@@ -31,55 +31,53 @@ Observations that come from different individuals or groups at a single point in
 
 A set of observations, along with some information about what times those observations were recorded.
 
----
+------------------------------------------------------------------------
 
 # Time Series Patterns
 
----
+------------------------------------------------------------------------
 
 ## Trend
 
 Long-term increase or decrease in the data.
 
----
+------------------------------------------------------------------------
 
 ## Seasonal
 
-- A seasonal pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week). 
+-   A seasonal pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).
 
-- Seasonality is always of a fixed and known period. 
-
-
+-   Seasonality is always of a fixed and known period.
 
 ## Cyclic
 
-- A cyclic pattern exists when data exhibit rises and falls that are not of fixed period. 
+-   A cyclic pattern exists when data exhibit rises and falls that are not of fixed period.
 
-- The duration of these fluctuations is usually of at least 2 years. 
+-   The duration of these fluctuations is usually of at least 2 years.
 
-- The average length of cycles is longer than the length of a seasonal pattern.
+-   The average length of cycles is longer than the length of a seasonal pattern.
 
----
+------------------------------------------------------------------------
 
 ## Frequency of a time series: Seasonal periods
 
 Frequency: Number of observations per natural time interval (Usually year, but sometimes a week, a day, an hour)
 
-Your turn: 
+Your turn:
 
 Identify frequencies for the following:
 
-- Annual
+-   Annual
 
-- Quarterly
+-   Quarterly
 
-- Monthly
+-   Monthly
 
-- Weekly
+-   Weekly
 
 ## Multiple Seasonal Patterns
 
-For example, the hourly utility demand data  exhibit both daily and weekly cycles.
+For example, the hourly utility demand data exhibit both daily and weekly cycles.
 
 ```{r, echo=FALSE, fig.cap="Source: https://www.robjhyndman.com/papers/multiseasonal.pdf"}
 knitr::include_graphics("fig1.png")
@@ -89,23 +87,24 @@ knitr::include_graphics("fig1.png")
 
 Identify multiple frequencies for the followings:
 
-- Daily
+-   Daily
 
-- Hourly
+-   Hourly
 
-- Half-hourly
+-   Half-hourly
 
-- Minutes
+-   Minutes
 
-- Seconds
+-   Seconds
 
-#  Correlation vs Autocorrelation
+# Correlation vs Autocorrelation
 
 ## Correlation
 
-- Measures the strength of the linear relationship between two variables
+-   Measures the strength of the linear relationship between two variables
 
-$$r = \frac{\sum (x_i -\bar{x})(y_i-\bar{y})}{\sqrt{\sum (x_i -\bar{x})^2 \sum (y_i -\bar{y})^2}}$$
+$$r = \frac{\sum_{i=1}^{n} (x_i -\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i -\bar{x})^2 \sum_{i=1}^{n} (y_i -\bar{y})^2}}$$  
+
 ## Autocorrelation
 
 Measures the strength of linear relationship between lagged values of time series.
@@ -116,11 +115,11 @@ Lagged values: in-class
 
 ## Autocorrelation plot
 
-1. Time series with trend only
+1.  Time series with trend only
 
-2. Time series with seasonality only
+2.  Time series with seasonality only
 
-3. Time series with trend and seasonal
+3.  Time series with trend and seasonal
 
 ## Example 1
 
@@ -181,7 +180,7 @@ ggAcf(y)
 
 ## Exercise
 
-Question 6 at [https://otexts.com/fpp2/graphics-exercises.html](https://otexts.com/fpp2/graphics-exercises.html)
+Question 6 at <https://otexts.com/fpp2/graphics-exercises.html>
 
 ## Notation
 
@@ -189,17 +188,17 @@ $$\hat{Y}_{T+h|T}$$
 
 ## Simple time series forecasting techniques
 
-1. Average method
+1.  Average method
 
-2. Naive method/ random walk method
+2.  Naive method/ random walk method
 
-3. Seasonal naive method
+3.  Seasonal naive method
 
-4. Drift method
+4.  Drift method
 
 [Reading](https://otexts.com/fpp2/simple-methods.html)
 
----
+------------------------------------------------------------------------
 
 ## Electricity Demand
 
@@ -208,7 +207,7 @@ aelec
 autoplot(aelec)
 ```
 
----
+------------------------------------------------------------------------
 
 ```{r}
 
@@ -243,16 +242,15 @@ $$\gamma_X(r, s)=Cov(X_r, X_s)=E[(X_r-\mu_X(r))(X_s-\mu_X(s))]$$
 
 for all integers $(r)$ and $(s)$.
 
-The covariance function of ${X_t}$ at lag $(h)$ is defined by
-$$\gamma_X(h):=\gamma_X(h, 0)=\gamma(t+h, t)=Cov(X_{t+h}, X_t).$$
+The covariance function of ${X_t}$ at lag $(h)$ is defined by $$\gamma_X(h):=\gamma_X(h, 0)=\gamma(t+h, t)=Cov(X_{t+h}, X_t).$$
 
----
+------------------------------------------------------------------------
+
 ## Autocovariance function
 
 The auto covariance function of ${X_t}$ at lag $(h)$ is
 
-$$\gamma_X(h)=Cov(X_{t+h}, X_t).$$
-**Autocorrelation function**
+$$\gamma_X(h)=Cov(X_{t+h}, X_t).$$ **Autocorrelation function**
 
 The autocorrelation function of ${X_t}$ at lag $(h)$ is
 
@@ -260,30 +258,29 @@ $$\rho_X(h)=\frac{\gamma_X(h)}{\gamma_X(0)}=Cor(X_{t+h}, X_t).$$
 
 ## Weekly stationary
 
-A time series ${X_t}$ is called weekly stationary if 
+A time series ${X_t}$ is called weekly stationary if
 
-- $\mu_X(t)$ is independent of $t$.
+-   $\mu_X(t)$ is independent of $t$.
 
-- $\gamma_X(t+h, t)$ is independent of $(t)$ for each $(h)$.
+-   $\gamma_X(t+h, t)$ is independent of $(t)$ for each $(h)$.
 
-In other words the statistical properties of the time series (mean, variance, autocorrelation, etc.) do not depend on the time at which the series is observed, that is no trend or seasonality. However,  a time series with cyclic behaviour (but with no trend or seasonality) is stationary.
+In other words the statistical properties of the time series (mean, variance, autocorrelation, etc.) do not depend on the time at which the series is observed, that is no trend or seasonality. However, a time series with cyclic behaviour (but with no trend or seasonality) is stationary.
 
 ## Strict stationarity of a time series
 
 A time series $\{X_t\}$ is called weekly stationary if the random vector $[X_1, X_2..., X_n]$ and $[X_{1+h}, X_{2+h}..., X_{n+h}]$ have the same joint distribution for all integers $(h)$ and $(n > 0)$.
 
-
 # Simple time series models
 
 ## 1. iid noise
 
-1. no trend or seasonal component
+1.  no trend or seasonal component
 
-2. observations are independent and identically distributed (iid) random variables with zero mean. 
+2.  observations are independent and identically distributed (iid) random variables with zero mean.
 
-3. Notation: ${X_t} \sim IID(0, \sigma^2)$
+3.  Notation: ${X_t} \sim IID(0, \sigma^2)$
 
-4. plays an important role as a building block for more complicated time series.
+4.  plays an important role as a building block for more complicated time series.
 
 ## 
 
@@ -300,7 +297,7 @@ samples
 
 ```
 
-##
+## 
 
 ```{python}
 plt.plot(samples)
@@ -329,7 +326,7 @@ plt.plot(samples)
 plt.show()
 ```
 
-## ACF 
+## ACF
 
 ```{python}
 import pandas as pd
@@ -341,11 +338,9 @@ plt.show()
 
 White noise implies stationarity. Stationarity does not imply white noise.
 
-
 ## 3. Random walk
 
-A random walk process is obtained by cumulatively summing iid random variables. If ${S_t, t=0, 1, 2, ...}$ is a random walk process, then
-$S_0 =0$
+A random walk process is obtained by cumulatively summing iid random variables. If ${S_t, t=0, 1, 2, ...}$ is a random walk process, then $S_0 =0$
 
 $S_1=0+X_1$
 
@@ -361,21 +356,21 @@ Is ${S_t, t=0, 1, 2, ...}$ a weak stationary process?
 
 ## Identifying non-stationarity in the mean
 
-- Using time series plot
+-   Using time series plot
 
-- ACF plot
+-   ACF plot
 
-   - ACF of stationary time series will drop to relatively quickly.
-   
-   - The ACF of non-stationary series decreases slowly.
-   
-   - For non-stationary series, the ACF at lag 1 is often large and positive.
-   
+    -   ACF of stationary time series will drop to relatively quickly.
+
+    -   The ACF of non-stationary series decreases slowly.
+
+    -   For non-stationary series, the ACF at lag 1 is often large and positive.
+
 # Elimination of Trend and Seasonality by Differencing
 
-- Differencing helps to stabilize the mean.
+-   Differencing helps to stabilize the mean.
 
-## Backshift notation: 
+## Backshift notation:
 
 $$BX_t=X_{t-1}$$
 
@@ -383,41 +378,35 @@ $$BX_t=X_{t-1}$$
 
 The first-order differencing can be defined as
 
-$$\nabla X_t = X_t-X_{t-1}=X_t-BX_t=(1-B)X_t$$
-where $\nabla=1-B$.
+$$\nabla X_t = X_t-X_{t-1}=X_t-BX_t=(1-B)X_t$$ where $\nabla=1-B$.
 
 The second-order differencing
 
 $$\nabla^2X_t=\nabla(\nabla X_t)=\nabla(X_t-X_{t-1})=\nabla X_t - \nabla X_{t-1}$$
 
-$$\nabla X_t - \nabla X_{t-1}=(X_t-X_{t-1})-(X_{t-1}-X_{t-2})$$
-- In practice, we seldom need to go beyond second order differencing. 
+$$\nabla X_t - \nabla X_{t-1}=(X_t-X_{t-1})-(X_{t-1}-X_{t-2})$$ - In practice, we seldom need to go beyond second order differencing.
 
 ## Seasonal differencing
 
-- differencing between an observation and the corresponding observation from the previous year.
+-   differencing between an observation and the corresponding observation from the previous year.
 
-$$\nabla_mX_t=X_t-X_{t-m}=(1-B^m)X_t$$
-where $(m)$ is the number of seasons. For monthly, $(m=12)$, for quarterly $(m=4)$.
+$$\nabla_mX_t=X_t-X_{t-m}=(1-B^m)X_t$$ where $(m)$ is the number of seasons. For monthly, $(m=12)$, for quarterly $(m=4)$.
 
 For monthly series
 
 $$\nabla_{12}X_t=X_t-X_{t-12}$$
 
-##
+## 
 
 Twice-differenced series
 
-$$\nabla^2_{12}X_t=\nabla_{12}X_t-\nabla_{12}X_{t-1}$$
-$$\nabla_{12}X_t-\nabla_{12}X_{t-1}=(X_t-X_{t-12})-(X_{t-1}-X_{t-13})$$
-If seasonality is strong, the seasonal differencing should be done first.
+$$\nabla^2_{12}X_t=\nabla_{12}X_t-\nabla_{12}X_{t-1}$$ $$\nabla_{12}X_t-\nabla_{12}X_{t-1}=(X_t-X_{t-12})-(X_{t-1}-X_{t-13})$$ If seasonality is strong, the seasonal differencing should be done first.
 
 ## Non-Stationary Time Series
 
 **1. Deterministic trend**
 
 $$Y_t  = f(t) + \epsilon_t$$
-
 
 where $\epsilon_t \sim iid(0, \sigma^2)$, $t = 1, 2, ...T$
 
@@ -427,17 +416,15 @@ A trend is deterministic if it is a nonrandom function of time.
 
 ## Non-Stationary Time Series (cont.)
 
-**2. Random walk** 
+**2. Random walk**
 
 $$Y_t = Y_{t-1} + \epsilon_t$$
 
-- Random walk has a stochastic trend.
+-   Random walk has a stochastic trend.
 
-- Model behind naive method.
+-   Model behind naive method.
 
 A trend is said to be stochastic if it is a random function of time.
-
-
 
 ## Non-Stationary Time Series (cont.)
 
@@ -445,13 +432,11 @@ A trend is said to be stochastic if it is a random function of time.
 
 $$Y_t = \alpha+  Y_{t-1} + \epsilon_t$$
 
-- Random walk with drift has a stochastic trend and a deterministic trend.
+-   Random walk with drift has a stochastic trend and a deterministic trend.
 
-- Model behind drift method.
-
+-   Model behind drift method.
 
 ## Random walk
-
 
 $$
 \begin{aligned}
@@ -470,7 +455,6 @@ Variance: $Var(Y_t)=t \sigma^2$.
 
 ## Random walk with drift
 
-
 $$
 \begin{aligned}
   Y_t &= Y_{t-1} + \epsilon_t \\
@@ -485,37 +469,33 @@ $$
 
 ## Random walk with drift (cont.)
 
-
 It has a *deterministic trend* $(Y_0 + t \alpha)$ and a *stochastic trend* $\sum_{i=1}^{t} \epsilon_t$.
 
 Mean: $E(Y_t) = Y_0 + t\alpha$
 
 Variance: $Var(Y_t) = t\sigma^2$.
 
-There is a trend in both mean and variance. 
-
+There is a trend in both mean and variance.
 
 ## Common trend removal (de-trending) procedures
 
-1. Deterministic trend: Time-trend regression
+1.  Deterministic trend: Time-trend regression
 
-      The trend can be removed by fitting a deterministic polynomial time trend. The residual series after removing the trend will give us the de-trended series.
+    The trend can be removed by fitting a deterministic polynomial time trend. The residual series after removing the trend will give us the de-trended series.
 
-1. Stochastic trend: Differencing
- 
-      The process is also known as a **Difference-stationary process**.
-      
+2.  Stochastic trend: Differencing
+
+    The process is also known as a **Difference-stationary process**.
+
 # Notation: I(d)
 
 Integrated to order $d$: Series can be made stationary by differencing $d$ times.
- 
- - Known as $I(d)$ process.
- 
 
-**Question: ** Show that random walk process is an $I(1)$ process.
+-   Known as $I(d)$ process.
 
-The random walk process is called a unit root process.
-(If one of the roots turns out to be one, then the process is called unit root process.)
+**Question:** Show that random walk process is an $I(1)$ process.
+
+The random walk process is called a unit root process. (If one of the roots turns out to be one, then the process is called unit root process.)
 
 ## Random walk
 
@@ -558,7 +538,6 @@ plot_acf(diff.dropna(), lags=20)
 plt.show()
 ```
 
-
 ## Example 2
 
 ```{python}
@@ -584,7 +563,7 @@ plt.show()
 
 ```
 
-##
+## 
 
 ```{python}
 
@@ -616,19 +595,18 @@ plot_acf(df.value.diff().diff().dropna())
 plt.show()
 ```
 
-
 ## Variance stabilization
 
 Eg:
 
-- Square root: $W_t = \sqrt{Y_t}$
+-   Square root: $W_t = \sqrt{Y_t}$
 
-- Logarithm: $W_t = log({Y_t})$
+-   Logarithm: $W_t = log({Y_t})$
 
-     - This very useful.
-     
-     - Interpretable: Changes in a log value are **relative (percent) changes on the original sclae**.
-     
+    -   This very useful.
+
+    -   Interpretable: Changes in a log value are **relative (percent) changes on the original sclae**.
+
 ## Monthly Airline Passenger Numbers 1949-1960
 
 ```{python}
@@ -659,16 +637,15 @@ $$
   \end{cases}
 $$
 
-
 Different values of $\lambda$ gives you different transformations.
 
-- $\lambda=1$: No **substantive** transformation
+-   $\lambda=1$: No **substantive** transformation
 
-- $\lambda = \frac{1}{2}$: Square root plus linear transformation
+-   $\lambda = \frac{1}{2}$: Square root plus linear transformation
 
-- $\lambda=0$: Natural logarithm
+-   $\lambda=0$: Natural logarithm
 
-- $\lambda = -1$: Inverse plus 1
+-   $\lambda = -1$: Inverse plus 1
 
 Balance the seasonal fluctuations and random variation across the series.
 
@@ -684,8 +661,7 @@ y2,fitted_lambda = stats.boxcox(airpassenger['#Passengers'])
 
 ```
 
-
-##  Box-Cox transformation: Exploring the output
+## Box-Cox transformation: Exploring the output
 
 ```{python}
 #| echo: true
@@ -699,6 +675,59 @@ y2
 
 ```
 
+# Linear Time Series Analysis
 
 
 
+## Autoregressive Models
+
+$Y_t = \alpha + \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \dots + \phi_p Y_{t-p} + \epsilon_t$
+
+Where:
+
+$Y_t$ is the value at time $t$
+
+$\alpha$ is a constant,
+
+$\phi_1, \phi_2,...\phi_p$ are the parameters,
+
+$\epsilon_t$ is white noise (error term),
+
+$p$ is the order of the AR model.
+
+
+## In-class: Properties of AR(1) process
+
+Derive
+
+- Mean
+
+- Variance
+
+- Covariance
+
+- Autocorrelation function of an AR(1) process
+
+## In-class: Properties of AR(2) process
+
+Derive
+
+- Mean
+
+- Variance
+
+- Covariance
+
+- Autocorrelation function of an AR(1) process
+
+## In-class: Properties of AR(P) process
+
+Derive
+
+- Mean
+
+- Variance
+
+- Covariance
+
+- Autocorrelation function of an AR(P) process
