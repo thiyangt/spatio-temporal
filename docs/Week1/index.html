@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-html/tabby.min.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/light-border.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
+  <meta name="generator" content="quarto-1.5.57">
+
+  <meta name="author" content="Dr.&nbsp;Thiyanga S. Talagala   Department of Statistics, Faculty of Applied Sciences   University of Sri Jayewardenepura, Sri Lanka">
+  <title>web – DSA 554 3.0 Spatio-temporal Data Analysis</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      { color: #003b4f; background-color: #f1f3f5; }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #003b4f; } /* Normal */
+    code span.al { color: #ad0000; } /* Alert */
+    code span.an { color: #5e5e5e; } /* Annotation */
+    code span.at { color: #657422; } /* Attribute */
+    code span.bn { color: #ad0000; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #003b4f; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #20794d; } /* Char */
+    code span.cn { color: #8f5902; } /* Constant */
+    code span.co { color: #5e5e5e; } /* Comment */
+    code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+    code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad0000; } /* DataType */
+    code span.dv { color: #ad0000; } /* DecVal */
+    code span.er { color: #ad0000; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad0000; } /* Float */
+    code span.fu { color: #4758ab; } /* Function */
+    code span.im { color: #00769e; } /* Import */
+    code span.in { color: #5e5e5e; } /* Information */
+    code span.kw { color: #003b4f; font-weight: bold; } /* Keyword */
+    code span.op { color: #5e5e5e; } /* Operator */
+    code span.ot { color: #003b4f; } /* Other */
+    code span.pp { color: #ad0000; } /* Preprocessor */
+    code span.sc { color: #5e5e5e; } /* SpecialChar */
+    code span.ss { color: #20794d; } /* SpecialString */
+    code span.st { color: #20794d; } /* String */
+    code span.va { color: #111111; } /* Variable */
+    code span.vs { color: #20794d; } /* VerbatimString */
+    code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../site_libs/revealjs/dist/theme/quarto.css">
+  <link rel="stylesheet" href="custom.css">
+  <link href="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="../site_libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <style type="text/css">
+
+  .callout {
+    margin-top: 1em;
+    margin-bottom: 1em;  
+    border-radius: .25rem;
+  }
+
+  .callout.callout-style-simple { 
+    padding: 0em 0.5em;
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+    display: flex;
+  }
+
+  .callout.callout-style-default {
+    border-left: solid #acacac .3rem;
+    border-right: solid 1px silver;
+    border-top: solid 1px silver;
+    border-bottom: solid 1px silver;
+  }
+
+  .callout .callout-body-container {
+    flex-grow: 1;
+  }
+
+  .callout.callout-style-simple .callout-body {
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-style-default .callout-body {
+    font-size: 0.9rem;
+    font-weight: 400;
+  }
+
+  .callout.callout-titled.callout-style-simple .callout-body {
+    margin-top: 0.2em;
+  }
+
+  .callout:not(.callout-titled) .callout-body {
+      display: flex;
+  }
+
+  .callout:not(.no-icon).callout-titled.callout-style-simple .callout-content {
+    padding-left: 1.6em;
+  }
+
+  .callout.callout-titled .callout-header {
+    padding-top: 0.2em;
+    margin-bottom: -0.2em;
+  }
+
+  .callout.callout-titled .callout-title  p {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+  }
+    
+  .callout.callout-titled.callout-style-simple .callout-content  p {
+    margin-top: 0;
+  }
+
+  .callout.callout-titled.callout-style-default .callout-content  p {
+    margin-top: 0.7em;
+  }
+
+  .callout.callout-style-simple div.callout-title {
+    border-bottom: none;
+    font-size: .9rem;
+    font-weight: 600;
+    opacity: 75%;
+  }
+
+  .callout.callout-style-default  div.callout-title {
+    border-bottom: none;
+    font-weight: 600;
+    opacity: 85%;
+    font-size: 0.9rem;
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-default div.callout-content {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+  }
+
+  .callout.callout-style-simple .callout-icon::before {
+    height: 1rem;
+    width: 1rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 1rem 1rem;
+  }
+
+  .callout.callout-style-default .callout-icon::before {
+    height: 0.9rem;
+    width: 0.9rem;
+    display: inline-block;
+    content: "";
+    background-repeat: no-repeat;
+    background-size: 0.9rem 0.9rem;
+  }
+
+  .callout-title {
+    display: flex
+  }
+    
+  .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  .callout.no-icon::before {
+    display: none !important;
+  }
+
+  .callout.callout-titled .callout-body > .callout-content > :last-child {
+    padding-bottom: 0.5rem;
+    margin-bottom: 0;
+  }
+
+  .callout.callout-titled .callout-icon::before {
+    margin-top: .5rem;
+    padding-right: .5rem;
+  }
+
+  .callout:not(.callout-titled) .callout-icon::before {
+    margin-top: 1rem;
+    padding-right: .5rem;
+  }
+
+  /* Callout Types */
+
+  div.callout-note {
+    border-left-color: #4582ec !important;
+  }
+
+  div.callout-note .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEU0lEQVRYCcVXTWhcVRQ+586kSUMMxkyaElstCto2SIhitS5Ek8xUKV2poatCcVHtUlFQk8mbaaziwpWgglJwVaquitBOfhQXFlqlzSJpFSpIYyXNjBNiTCck7x2/8/LeNDOZxDuEkgOXe++553zfefee+/OYLOXFk3+1LLrRdiO81yNqZ6K9cG0P3MeFaMIQjXssE8Z1JzLO9ls20MBZX7oG8w9GxB0goaPrW5aNMp1yOZIa7Wv6o2ykpLtmAPs/vrG14Z+6d4jpbSKuhdcSyq9wGMPXjonwmESXrriLzFGOdDBLB8Y6MNYBu0dRokSygMA/mrun8MGFN3behm6VVAwg4WR3i6FvYK1T7MHo9BK7ydH+1uurECoouk5MPRyVSBrBHMYwVobG2aOXM07sWrn5qgB60rc6mcwIDJtQrnrEr44kmy+UO9r0u9O5/YbkS9juQckLed3DyW2XV/qWBBB3ptvI8EUY3I9p/67OW+g967TNr3Sotn3IuVlfMLVnsBwH4fsnebJvyGm5GeIUA3jljERmrv49SizPYuq+z7c2H/jlGC+Ghhupn/hcapqmcudB9jwJ/3jvnvu6vu5lVzF1fXyZuZZ7U8nRmVzytvT+H3kilYvH09mLWrQdwFSsFEsxFVs5fK7A0g8gMZjbif4ACpKbjv7gNGaD8bUrlk8x+KRflttr22JEMRUbTUwwDQScyzPgedQHZT0xnx7ujw2jfVfExwYHwOsDTjLdJ2ebmeQIlJ7neo41s/DrsL3kl+W2lWvAga0tR3zueGr6GL78M3ifH0rGXrBC2aAR8uYcIA5gwV8zIE8onoh8u0Fca/ciF7j1uOzEnqcIm59sEXoGc0+z6+H45V1CvAvHcD7THztu669cnp+L0okAeIc6zjbM/24LgGM1gZk7jnRu1aQWoU9sfUOuhrmtaPIO3YY1KLLWZaEO5TKUbMY5zx8W9UJ6elpLwKXbsaZ4EFl7B4bMtDv0iRipKoDQT2sNQI9b1utXFdYisi+wzZ/ri/1m7QfDgEuvgUUEIJPq3DhX/5DWNqIXDOweC2wvIR90Oq3lDpdMIgD2r0dXvGdsEW5H6x6HLRJYU7C69VefO1x8Gde1ZFSJLfWS1jbCnhtOPxmpfv2LXOA2Xk2tvnwKKPFuZ/oRmwBwqRQDcKNeVQkYcOjtWVBuM/JuYw5b6isojIkYxyYAFn5K7ZBF10fea52y8QltAg6jnMqNHFBmGkQ1j+U43HMi2xMar1Nv0zGsf1s8nUsmUtPOOrbFIR8bHFDMB5zL13Gmr/kGlCkUzedTzzmzsaJXhYawnA3UmARpiYj5ooJZiUoxFRtK3X6pgNPv+IZVPcnwbOl6f+aBaO1CNvPW9n9LmCp01nuSaTRF2YxHqZ8DYQT6WsXT+RD6eUztwYLZ8rM+rcPxamv1VQzFUkzFXvkiVrySGQgJNvXHJAxiU3/NwiC03rSf05VBaPtu/Z7/B8Yn/w7eguloAAAAAElFTkSuQmCC');
+  }
+
+  div.callout-note.callout-style-default .callout-title {
+    background-color: #dae6fb
+  }
+
+  div.callout-important {
+    border-left-color: #d9534f !important;
+  }
+
+  div.callout-important .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAEKklEQVRYCcVXTWhcVRS+575MJym48A+hSRFr00ySRQhURRfd2HYjk2SSTokuBCkU2o0LoSKKraKIBTcuFCoidGFD08nkBzdREbpQ1EDNIv8qSGMFUboImMSZd4/f9zJv8ibJMC8xJQfO3HPPPef7zrvvvnvviIkpC9nsw0UttFunbUhpFzFtarSd6WJkStVMw5xyVqYTvkwfzuf/5FgtkVoB0729j1rjXwThS7Vio+Mo6DNnvLfahoZ+i/o32lULuJ3NNiz7q6+pyAUkJaFF6JwaM2lUJlV0MlnQn5aTRbEu0SEqHUa0A4AdiGuB1kFXRfVyg5d87+Dg4DL6m2TLAub60ilj7A1Ec4odSAc8X95sHh7+ZRPCFo6Fnp7HfU/fBng/hi10CjCnWnJjsxvDNxWw0NfV6Rv5GgP3I3jGWXumdTD/3cbEOP2ZbOZp69yniG3FQ9z1jD7bnBu9Fc2tKGC2q+uAJOQHBDRiZX1x36o7fWBs7J9ownbtO+n0/qWkvW7UPIfc37WgT6ZGR++EOJyeQDSb9UB+DZ1G6DdLDzyS+b/kBCYGsYgJbSQHuThGKRcw5xdeQf8YdNHsc6ePXrlSYMBuSIAFTGAtQo+VuALo4BX83N190NWZWbynBjhOHsmNfFWLeL6v+ynsA58zDvvAC8j5PkbOcXCMg2PZFk3q8MjI7WAG/Dp9AwP7jdGBOOQkAvlFUB+irtm16I1Zw9YBcpGTGXYmk3kQIC/Cds55l+iMI3jqhjAuaoe+am2Jw5GT3Nbz3CkE12NavmzN5+erJW7046n/CH1RO/RVa8lBLozXk9uqykkGAyRXLWlLv5jyp4RFsG5vGVzpDLnIjTWgnRy2Rr+tDKvRc7Y8AyZq10jj8DqXdnIRNtFZb+t/ZRtXcDiVnzpqx8mPcDWxgARUqx0W1QB9MeUZiNrV4qP+Ehc+BpNgATsTX8ozYKL2NtFYAHc84fG7ndxUPr+AR/iQSns7uSUufAymwDOb2+NjK27lEFocm/EE2WpyIy/Hi66MWuMKJn8RvxIcj87IM5Vh9663ziW36kR0HNenXuxmfaD8JC7tfKbrhFr7LiZCrMjrzTeGx+PmkosrkNzW94ObzwocJ7A1HokLolY+AvkTiD/q1H0cN48c5EL8Crkttsa/AXQVDmutfyku0E7jShx49XqV3MFK8IryDhYVbj7Sj2P2eBxwcXoe8T8idsKKPRcnZw1b+slFTubwUwhktrfnAt7J++jwQtLZcm3sr9LQrjRzz6cfMv9aLvgmnAGvpoaGLxM4mAEaLV7iAzQ3oU0IvD5x9ix3yF2RAAuYAOO2f7PEFWCXZ4C9Pb2UsgDeVnFSpbFK7/IWu7TPTvBqzbGdCHOJQSxiEjt6IyZmxQyEJHv6xyQsYk//moVFsN2zP6fRImjfq7/n/wFDguUQFNEwugAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-important.callout-style-default .callout-title {
+    background-color: #f7dddc
+  }
+
+  div.callout-warning {
+    border-left-color: #f0ad4e !important;
+  }
+
+  div.callout-warning .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAAETklEQVRYCeVWW2gcVRg+58yaTUnizqbipZeX4uWhBEniBaoUX1Ioze52t7sRq6APio9V9MEaoWlVsFasRq0gltaAPuxms8lu0gcviE/FFOstVbSIxgcv6SU7EZqmdc7v9+9mJtNks51NTUH84ed889/PP+cmxP+d5FIbMJmNbpREu4WUkiTtCicKny0l1pIKmBzovF2S+hIJHX8iEu3hZJ5lNZGqyRrGSIQpq15AzF28jgpeY6yk6GVdrfFqdrD6Iw+QlB8g0YS2g7dyQmXM/IDhBhT0UCiRf59lfqmmDvzRt6kByV/m4JjtzuaujMUM2c5Z2d6JdKrRb3K2q6mA+oYVz8JnDdKPmmNthzkAk/lN63sYPgevrguc72aZX/L9C6x09GYyxBgCX4NlvyGUHOKELlm5rXeR1kchuChJt4SSwyddZRXgvwMGvYo4QSlk3/zkHD8UHxwVJA6zjZZqP8v8kK8OWLnIZtLyCAJagYC4rTGW/9Pqj92N/c+LUaAj27movwbi19tk/whRCIE7Q9vyI6yvRpftAKVTdUjOW40X3h5OXsKCdmFcx0xlLJoSuQngnrJe7Kcjm4OMq9FlC7CMmScQANuNvjfP3PjGXDBaUQmbp296S5L4DrpbrHN1T87ZVEZVCzg1FF0Ft+dKrlLukI+/c9ENo+TvlTDbYFvuKPtQ9+l052rXrgKoWkDAFnvh0wTOmYn8R5f4k/jN/fZiCM1tQx9jQQ4ANhqG4hiL0qIFTGViG9DKB7GYzgubnpofgYRwO+DFjh0Zin2m4b/97EDkXkc+f6xYAPX0KK2I/7fUQuwzuwo/L3AkcjugPNixC8cHf0FyPjWlItmLxWw4Ou9YsQCr5fijMGoD/zpdRy95HRysyXA74MWOnscpO4j2y3HAVisw85hX5+AFBRSHt4ShfLFkIMXTqyKFc46xdzQM6XbAi702a7sy04J0+feReMFKp5q9esYLCqAZYw/k14E/xcLLsFElaornTuJB0svMuJINy8xkIYuL+xPAlWRceH6+HX7THJ0djLUom46zREu7tTkxwmf/FdOZ/sh6Q8qvEAiHpm4PJ4a/doJe0gH1t+aHRgCzOvBvJedEK5OFE5jpm4AGP2a8Dxe3gGJ/pAutug9Gp6he92CsSsWBaEcxGx0FHytmIpuqGkOpldqNYQK8cSoXvd+xLxXADw0kf6UkJNFtdo5MOgaLjiQOQHcn+A6h5NuL2s0qsC2LOM75PcF3yr5STuBSAcGG+meA14K/CI21HcS4LBT6tv0QAh8Dr5l93AhZzG5ZJ4VxAqdZUEl9z7WJ4aN+svMvwHHL21UKTd1mqvChH7/Za5xzXBBKrUcB0TQ+Ulgkfbi/H/YT5EptrGzsEK7tR1B7ln9BBwckYfMiuSqklSznIuoIIOM42MQO+QnduCoFCI0bpkzjCjddHPN/F+2Yu+sd9bKNpVwHhbS3LluK/0zgfwD0xYI5dXuzlQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-warning.callout-style-default .callout-title {
+    background-color: #fcefdc
+  }
+
+  div.callout-tip {
+    border-left-color: #02b875 !important;
+  }
+
+  div.callout-tip .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAADr0lEQVRYCe1XTWgTQRj9ZjZV8a9SPIkKgj8I1bMHsUWrqYLVg4Ue6v9BwZOxSYsIerFao7UiUryIqJcqgtpimhbBXoSCVxUFe9CTiogUrUp2Pt+3aUI2u5vdNh4dmMzOzHvvezuz8xNFM0mjnbXaNu1MvFWRXkXEyE6aYOYJpdW4IXuA4r0fo8qqSMDBU0v1HJUgVieAXxzCsdE/YJTdFcVIZQNMyhruOMJKXYFoLfIfIvVIMWdsrd+Rpd86ZmyzzjJmLStqRn0v8lzkb4rVIXvnpScOJuAn2ACC65FkPzEdEy4TPWRLJ2h7z4cArXzzaOdKlbOvKKX25Wl00jSnrwVxAg3o4dRxhO13RBSdNvH0xSARv3adTXbBdTf64IWO2vH0LT+cv4GR1DJt+DUItaQogeBX/chhbTBxEiZ6gftlDNXTrvT7co4ub5A6gp9HIcHvzTa46OS5fBeP87Qm0fQkr4FsYgVQ7Qg+ZayaDg9jhg1GkWj8RG6lkeSacrrHgDaxdoBiZPg+NXV/KifMuB6//JmYH4CntVEHy/keA6x4h4CU5oFy8GzrBS18cLJMXcljAKB6INjWsRcuZBWVaS3GDrqB7rdapVIeA+isQ57Eev9eCqzqOa81CY05VLd6SamW2wA2H3SiTbnbSxmzfp7WtKZkqy4mdyAlGx7ennghYf8voqp9cLSgKdqNfa6RdRsAAkPwRuJZNbpByn+RrJi1RXTwdi8RQF6ymDwGMAtZ6TVE+4uoKh+MYkcLsT0Hk8eAienbiGdjJHZTpmNjlbFJNKDVAp2fJlYju6IreQxQ08UJDNYdoLSl6AadO+fFuCQqVMB1NJwPm69T04Wv5WhfcWyfXQB+wXRs1pt+nCknRa0LVzSA/2B+a9+zQJadb7IyyV24YAxKp2Jqs3emZTuNnKxsah+uabKbMk7CbTgJx/zIgQYErIeTKRQ9yD9wxVof5YolPHqaWo7TD6tJlh7jQnK5z2n3+fGdggIOx2kaa2YI9QWarc5Ce1ipNWMKeSG4DysFF52KBmTNMmn5HqCFkwy34rDg05gDwgH3bBi+sgFhN/e8QvRn8kbamCOhgrZ9GJhFDgfcMHzFb6BAtjKpFhzTjwv1KCVuxHvCbsSiEz4CANnj84cwHdFXAbAOJ4LTSAawGWFn5tDhLMYz6nWeU2wJfIhmIJBefcd/A5FWQWGgrWzyORZ3Q6HuV+Jf0Bj+BTX69fm1zWgK7By1YTXchFDORywnfQ7GpzOo6S+qECrsx2ifVQAAAABJRU5ErkJggg==');
+  }
+
+  div.callout-tip.callout-style-default .callout-title {
+    background-color: #ccf1e3
+  }
+
+  div.callout-caution {
+    border-left-color: #fd7e14 !important;
+  }
+
+  div.callout-caution .callout-icon::before {
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAERlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAA6ABAAMAAAABAAEAAKACAAQAAAABAAAAIKADAAQAAAABAAAAIAAAAACshmLzAAACV0lEQVRYCdVWzWoUQRCuqp2ICBLJXgITZL1EfQDBW/bkzUMUD7klD+ATSHBEfAIfQO+iXsWDxJsHL96EHAwhgzlkg8nBg25XWb0zIb0zs9muYYWkoKeru+vn664fBqElyZNuyh167NXJ8Ut8McjbmEraKHkd7uAnAFku+VWdb3reSmRV8PKSLfZ0Gjn3a6Xlcq9YGb6tADjn+lUfTXtVmaZ1KwBIvFI11rRXlWlatwIAAv2asaa9mlB9wwygiDX26qaw1yYPzFXg2N1GgG0FMF8Oj+VIx7E/03lHx8UhvYyNZLN7BwSPgekXXLribw7w5/c8EF+DBK5idvDVYtEEwMeYefjjLAdEyQ3M9nfOkgnPTEkYU+sxMq0BxNR6jExrAI31H1rzvLEfRIdgcv1XEdj6QTQAS2wtstEALLG1yEZ3QhH6oDX7ExBSFEkFINXH98NTrme5IOaaA7kIfiu2L8A3qhH9zRbukdCqdsA98TdElyeMe5BI8Rs2xHRIsoTSSVFfCFCWGPn9XHb4cdobRIWABNf0add9jakDjQJpJ1bTXOJXnnRXHRf+dNL1ZV1MBRCXhMbaHqGI1JkKIL7+i8uffuP6wVQAzO7+qVEbF6NbS0LJureYcWXUUhH66nLR5rYmva+2tjRFtojkM2aD76HEGAD3tPtKM309FJg5j/K682ywcWJ3PASCcycH/22u+Bh7Aa0ehM2Fu4z0SAE81HF9RkB21c5bEn4Dzw+/qNOyXr3DCTQDMBOdhi4nAgiFDGCinIa2owCEChUwD8qzd03PG+qdW/4fDzjUMcE1ZpIAAAAASUVORK5CYII=');
+  }
+
+  div.callout-caution.callout-style-default .callout-title {
+    background-color: #ffe5d0
+  }
+
+  </style>
+  <style type="text/css">
+    .reveal div.sourceCode {
+      margin: 0;
+      overflow: auto;
+    }
+    .reveal div.hanging-indent {
+      margin-left: 1em;
+      text-indent: -1em;
+    }
+    .reveal .slide:not(.center) {
+      height: 100%;
+    }
+    .reveal .slide.scrollable {
+      overflow-y: auto;
+    }
+    .reveal .footnotes {
+      height: 100%;
+      overflow-y: auto;
+    }
+    .reveal .slide .absolute {
+      position: absolute;
+      display: block;
+    }
+    .reveal .footnotes ol {
+      counter-reset: ol;
+      list-style-type: none; 
+      margin-left: 0;
+    }
+    .reveal .footnotes ol li:before {
+      counter-increment: ol;
+      content: counter(ol) ". "; 
+    }
+    .reveal .footnotes ol li > p:first-child {
+      display: inline-block;
+    }
+    .reveal .slide ul,
+    .reveal .slide ol {
+      margin-bottom: 0.5em;
+    }
+    .reveal .slide ul li,
+    .reveal .slide ol li {
+      margin-top: 0.4em;
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide ul[role="tablist"] li {
+      margin-bottom: 0;
+    }
+    .reveal .slide ul li > *:first-child,
+    .reveal .slide ol li > *:first-child {
+      margin-block-start: 0;
+    }
+    .reveal .slide ul li > *:last-child,
+    .reveal .slide ol li > *:last-child {
+      margin-block-end: 0;
+    }
+    .reveal .slide .columns:nth-child(3) {
+      margin-block-start: 0.8em;
+    }
+    .reveal blockquote {
+      box-shadow: none;
+    }
+    .reveal .tippy-content>* {
+      margin-top: 0.2em;
+      margin-bottom: 0.7em;
+    }
+    .reveal .tippy-content>*:last-child {
+      margin-bottom: 0.2em;
+    }
+    .reveal .slide > img.stretch.quarto-figure-center,
+    .reveal .slide > img.r-stretch.quarto-figure-center {
+      display: block;
+      margin-left: auto;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-left,
+    .reveal .slide > img.r-stretch.quarto-figure-left  {
+      display: block;
+      margin-left: 0;
+      margin-right: auto; 
+    }
+    .reveal .slide > img.stretch.quarto-figure-right,
+    .reveal .slide > img.r-stretch.quarto-figure-right  {
+      display: block;
+      margin-left: auto;
+      margin-right: 0; 
+    }
+  </style>
+</head>
+<body class="quarto-light">
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide" data-background-color="#081d58" data-background-image="none" class="quarto-title-block center">
+  <h1 class="title">DSA 554 3.0 Spatio-temporal Data Analysis</h1>
+
+<div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+Dr.&nbsp;Thiyanga S. Talagala <br> Department of Statistics, Faculty of Applied Sciences <br> University of Sri Jayewardenepura, Sri Lanka 
+</div>
+</div>
+</div>
+
+</section>
+<section id="time-series" class="slide level2">
+<h2>Time Series</h2>
+<p>A time series is a sequence of observations taken sequentially in time.</p>
+<h3 id="cross-sectional-data">Cross sectional data</h3>
+<p>Observations that come from different individuals or groups at a single point in time.</p>
+<h3 id="time-series-data">Time series data</h3>
+<p>A set of observations, along with some information about what times those observations were recorded.</p>
+</section>
+<section class="slide level2">
+
+</section>
+<section>
+<section id="time-series-patterns" class="title-slide slide level1 center">
+<h1>Time Series Patterns</h1>
+
+</section>
+<section id="trend" class="slide level2">
+<h2>Trend</h2>
+<p>Long-term increase or decrease in the data.</p>
+</section>
+<section id="seasonal" class="slide level2">
+<h2>Seasonal</h2>
+<ul>
+<li><p>A seasonal pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).</p></li>
+<li><p>Seasonality is always of a fixed and known period.</p></li>
+</ul>
+</section>
+<section id="cyclic" class="slide level2">
+<h2>Cyclic</h2>
+<ul>
+<li><p>A cyclic pattern exists when data exhibit rises and falls that are not of fixed period.</p></li>
+<li><p>The duration of these fluctuations is usually of at least 2 years.</p></li>
+<li><p>The average length of cycles is longer than the length of a seasonal pattern.</p></li>
+</ul>
+</section>
+<section id="frequency-of-a-time-series-seasonal-periods" class="slide level2">
+<h2>Frequency of a time series: Seasonal periods</h2>
+<p>Frequency: Number of observations per natural time interval (Usually year, but sometimes a week, a day, an hour)</p>
+<p>Your turn:</p>
+<p>Identify frequencies for the following:</p>
+<ul>
+<li><p>Annual</p></li>
+<li><p>Quarterly</p></li>
+<li><p>Monthly</p></li>
+<li><p>Weekly</p></li>
+</ul>
+</section>
+<section id="multiple-seasonal-patterns" class="slide level2">
+<h2>Multiple Seasonal Patterns</h2>
+<p>For example, the hourly utility demand data exhibit both daily and weekly cycles.</p>
+
+<img data-src="fig1.png" width="286" class="r-stretch quarto-figure-center"><p class="caption">Source: https://www.robjhyndman.com/papers/multiseasonal.pdf</p></section>
+<section id="your-turn" class="slide level2">
+<h2>Your turn</h2>
+<p>Identify multiple frequencies for the followings:</p>
+<ul>
+<li><p>Daily</p></li>
+<li><p>Hourly</p></li>
+<li><p>Half-hourly</p></li>
+<li><p>Minutes</p></li>
+<li><p>Seconds</p></li>
+</ul>
+</section></section>
+<section>
+<section id="correlation-vs-autocorrelation" class="title-slide slide level1 center">
+<h1>Correlation vs Autocorrelation</h1>
+
+</section>
+<section id="correlation" class="slide level2">
+<h2>Correlation</h2>
+<ul>
+<li>Measures the strength of the linear relationship between two variables</li>
+</ul>
+<p><span class="math display">\[r = \frac{\sum (x_i -\bar{x})(y_i-\bar{y})}{\sqrt{\sum (x_i -\bar{x})^2 \sum (y_i -\bar{y})^2}}\]</span> ## Autocorrelation</p>
+<p>Measures the strength of linear relationship between lagged values of time series.</p>
+<p><span class="math display">\[r_k = \frac{\sum (y_t -\bar{y})(y_{t-k}-\bar{y})}{\sum (y_t -\bar{y})^2}\]</span></p>
+<p>Lagged values: in-class</p>
+</section>
+<section id="autocorrelation-plot" class="slide level2">
+<h2>Autocorrelation plot</h2>
+<ol type="1">
+<li><p>Time series with trend only</p></li>
+<li><p>Time series with seasonality only</p></li>
+<li><p>Time series with trend and seasonal</p></li>
+</ol>
+</section>
+<section id="example-1" class="slide level2">
+<h2>Example 1</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-2-1.png" width="960" class="r-stretch"></section>
+<section id="example-1-cont." class="slide level2">
+<h2>Example 1 (cont.)</h2>
+<p>Seasonal plots</p>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-3-1.png" width="960" class="r-stretch"></section>
+<section id="example-1-cont.-1" class="slide level2">
+<h2>Example 1 (cont.)</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-4-1.png" width="960" class="r-stretch"></section>
+<section id="example-2" class="slide level2">
+<h2>Example 2</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-5-1.png" width="960" class="r-stretch"></section>
+<section id="example-2cont." class="slide level2">
+<h2>Example 2(cont.)</h2>
+<p>Seasonal plots</p>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-6-1.png" width="960" class="r-stretch"></section>
+<section id="example-2-cont." class="slide level2">
+<h2>Example 2 (cont.)</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-7-1.png" width="960" class="r-stretch"></section>
+<section id="example-3" class="slide level2">
+<h2>Example 3</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-8-1.png" width="960" class="r-stretch"></section>
+<section id="example-3-cont" class="slide level2">
+<h2>Example 3 (cont)</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-9-1.png" width="960" class="r-stretch"></section>
+<section id="exercise" class="slide level2">
+<h2>Exercise</h2>
+<p>Question 6 at <a href="https://otexts.com/fpp2/graphics-exercises.html">https://otexts.com/fpp2/graphics-exercises.html</a></p>
+</section>
+<section id="notation" class="slide level2">
+<h2>Notation</h2>
+<p><span class="math display">\[\hat{Y}_{T+h|T}\]</span></p>
+</section>
+<section id="simple-time-series-forecasting-techniques" class="slide level2">
+<h2>Simple time series forecasting techniques</h2>
+<ol type="1">
+<li><p>Average method</p></li>
+<li><p>Naive method/ random walk method</p></li>
+<li><p>Seasonal naive method</p></li>
+<li><p>Drift method</p></li>
+</ol>
+<p><a href="https://otexts.com/fpp2/simple-methods.html">Reading</a></p>
+</section>
+<section id="electricity-demand" class="slide level2">
+<h2>Electricity Demand</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>       Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec
+1980  7366  7414  7824  7524  8279  8707  9486  8973  8231  8206  7927  7999
+1981  7834  7521  8284  7999  8940  9381 10078  9796  8471  8572  8150  8168
+1982  8166  7903  8606  8071  9178  9873 10476  9296  8818  8697  8381  8293
+1983  7942  8001  8744  8397  9115  9773 10358  9849  9083  9143  8800  8741
+1984  8492  8795  9354  8796 10072 10174 11326 10744  9806  9740  9373  9244
+1985  9407  8827  9880  9364 10580 10899 11687 11280 10208 10212  9725  9721
+1986  9846  9407 10265  9970 10801 11246 12167 11578 10645 10613 10104 10348
+1987 10263  9973 10803 10409 11458 11845 12559 12070 11221 11338 10761 11012
+1988 10923 10790 11427 10788 11772 12104 12634 12772 11764 11956 11646 11750
+1989 11485 11198 12265 11704 12419 13259 13945 13839 12387 12546 12038 11977
+1990 12336 11793 12877 11923 13306 13988 14002 14336 12867 12721 12449 12686
+1991 12810 12015 12888 12431 13499 13014 14296 14125 12817 12862 12449 12489
+1992 12621 12380 13023 12302 13339 13825 14428 14151 13355 13094 12656 12435
+1993 13287 12434 13209 12817 13746 14259 14590 14354 13254 13464 13302 13456
+1994 13171 12517 13489 12509 13785 13921 14603 14749 13540 13457 13243 13590
+1995 13487 12776 13812 13032 14268 14473 15359 14457                        </code></pre>
+</div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-10-1.png" width="960" class="r-stretch"></section>
+<section class="slide level2">
+
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-11-1.png" width="960" class="r-stretch"></section></section>
+<section>
+<section id="statistical-properties" class="title-slide slide level1 center">
+<h1>Statistical Properties</h1>
+
+</section>
+<section id="mean-function" class="slide level2">
+<h2>Mean function</h2>
+<p>Let <span class="math inline">\({X_1, X_2, ...}\)</span> be a sequence of time index random variables.</p>
+<p>The <strong>mean function</strong> of <span class="math inline">\({X_t}\)</span> is</p>
+<p><span class="math display">\[\mu_X(t)=E(X_t).\]</span></p>
+</section>
+<section id="covariance-function" class="slide level2">
+<h2>Covariance function</h2>
+<p>The <strong>covariance function</strong> of <span class="math inline">\({X_t}\)</span> is</p>
+<p><span class="math display">\[\gamma_X(r, s)=Cov(X_r, X_s)=E[(X_r-\mu_X(r))(X_s-\mu_X(s))]\]</span></p>
+<p>for all integers <span class="math inline">\((r)\)</span> and <span class="math inline">\((s)\)</span>.</p>
+<p>The covariance function of <span class="math inline">\({X_t}\)</span> at lag <span class="math inline">\((h)\)</span> is defined by <span class="math display">\[\gamma_X(h):=\gamma_X(h, 0)=\gamma(t+h, t)=Cov(X_{t+h}, X_t).\]</span></p>
+</section>
+<section id="autocovariance-function" class="slide level2">
+<h2>Autocovariance function</h2>
+<p>The auto covariance function of <span class="math inline">\({X_t}\)</span> at lag <span class="math inline">\((h)\)</span> is</p>
+<p><span class="math display">\[\gamma_X(h)=Cov(X_{t+h}, X_t).\]</span> <strong>Autocorrelation function</strong></p>
+<p>The autocorrelation function of <span class="math inline">\({X_t}\)</span> at lag <span class="math inline">\((h)\)</span> is</p>
+<p><span class="math display">\[\rho_X(h)=\frac{\gamma_X(h)}{\gamma_X(0)}=Cor(X_{t+h}, X_t).\]</span></p>
+</section>
+<section id="weekly-stationary" class="slide level2">
+<h2>Weekly stationary</h2>
+<p>A time series <span class="math inline">\({X_t}\)</span> is called weekly stationary if</p>
+<ul>
+<li><p><span class="math inline">\(\mu_X(t)\)</span> is independent of <span class="math inline">\(t\)</span>.</p></li>
+<li><p><span class="math inline">\(\gamma_X(t+h, t)\)</span> is independent of <span class="math inline">\((t)\)</span> for each <span class="math inline">\((h)\)</span>.</p></li>
+</ul>
+<p>In other words the statistical properties of the time series (mean, variance, autocorrelation, etc.) do not depend on the time at which the series is observed, that is no trend or seasonality. However, a time series with cyclic behaviour (but with no trend or seasonality) is stationary.</p>
+</section>
+<section id="strict-stationarity-of-a-time-series" class="slide level2">
+<h2>Strict stationarity of a time series</h2>
+<p>A time series <span class="math inline">\(\{X_t\}\)</span> is called weekly stationary if the random vector <span class="math inline">\([X_1, X_2..., X_n]\)</span> and <span class="math inline">\([X_{1+h}, X_{2+h}..., X_{n+h}]\)</span> have the same joint distribution for all integers <span class="math inline">\((h)\)</span> and <span class="math inline">\((n &gt; 0)\)</span>.</p>
+</section></section>
+<section>
+<section id="simple-time-series-models" class="title-slide slide level1 center">
+<h1>Simple time series models</h1>
+
+</section>
+<section id="iid-noise" class="slide level2">
+<h2>1. iid noise</h2>
+<ol type="1">
+<li><p>no trend or seasonal component</p></li>
+<li><p>observations are independent and identically distributed (iid) random variables with zero mean.</p></li>
+<li><p>Notation: <span class="math inline">\({X_t} \sim IID(0, \sigma^2)\)</span></p></li>
+<li><p>plays an important role as a building block for more complicated time series.</p></li>
+</ol>
+</section>
+<section id="section" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a></a><span class="im">import</span> numpy</span>
+<span id="cb2-2"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-3"><a></a></span>
+<span id="cb2-4"><a></a>mean <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb2-5"><a></a>std <span class="op">=</span> <span class="dv">1</span> </span>
+<span id="cb2-6"><a></a>num_samples <span class="op">=</span> <span class="dv">1000</span></span>
+<span id="cb2-7"><a></a>samples <span class="op">=</span> numpy.random.normal(mean, std, size<span class="op">=</span>num_samples)</span>
+<span id="cb2-8"><a></a>samples</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>array([ 5.43753744e-01,  1.34484819e+00, -1.05394712e+00, -1.52858294e+00,
+       -1.74649527e+00,  1.80059749e-01,  3.26800235e-01, -6.61862852e-01,
+       -6.65566672e-01,  1.06027947e+00,  1.05611929e+00, -1.58158007e-01,
+       -4.45800255e-01,  3.63759340e-01, -7.71578534e-01,  4.28568558e-01,
+        2.20408986e+00,  3.13756210e-01, -1.80641742e+00,  1.04228285e+00,
+       -3.62560391e-01,  7.43919223e-01,  1.97676889e-01,  8.45836821e-01,
+       -6.50690634e-01,  6.83812138e-01, -1.49922990e+00,  3.00192894e+00,
+        5.07125207e-01, -4.84196645e-01,  3.83726614e-01,  1.43103668e+00,
+        2.73967483e-01,  9.92394909e-01,  1.37117774e+00,  5.51758158e-01,
+        1.37497610e+00,  6.78895612e-01,  1.89125100e+00,  1.37270415e-01,
+       -4.14162430e-01,  1.53650381e+00,  6.60463988e-02,  8.84487726e-01,
+        4.79819149e-01,  1.93167895e-01, -1.03817834e+00, -3.11322241e-02,
+        1.77215976e+00, -8.65087213e-01,  2.64484419e-02,  8.44203237e-01,
+        1.01109795e+00,  1.47214643e+00, -2.59020362e-01, -7.15799334e-01,
+       -1.13992485e+00,  8.35656872e-01, -1.63431594e+00, -4.53772605e-01,
+        1.49669663e+00,  2.56349199e-03,  1.72165518e-01,  4.83971996e-01,
+        9.83443259e-01, -8.42179044e-01, -9.57905500e-01,  1.64500293e+00,
+       -1.71001053e+00,  9.48098568e-01, -1.95679253e-01,  2.59290235e-02,
+        2.33392190e-02,  1.26823925e+00, -4.27203649e-02,  1.21137359e+00,
+       -6.14855101e-01, -5.01991347e-02, -1.11144400e+00,  2.73794006e-01,
+        2.90591930e-01,  1.68861137e+00, -1.12911589e+00, -1.72018997e-01,
+       -3.69276175e-01, -2.08321611e-01,  6.92788062e-01,  8.15407902e-01,
+       -1.75958643e+00,  1.42395995e+00, -5.34208499e-01, -1.48561393e-01,
+       -4.35346185e-01,  1.72866906e+00, -5.11317367e-01,  2.42475362e-01,
+        1.54818076e-01,  4.19414646e-01, -8.29392973e-01,  8.32564649e-02,
+       -1.88439891e-01, -5.85664870e-01, -1.09502450e-01,  1.16527461e-02,
+       -6.64532457e-01,  4.60072585e-01,  1.13468269e+00,  1.43897159e+00,
+       -8.55164379e-01,  1.00448793e+00, -2.33033018e-01,  1.77237510e+00,
+        9.96466712e-01, -1.21815747e+00, -8.52162685e-01, -3.35650499e-01,
+       -2.72525766e-01, -1.98613746e+00,  7.99961948e-01,  4.29997094e-01,
+        1.12835020e+00,  9.04477430e-01,  1.55220055e+00, -7.60329892e-01,
+       -5.05401539e-01, -3.24602631e-01, -4.58592055e-02,  6.36482150e-01,
+        7.35661950e-01,  1.55459808e+00,  2.52520305e-01,  1.44872719e-01,
+       -3.87166461e-01, -2.49233034e-01,  8.36155521e-01,  1.44402574e+00,
+       -1.31135451e+00,  8.57364158e-01,  1.57509229e-01, -1.84399014e+00,
+        1.95076038e+00, -3.53588221e-01, -8.23457794e-01,  1.10527173e-01,
+       -1.22526805e-01, -8.79293816e-01,  2.50893374e-01, -1.38162375e+00,
+       -1.06884760e+00, -1.07648711e+00, -2.79124824e-01, -8.48655143e-01,
+       -4.57723857e-01, -3.34373060e-01, -8.58157088e-01,  3.46394194e-01,
+        5.23688837e-01, -1.01630798e+00, -7.00151537e-01,  1.47351708e+00,
+       -5.09304622e-01,  3.25393589e-01, -9.56641354e-01,  6.22916324e-01,
+        1.45185532e+00, -1.36504145e+00, -3.98436220e-01, -1.31143297e-01,
+       -5.98170015e-01, -7.04241181e-01, -1.44768087e-01,  1.09059462e-01,
+       -8.45696571e-01, -3.76083424e-01,  6.78847716e-01, -1.23781484e+00,
+       -1.70344861e-01,  1.45585148e-01,  9.32680206e-01,  1.40365800e+00,
+       -6.64303634e-01, -4.95406554e-01,  1.70868175e+00, -1.32140432e+00,
+       -8.69810462e-01,  1.53172543e-01,  3.92909780e-01,  1.56388944e-01,
+       -5.71409735e-01, -1.06566962e+00,  1.69274395e+00, -2.23503520e-01,
+        5.61702245e-01,  1.10784255e+00,  3.09717617e-01, -9.35457985e-01,
+       -1.14326166e+00,  6.91408445e-01, -8.25008740e-01,  1.30876158e+00,
+       -4.87325957e-01,  1.02051223e+00,  9.32263130e-01, -9.17727804e-01,
+       -4.50556420e-01, -1.19383273e+00,  1.41495718e+00, -5.46732036e-01,
+        2.69154313e-01,  5.20277512e-01, -8.44999930e-01,  3.98850206e-01,
+       -1.59843434e-01, -2.10545931e-01,  1.61955786e-01, -1.04074867e+00,
+        1.58087526e-01,  2.88011971e+00, -4.68351998e-01, -7.82164757e-01,
+        5.60752681e-02, -1.12469265e+00, -1.35268156e+00,  1.03504970e+00,
+        6.94937147e-01,  7.46827679e-01, -2.58142488e-01, -1.70294030e+00,
+       -1.59769344e+00, -9.44032105e-01, -6.88100130e-01,  7.65357736e-01,
+        1.90499125e+00, -7.24207682e-01, -2.70114004e+00,  4.00433434e-01,
+        1.41516235e+00,  1.04995042e+00,  1.24790647e+00, -2.22308609e+00,
+        6.98964087e-01, -9.10588115e-01, -6.87430684e-01, -1.00895824e-01,
+       -7.56560757e-01,  2.78780325e-01,  1.68535114e-01, -1.70507569e+00,
+        2.64359956e-01, -9.48155309e-01, -4.73919215e-02,  2.53040107e-02,
+       -8.56165221e-01, -5.92028485e-02, -4.98642673e-01,  6.70818936e-01,
+       -7.40964994e-01, -1.07476907e+00,  7.39770502e-01, -2.71512663e-01,
+        1.72527806e-01,  2.05533601e+00, -2.10230347e-01, -3.44849220e-02,
+       -4.55333056e-02, -1.49393204e+00, -3.60096659e-01,  1.76876894e-01,
+        1.44178330e+00,  2.29436640e-01, -6.98672866e-01,  1.15816434e-01,
+        3.63381701e-01,  7.77611990e-01, -9.19191560e-01, -1.20155532e-01,
+       -1.23685932e+00,  2.51363795e-01, -5.85806735e-02, -3.58581956e-01,
+        1.64062799e+00, -5.19372027e-01,  3.05048472e-01, -4.40436119e-01,
+        7.31107018e-01,  2.17591847e+00,  3.48322040e-01,  7.58069255e-01,
+        3.45356931e-02,  8.12517792e-02,  4.92648844e-01, -1.17852690e+00,
+       -8.65515427e-02, -4.38627754e-02, -8.45505978e-01, -1.02319498e+00,
+        6.78204751e-01, -1.10145133e+00,  3.86611345e-01,  8.65374629e-01,
+        1.74454344e+00,  3.40853597e-01, -7.00906509e-01,  1.15876796e+00,
+        1.72543507e-01,  8.68042555e-01, -4.93153957e-01,  1.67186747e-01,
+       -1.74091708e-01, -1.10981837e+00, -6.39910553e-02,  7.55093850e-01,
+        9.84344128e-01,  1.17720970e+00,  7.91984154e-01,  6.23454441e-01,
+       -8.89075555e-01, -1.81553104e+00,  4.41533997e-01, -1.20371867e+00,
+        9.68377559e-01,  9.61390658e-01, -9.82525859e-01,  3.06584083e-02,
+        1.84364888e+00, -1.28314313e+00,  1.02768881e+00, -2.67759350e-01,
+       -5.25851275e-02, -9.28260412e-01,  1.15051400e+00,  4.28949102e-01,
+        1.41831076e+00, -9.37167332e-01, -1.47996392e+00, -7.98396293e-02,
+       -1.02407705e+00, -1.62545506e+00, -1.42416998e+00, -1.69551940e+00,
+        1.55304987e-01, -1.38018952e+00,  3.40147475e-02, -1.16005926e+00,
+        1.12028122e+00,  4.18904739e-01,  8.61974204e-01, -3.58790474e+00,
+       -6.01657123e-01,  3.68582411e-01, -1.81517491e+00,  3.20801920e-01,
+        5.70435054e-01,  2.17884048e+00, -2.66278582e+00,  1.61344843e-01,
+       -7.69160490e-01,  4.49905904e-01, -2.20286888e-01, -1.42412241e+00,
+       -2.58583127e+00, -5.36543139e-01, -1.07920364e+00, -1.42907171e+00,
+        7.34311382e-01, -1.90331744e-01, -4.00924218e-01, -1.40909318e+00,
+       -3.18519483e-01,  9.92320253e-02, -1.83060194e-01, -1.23242659e-01,
+       -7.95732176e-01,  2.94214132e-01, -1.57879293e+00, -2.46755007e+00,
+       -5.97310318e-01, -2.41406316e-01,  1.89442250e+00,  2.04208251e+00,
+       -1.72628471e+00,  1.35390073e-01, -1.11452893e-01,  1.65944024e+00,
+        1.15487058e+00, -1.51459267e+00,  9.78314588e-01, -5.75582001e-01,
+        4.54101312e-01, -4.63357891e-04, -1.40895326e+00, -4.87927731e-01,
+        2.13415156e+00, -1.11367651e+00,  1.11815035e+00,  3.36386407e+00,
+        5.06085620e-01,  1.20379204e-01, -3.10684847e-01, -1.94801439e+00,
+        9.37184307e-01,  1.90634342e-01,  1.44265681e+00, -9.24637119e-01,
+        2.80356453e-02,  1.09177539e+00,  1.82502983e+00,  6.71881166e-01,
+        9.08010306e-01, -1.95476678e-01,  4.86492589e-01, -7.56126687e-01,
+        4.09631972e-01,  1.77857539e-01, -5.93487568e-01, -2.95701383e-01,
+        1.10031810e+00, -1.50086435e+00,  1.19644484e-02, -6.09043110e-01,
+       -5.78360864e-01, -6.88891481e-02,  1.58243013e+00,  1.86966445e-01,
+       -1.04471086e+00,  1.56566433e-01, -2.16972887e+00, -7.02964967e-01,
+       -1.95033146e-02,  1.55604258e+00,  4.85815254e-01,  1.91299792e+00,
+       -1.95277379e+00,  3.39405889e-01, -1.54430105e-02,  5.57285614e-01,
+       -3.36328755e-01,  1.29245022e+00, -1.15519158e+00, -3.50086668e+00,
+       -1.25589233e+00,  2.52624045e+00, -5.33830418e-01, -9.44463885e-01,
+        1.84572861e+00,  6.83243239e-01, -5.34036850e-01, -7.81012906e-01,
+       -9.68884918e-01,  1.73110942e-01, -2.45827245e-01,  5.99010396e-01,
+       -7.14771525e-01, -1.12647638e+00,  8.04326379e-01,  4.53572915e-02,
+        2.73925937e+00,  1.13759764e+00,  5.74457993e-01, -1.41932665e+00,
+        6.02208509e-01, -1.54398605e+00, -2.45467008e-01, -4.52194183e-01,
+        9.99535173e-01, -6.13506302e-01, -1.38358717e+00,  6.91132814e-01,
+        1.22914799e+00,  1.60440375e+00, -6.89691526e-01,  7.45915927e-01,
+       -2.47819576e+00,  9.55253455e-01,  4.00209107e-01,  9.50592483e-01,
+        4.49524096e-01,  2.08726443e+00,  1.56555216e+00, -3.09714612e+00,
+       -9.12751849e-02,  6.92107658e-01, -6.50784881e-02, -1.33794668e+00,
+        1.44629809e+00, -6.24616219e-01,  8.39930225e-01, -1.55442727e-01,
+        1.13312180e-01,  1.12553681e+00, -1.60488818e-01,  2.11603647e-01,
+       -1.37131243e-01,  2.27004762e-01, -1.31197262e+00,  1.93015535e+00,
+        1.68548419e+00,  8.22449015e-01, -2.22299972e+00, -1.55871952e+00,
+        5.31115864e-01, -5.32287074e-01,  1.43645651e+00, -2.53338666e+00,
+       -1.12899105e+00,  5.70241406e-01,  2.14907902e+00, -7.50060066e-01,
+        1.37122417e+00,  2.10821128e-01,  2.53136848e-01,  1.29987296e+00,
+        8.19070597e-01,  6.07285871e-01, -1.29669046e+00, -1.09981085e-01,
+        1.44855670e+00, -1.60730286e+00,  3.36787481e-01, -8.05906831e-01,
+        1.39350505e-01,  1.43348673e+00,  1.72165962e-01,  1.03218825e+00,
+        1.84364713e+00, -7.56581327e-01,  7.52169717e-01, -1.33936665e+00,
+       -8.97291303e-01,  2.34021011e-01,  1.83317264e+00, -2.39977245e-01,
+        4.21021153e-01, -5.38139749e-01, -2.57971850e+00,  1.08955891e+00,
+       -1.94680812e-01,  6.98979968e-01,  4.38169019e-01, -7.11827128e-01,
+       -1.30921807e+00,  1.47502279e+00,  7.51124537e-01,  1.24428416e+00,
+       -1.89894987e+00,  5.68114938e-02,  1.45008608e+00,  1.08818494e+00,
+        7.05796566e-01, -4.19793663e-01, -4.33431330e-01, -8.94663273e-01,
+       -9.67309207e-01,  3.27384118e-02,  2.00691714e-01, -1.01385505e+00,
+       -6.24645704e-01, -3.96329806e-01, -2.58943388e-01, -5.85451804e-01,
+       -6.74167649e-01, -1.23146245e+00,  1.01360706e+00, -1.49899999e+00,
+        1.31413867e+00, -2.07445795e-01,  1.76153239e+00,  2.82887905e-01,
+        1.38391088e-01,  7.91095452e-01, -1.44324348e+00, -4.90350458e-02,
+       -1.19892435e+00,  1.10389286e+00,  2.15110641e-01,  7.48426370e-01,
+        1.23545353e-01,  2.52305751e-01, -7.10141478e-01, -1.08662288e+00,
+        2.45260302e-01,  1.43508222e+00,  7.67243448e-01, -6.65726251e-01,
+       -9.60501167e-01,  5.20089914e-01,  4.86162577e-01, -4.00302186e-01,
+        1.21719469e+00,  1.02391489e+00, -2.52235752e-01,  1.96581809e-02,
+       -1.48524105e+00,  8.72970300e-01,  2.57558100e-01,  6.88358904e-01,
+        1.35070497e+00, -1.80174851e-02,  1.72649104e+00, -7.64392658e-01,
+        5.51164382e-01, -1.40730861e+00,  1.00326329e+00, -4.57641735e-01,
+       -6.63070000e-01, -8.62492603e-01, -7.75754528e-01, -1.36455290e+00,
+        9.36571935e-01,  2.88202020e+00,  3.53299825e-02, -1.05975236e+00,
+        8.70410735e-01, -9.48228966e-01,  3.18942883e-01,  2.48929908e-01,
+        4.58596484e-01, -8.12038494e-01, -9.99460775e-01,  1.76261442e-01,
+       -7.12571089e-01, -1.08361525e+00, -9.13230611e-01, -8.37628803e-01,
+        2.76803025e-01,  4.28828632e-01,  1.04181559e+00,  4.14180624e-01,
+       -8.69333906e-01, -8.00910493e-01, -2.67796567e+00,  1.66895240e-01,
+       -4.56042881e-01, -6.59134559e-02,  1.31585657e+00,  9.21810956e-01,
+        1.40265590e+00, -2.80087127e-01, -6.28361258e-01,  9.80909384e-01,
+        8.41212473e-01, -2.04312971e+00, -1.23236449e+00,  1.24207975e+00,
+        2.12261592e-01, -4.03606749e-01,  5.97685829e-01, -7.38264794e-01,
+        1.36965204e+00, -9.06434571e-01, -1.00530282e-01, -1.55868849e+00,
+       -3.14966346e-01, -9.34201855e-01, -3.86748013e-01,  7.32565137e-01,
+        9.49026296e-01,  3.18842362e-02, -3.47927237e-01, -2.76843960e-01,
+        1.21583073e+00,  1.35911733e-01, -8.62651514e-01, -1.27704193e+00,
+       -1.42812294e-01, -5.04192143e-01,  3.41216491e-01,  5.79976351e-01,
+       -1.35208901e+00, -9.29939136e-01, -1.98500829e+00,  3.07813058e-02,
+        7.98109591e-01, -6.07524776e-01,  1.53963111e+00, -9.69684358e-01,
+       -1.43052209e-01,  1.15954415e+00, -3.38130937e-02,  7.70404066e-01,
+       -4.47031918e-01, -1.05931522e+00,  2.05978898e+00, -5.15817347e-01,
+        9.39017441e-01, -1.15139665e+00, -2.72347548e-01,  1.09625606e+00,
+        1.94871233e-01, -2.05624662e+00,  1.01838956e+00,  8.35329638e-01,
+        7.84567254e-01, -5.01975729e-01, -8.85152150e-01,  3.29414765e-01,
+        1.47555955e+00,  1.97938411e-01, -1.15060832e+00, -2.33571479e+00,
+        6.51344294e-01, -1.91047331e-01, -9.05685867e-01,  4.53512147e-01,
+       -5.21246050e-01, -1.83706522e-02, -7.07404300e-01, -7.02779971e-01,
+       -3.83241903e-01, -1.20575903e-01,  2.55310183e-01,  6.64528304e-01,
+        1.28365820e-01, -7.71421754e-01, -1.14992922e+00,  5.23955008e-01,
+        5.29411885e-01, -5.03434441e-02,  4.29613658e-01, -6.99373761e-01,
+        4.24327418e-01,  2.60080793e-01, -6.46194202e-02,  8.46885676e-02,
+        1.00230063e+00, -2.78493191e-01,  1.86053685e+00, -9.31408111e-01,
+        7.47049577e-01, -9.26488329e-01, -1.90694956e+00, -1.89673172e-01,
+        2.65255900e-01,  3.74332052e-01,  1.19926825e+00, -2.43130058e+00,
+        1.41745093e+00, -3.71185136e-01, -3.90715824e-01, -3.26058732e+00,
+       -9.80147204e-01, -1.96787923e-01,  1.21842420e+00,  1.73314933e+00,
+       -1.35176313e-01, -3.41957506e-01, -5.40954055e-01,  6.75632783e-02,
+       -2.19999743e-01, -8.62039554e-01,  3.63939576e-01, -4.96981007e-01,
+       -5.90082936e-02, -8.73023320e-01,  1.04885577e+00, -1.18529385e+00,
+       -1.21736655e+00, -6.53505464e-01,  1.85110286e+00,  6.42623475e-01,
+       -6.07767524e-02, -7.19179286e-01,  1.09199295e+00, -1.11551476e+00,
+       -4.20620429e-01,  1.36148744e+00, -2.19810596e-01, -1.68509993e-01,
+        1.93305046e+00, -8.12595271e-01,  6.19404483e-01, -9.18152677e-02,
+       -7.33970782e-01, -3.55031278e-01,  2.80052402e-02, -1.65210115e+00,
+        6.69432121e-01,  1.10401423e+00, -1.47095972e-01,  2.81698673e-01,
+       -1.15225698e+00,  2.08173284e-01,  3.61825122e-01,  1.54722947e+00,
+       -7.02702785e-01, -7.21056665e-01, -1.39808004e+00,  1.71585970e-01,
+        5.34793263e-02,  8.80193123e-01, -4.54200224e-01, -2.10814157e+00,
+       -1.62397903e+00, -1.52284208e-01,  3.82163964e-01,  5.29300532e-01,
+       -1.79464399e+00,  4.17758177e-01, -1.21834579e+00,  1.53932849e-01,
+        7.85992697e-01,  1.68062046e-01, -1.31435705e+00, -7.69163775e-01,
+       -1.88011910e+00, -5.04343270e-02,  1.41576514e+00,  8.89460943e-01,
+        1.36031176e+00,  9.48207912e-01, -1.34091625e+00,  1.48488906e+00,
+       -2.41168753e+00,  6.19270989e-01, -3.11599719e-02, -1.37235577e+00,
+       -2.62563771e+00, -4.01009744e-01,  7.71624938e-01, -4.10123392e-01,
+        3.35667346e-01,  9.28049551e-01,  9.41682082e-02, -4.70779785e-01,
+        9.35719860e-01,  2.30057692e-01,  1.49730414e+00, -2.15512075e-01,
+       -1.16780170e+00,  3.20848602e-01, -1.04619122e+00, -8.73661609e-01,
+       -1.64042483e-02, -9.63944351e-01,  3.69609831e-01,  4.93312046e-01,
+        2.36081752e-01,  1.29220942e+00,  9.39131122e-03,  1.07623002e+00,
+        1.76303707e+00,  4.17744353e-03,  7.12874294e-01,  5.25848301e-01,
+       -3.61091661e-01, -4.09183822e-01, -5.64516399e-01,  1.44006804e+00,
+       -1.63075372e+00, -1.20937602e+00,  5.32920972e-01,  2.25885935e-01,
+       -2.26041538e-01, -5.89979239e-01, -1.57250963e+00,  1.00291126e+00,
+        1.40805782e+00, -1.69348560e+00, -2.49054268e+00, -7.09009524e-01,
+        2.24015510e+00, -1.39253698e+00,  1.96653287e+00, -1.22936610e+00,
+       -4.79016500e-01, -1.80704461e+00, -2.33118121e-01,  1.11329702e+00,
+        5.90982937e-02, -9.66519782e-01,  3.21980731e-01, -2.86880964e+00,
+        6.56879621e-01,  1.53825696e-02, -6.40786269e-02, -1.69119751e+00,
+       -2.97968740e-02, -1.11662288e+00,  7.91062220e-02,  5.41441395e-01,
+        3.10267247e-01, -1.06817592e+00, -9.18592728e-01, -6.02744064e-01,
+       -1.29659330e+00, -7.85203239e-01,  1.71269727e-01,  1.40739923e+00,
+        2.94623509e-01,  4.25932359e-01,  1.01571557e+00,  1.02512343e-02,
+       -3.83265699e-01, -1.73795471e+00,  9.87286550e-01,  7.79138390e-01,
+        1.48531087e+00, -1.56393921e+00,  9.94629164e-01, -6.47363421e-01,
+        1.89580157e+00, -1.10264426e-01,  2.08775978e-01, -7.18848444e-01,
+       -5.89515930e-01,  1.15936025e+00, -8.42282321e-01,  4.04167103e-01,
+       -1.18443472e+00,  8.15404478e-02, -2.59519826e-01, -1.31847965e+00,
+       -5.59119474e-01,  1.33346199e-01, -2.47657988e-01,  1.35664281e+00,
+        7.33126501e-01,  3.33429961e-01, -1.44334626e+00, -1.10521821e+00,
+        6.60900748e-01,  5.91806111e-01, -6.63091511e-01, -2.06507735e-02,
+       -1.31548595e+00,  1.35653473e+00,  1.14376190e+00,  6.53219471e-01,
+        6.69745650e-01, -1.00706479e+00,  8.95123051e-01, -2.34167007e+00,
+       -1.28783896e+00, -3.66179716e-01,  1.36783838e-01,  2.22984306e+00,
+        1.63856304e+00, -7.24282003e-01,  2.72599979e-01,  5.40481907e-01,
+        2.63450511e-01, -4.29931399e-01, -1.05603042e+00, -1.41763428e+00,
+       -6.07074395e-01, -2.01368857e+00, -1.12219446e+00,  9.56796956e-01,
+       -3.80375422e-01, -1.62185782e+00,  3.33444235e-01, -4.86490055e-01,
+       -1.77512794e-01,  1.71945323e+00,  5.28318973e-01,  2.00026831e+00,
+        2.93422634e-01,  1.07569820e+00, -1.39406579e+00,  1.27924122e+00,
+        1.61183187e+00,  7.56913868e-01, -1.74537166e+00,  4.64509948e-01,
+        5.55751784e-01, -1.97140993e-01,  2.41881964e-01, -8.65615186e-03,
+        9.67782225e-01, -1.43281731e+00, -9.24822401e-01,  4.22676312e-01,
+        6.85235165e-01,  1.36712778e+00, -1.83660790e+00, -1.31662908e+00,
+        5.77385680e-01,  1.26683673e+00, -6.07511080e-01,  9.19782305e-01,
+       -1.41559422e+00,  4.06171929e-01,  5.55904903e-01, -6.86523185e-01,
+        7.51297525e-01, -4.69893616e-01, -2.52121672e-01, -4.54875471e-01,
+        2.64262689e-01,  4.95681592e-01, -7.70844187e-01,  1.69850330e+00,
+       -1.08491282e+00, -5.52770373e-01, -1.01872416e+00, -1.30405857e+00,
+       -5.32206597e-01, -8.60007467e-01,  6.40543979e-01,  9.77574159e-01])</code></pre>
+</div>
+</div>
+</section>
+<section id="section-1" class="slide level2">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-13-1.png" width="960" class="r-stretch"></section>
+<section id="white-noise" class="slide level2">
+<h2>2. White noise</h2>
+<p>If <span class="math inline">\({X_t}\)</span> is a sequence of uncorrelated random variables, each with zero mean and variance <span class="math inline">\(\sigma^2\)</span>, then such a sequence is referred to as <strong>white noise</strong>.</p>
+<p>Note: Every <span class="math inline">\((IID(0, \sigma^2)\)</span> sequence is <span class="math inline">\((WN(0, \sigma^2)\)</span> but not conversely.</p>
+</section>
+<section id="section-2" class="slide level2">
+<h2></h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a></a><span class="im">import</span> numpy</span>
+<span id="cb4-2"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb4-3"><a></a></span>
+<span id="cb4-4"><a></a>mean <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb4-5"><a></a>std <span class="op">=</span> <span class="dv">1</span> </span>
+<span id="cb4-6"><a></a>num_samples <span class="op">=</span> <span class="dv">100</span></span>
+<span id="cb4-7"><a></a>samples <span class="op">=</span> numpy.random.normal(mean, std, size<span class="op">=</span>num_samples)</span>
+<span id="cb4-8"><a></a>plt.plot(samples)</span>
+<span id="cb4-9"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-14-3.png" width="960" class="r-stretch"></section>
+<section id="acf" class="slide level2">
+<h2>ACF</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-15-5.png" width="960" class="r-stretch"><p>White noise implies stationarity. Stationarity does not imply white noise.</p>
+</section>
+<section id="random-walk" class="slide level2">
+<h2>3. Random walk</h2>
+<p>A random walk process is obtained by cumulatively summing iid random variables. If <span class="math inline">\({S_t, t=0, 1, 2, ...}\)</span> is a random walk process, then <span class="math inline">\(S_0 =0\)</span></p>
+<p><span class="math inline">\(S_1=0+X_1\)</span></p>
+<p><span class="math inline">\(S_2=0+X_1+X_2\)</span></p>
+<p><span class="math inline">\(...\)</span></p>
+<p><span class="math inline">\(S_t=X_1+X_2+...+X_t.\)</span></p>
+</section>
+<section id="question" class="slide level2">
+<h2>Question</h2>
+<p>Is <span class="math inline">\({S_t, t=0, 1, 2, ...}\)</span> a weak stationary process?</p>
+</section>
+<section id="identifying-non-stationarity-in-the-mean" class="slide level2">
+<h2>Identifying non-stationarity in the mean</h2>
+<ul>
+<li><p>Using time series plot</p></li>
+<li><p>ACF plot</p>
+<ul>
+<li><p>ACF of stationary time series will drop to relatively quickly.</p></li>
+<li><p>The ACF of non-stationary series decreases slowly.</p></li>
+<li><p>For non-stationary series, the ACF at lag 1 is often large and positive.</p></li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="elimination-of-trend-and-seasonality-by-differencing" class="title-slide slide level1 center">
+<h1>Elimination of Trend and Seasonality by Differencing</h1>
+<ul>
+<li>Differencing helps to stabilize the mean.</li>
+</ul>
+</section>
+<section id="backshift-notation" class="slide level2">
+<h2>Backshift notation:</h2>
+<p><span class="math display">\[BX_t=X_{t-1}\]</span></p>
+</section>
+<section id="ordinary-differencing" class="slide level2">
+<h2>Ordinary differencing</h2>
+<p>The first-order differencing can be defined as</p>
+<p><span class="math display">\[\nabla X_t = X_t-X_{t-1}=X_t-BX_t=(1-B)X_t\]</span> where <span class="math inline">\(\nabla=1-B\)</span>.</p>
+<p>The second-order differencing</p>
+<p><span class="math display">\[\nabla^2X_t=\nabla(\nabla X_t)=\nabla(X_t-X_{t-1})=\nabla X_t - \nabla X_{t-1}\]</span></p>
+<p><span class="math display">\[\nabla X_t - \nabla X_{t-1}=(X_t-X_{t-1})-(X_{t-1}-X_{t-2})\]</span> - In practice, we seldom need to go beyond second order differencing.</p>
+</section>
+<section id="seasonal-differencing" class="slide level2">
+<h2>Seasonal differencing</h2>
+<ul>
+<li>differencing between an observation and the corresponding observation from the previous year.</li>
+</ul>
+<p><span class="math display">\[\nabla_mX_t=X_t-X_{t-m}=(1-B^m)X_t\]</span> where <span class="math inline">\((m)\)</span> is the number of seasons. For monthly, <span class="math inline">\((m=12)\)</span>, for quarterly <span class="math inline">\((m=4)\)</span>.</p>
+<p>For monthly series</p>
+<p><span class="math display">\[\nabla_{12}X_t=X_t-X_{t-12}\]</span></p>
+</section>
+<section id="section-3" class="slide level2">
+<h2></h2>
+<p>Twice-differenced series</p>
+<p><span class="math display">\[\nabla^2_{12}X_t=\nabla_{12}X_t-\nabla_{12}X_{t-1}\]</span> <span class="math display">\[\nabla_{12}X_t-\nabla_{12}X_{t-1}=(X_t-X_{t-12})-(X_{t-1}-X_{t-13})\]</span> If seasonality is strong, the seasonal differencing should be done first.</p>
+</section>
+<section id="non-stationary-time-series" class="slide level2">
+<h2>Non-Stationary Time Series</h2>
+<p><strong>1. Deterministic trend</strong></p>
+<p><span class="math display">\[Y_t  = f(t) + \epsilon_t\]</span></p>
+<p>where <span class="math inline">\(\epsilon_t \sim iid(0, \sigma^2)\)</span>, <span class="math inline">\(t = 1, 2, ...T\)</span></p>
+<p>Mean of the process is time dependent, but the variance of the process is constant.</p>
+<p>A trend is deterministic if it is a nonrandom function of time.</p>
+</section>
+<section id="non-stationary-time-series-cont." class="slide level2">
+<h2>Non-Stationary Time Series (cont.)</h2>
+<p><strong>2. Random walk</strong></p>
+<p><span class="math display">\[Y_t = Y_{t-1} + \epsilon_t\]</span></p>
+<ul>
+<li><p>Random walk has a stochastic trend.</p></li>
+<li><p>Model behind naive method.</p></li>
+</ul>
+<p>A trend is said to be stochastic if it is a random function of time.</p>
+</section>
+<section id="non-stationary-time-series-cont.-1" class="slide level2">
+<h2>Non-Stationary Time Series (cont.)</h2>
+<p><strong>3. Random walk with drift</strong></p>
+<p><span class="math display">\[Y_t = \alpha+  Y_{t-1} + \epsilon_t\]</span></p>
+<ul>
+<li><p>Random walk with drift has a stochastic trend and a deterministic trend.</p></li>
+<li><p>Model behind drift method.</p></li>
+</ul>
+</section>
+<section id="random-walk-1" class="slide level2">
+<h2>Random walk</h2>
+<p><span class="math display">\[
+\begin{aligned}
+  Y_t &amp;= Y_{t-1} + \epsilon_t \\
+     Y_1    &amp;= Y_0 + \epsilon_1 \\
+         Y_2 &amp;=  Y_1 + \epsilon_2=Y_0 + \epsilon_1 + \epsilon_2\\
+          Y_3 &amp;=  Y_2 + \epsilon_3=Y_0 + \epsilon_1 + \epsilon_2 +\epsilon_3\\
+          .   \\
+          Y_t &amp;=Y_{t-1} + \epsilon_t=Y_0 + \epsilon_1 + \epsilon_2 + \epsilon_3 +...+ \epsilon_t = Y_0 + \sum_{i=1}^{t} \epsilon_t
+\end{aligned}
+\]</span></p>
+<p>Mean: <span class="math inline">\(E(Y_t) = Y_0\)</span>.</p>
+<p>Variance: <span class="math inline">\(Var(Y_t)=t \sigma^2\)</span>.</p>
+</section>
+<section id="random-walk-with-drift" class="slide level2">
+<h2>Random walk with drift</h2>
+<p><span class="math display">\[
+\begin{aligned}
+  Y_t &amp;= Y_{t-1} + \epsilon_t \\
+     Y_1    &amp;= \alpha+Y_0 + \epsilon_1 \\
+         Y_2 &amp;= \alpha+ Y_1 + \epsilon_2=2 \alpha+Y_0 + \epsilon_1 + \epsilon_2\\
+          Y_3 &amp;= \alpha+ Y_2 + \epsilon_3= 3 \alpha+ Y_0 + \epsilon_1 + \epsilon_2 +\epsilon_3\\
+          .   \\
+          Y_t &amp;= \alpha+Y_{t-1} + \epsilon_t= t \alpha+ Y_0 + \epsilon_1 + \epsilon_2 + \epsilon_3 +...+ \epsilon_t \\
+          Y_t &amp;= t \alpha + Y_0 + \sum_{i=1}^{t} \epsilon_t
+\end{aligned}
+\]</span></p>
+</section>
+<section id="random-walk-with-drift-cont." class="slide level2">
+<h2>Random walk with drift (cont.)</h2>
+<p>It has a <em>deterministic trend</em> <span class="math inline">\((Y_0 + t \alpha)\)</span> and a <em>stochastic trend</em> <span class="math inline">\(\sum_{i=1}^{t} \epsilon_t\)</span>.</p>
+<p>Mean: <span class="math inline">\(E(Y_t) = Y_0 + t\alpha\)</span></p>
+<p>Variance: <span class="math inline">\(Var(Y_t) = t\sigma^2\)</span>.</p>
+<p>There is a trend in both mean and variance.</p>
+</section>
+<section id="common-trend-removal-de-trending-procedures" class="slide level2">
+<h2>Common trend removal (de-trending) procedures</h2>
+<ol type="1">
+<li><p>Deterministic trend: Time-trend regression</p>
+<p>The trend can be removed by fitting a deterministic polynomial time trend. The residual series after removing the trend will give us the de-trended series.</p></li>
+<li><p>Stochastic trend: Differencing</p>
+<p>The process is also known as a <strong>Difference-stationary process</strong>.</p></li>
+</ol>
+</section></section>
+<section>
+<section id="notation-id" class="title-slide slide level1 center">
+<h1>Notation: I(d)</h1>
+<p>Integrated to order <span class="math inline">\(d\)</span>: Series can be made stationary by differencing <span class="math inline">\(d\)</span> times.</p>
+<ul>
+<li>Known as <span class="math inline">\(I(d)\)</span> process.</li>
+</ul>
+<p><strong>Question: </strong> Show that random walk process is an <span class="math inline">\(I(1)\)</span> process.</p>
+<p>The random walk process is called a unit root process. (If one of the roots turns out to be one, then the process is called unit root process.)</p>
+</section>
+<section id="random-walk-2" class="slide level2">
+<h2>Random walk</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb5-2"><a></a>rw <span class="op">=</span> np.cumsum(samples)</span>
+<span id="cb5-3"><a></a>plt.plot(rw)</span>
+<span id="cb5-4"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-16-7.png" width="960" class="r-stretch"></section>
+<section id="random-walk---acf" class="slide level2">
+<h2>Random walk - ACF</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-17-9.png" width="960" class="r-stretch"></section>
+<section id="difference-series" class="slide level2">
+<h2>Difference series</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>      Values     Lag 1     Lag 2
+0  -0.947646       NaN       NaN
+1  -2.682392 -1.734746       NaN
+2  -3.148751 -0.466359  1.268387
+3  -2.827525  0.321226  0.787585
+4  -2.544523  0.283002 -0.038223
+..       ...       ...       ...
+95 -7.438711 -1.234723 -1.869760
+96 -7.009771  0.428940  1.663663
+97 -6.348209  0.661562  0.232622
+98 -6.580049 -0.231839 -0.893401
+99 -7.218645 -0.638597 -0.406757
+
+[100 rows x 3 columns]</code></pre>
+</div>
+</div>
+</section>
+<section id="plot-lag-1-series" class="slide level2">
+<h2>Plot Lag 1 series</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-19-11.png" width="960" class="r-stretch"></section>
+<section id="acf-lag-1-series" class="slide level2">
+<h2>ACF Lag 1 series</h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-20-13.png" width="960" class="r-stretch"></section>
+<section id="example-2-1" class="slide level2">
+<h2>Example 2</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np, pandas <span class="im">as</span> pd</span>
+<span id="cb7-2"><a></a><span class="im">from</span> statsmodels.graphics.tsaplots <span class="im">import</span> plot_acf, plot_pacf</span>
+<span id="cb7-3"><a></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb7-4"><a></a>plt.rcParams.update({<span class="st">'figure.figsize'</span>:(<span class="dv">9</span>,<span class="dv">7</span>), <span class="st">'figure.dpi'</span>:<span class="dv">120</span>})</span>
+<span id="cb7-5"><a></a></span>
+<span id="cb7-6"><a></a><span class="co"># Import data</span></span>
+<span id="cb7-7"><a></a>df <span class="op">=</span> pd.read_csv(<span class="st">'wwwusage.csv'</span>, names<span class="op">=</span>[<span class="st">'value'</span>], header<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb7-8"><a></a></span>
+<span id="cb7-9"><a></a><span class="co"># Original Series</span></span>
+<span id="cb7-10"><a></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">2</span>, <span class="dv">2</span>, sharex<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb7-11"><a></a>axes[<span class="dv">0</span>, <span class="dv">0</span>].plot(df.value)<span class="op">;</span> axes[<span class="dv">0</span>, <span class="dv">0</span>].set_title(<span class="st">'Original Series'</span>)</span>
+<span id="cb7-12"><a></a>plot_acf(df.value, ax<span class="op">=</span>axes[<span class="dv">0</span>, <span class="dv">1</span>], lags<span class="op">=</span>np.arange(<span class="bu">len</span>(df)))</span>
+<span id="cb7-13"><a></a></span>
+<span id="cb7-14"><a></a><span class="co"># 1st Differencing</span></span>
+<span id="cb7-15"><a></a>axes[<span class="dv">1</span>, <span class="dv">0</span>].plot(df.value.diff())<span class="op">;</span> axes[<span class="dv">1</span>, <span class="dv">0</span>].set_title(<span class="st">'1st Order Differencing'</span>)</span>
+<span id="cb7-16"><a></a>plot_acf(df.value.diff().dropna(), ax<span class="op">=</span>axes[<span class="dv">1</span>, <span class="dv">1</span>], lags<span class="op">=</span>np.arange(<span class="bu">len</span>(df) <span class="op">-</span> <span class="dv">1</span>))</span>
+<span id="cb7-17"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="section-4" class="slide level2">
+<h2></h2>
+
+<img data-src="index_files/figure-revealjs/unnamed-chunk-22-15.png" width="864" class="r-stretch"></section>
+<section id="nd-order-differencing" class="slide level2">
+<h2>2nd order differencing</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a></a>plot_acf(df.value.diff().diff().dropna())</span>
+<span id="cb8-2"><a></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-23-17.png" width="960" class="r-stretch"></section>
+<section id="variance-stabilization" class="slide level2">
+<h2>Variance stabilization</h2>
+<p>Eg:</p>
+<ul>
+<li><p>Square root: <span class="math inline">\(W_t = \sqrt{Y_t}\)</span></p></li>
+<li><p>Logarithm: <span class="math inline">\(W_t = log({Y_t})\)</span></p>
+<ul>
+<li><p>This very useful.</p></li>
+<li><p>Interpretable: Changes in a log value are <strong>relative (percent) changes on the original sclae</strong>.</p></li>
+</ul></li>
+</ul>
+</section>
+<section id="monthly-airline-passenger-numbers-1949-1960" class="slide level2">
+<h2>Monthly Airline Passenger Numbers 1949-1960</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a></a>airpassenger <span class="op">=</span> pd.read_csv(<span class="st">'AirPassengers.csv'</span>)</span>
+<span id="cb9-2"><a></a><span class="im">from</span> datetime <span class="im">import</span> datetime</span>
+<span id="cb9-3"><a></a><span class="im">import</span> plotnine</span>
+<span id="cb9-4"><a></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb9-5"><a></a>airpassenger[<span class="st">'Month'</span>]<span class="op">=</span> pd.to_datetime(airpassenger[<span class="st">'Month'</span>])</span>
+<span id="cb9-6"><a></a>ggplot(airpassenger, aes(x<span class="op">=</span><span class="st">'Month'</span>, y<span class="op">=</span><span class="st">'#Passengers'</span>))<span class="op">+</span>geom_line()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
+</div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-24-19.png" width="614" class="r-stretch"></section>
+<section id="monthly-airline-passenger-numbers-1949-1960---log" class="slide level2">
+<h2>Monthly Airline Passenger Numbers 1949-1960 - log</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb11-2"><a></a>airpassenger[<span class="st">'naturallog'</span>] <span class="op">=</span> np.log(airpassenger[<span class="st">'#Passengers'</span>]) </span>
+<span id="cb11-3"><a></a>ggplot(airpassenger, aes(x<span class="op">=</span><span class="st">'Month'</span>, y<span class="op">=</span><span class="st">'naturallog'</span>))<span class="op">+</span>geom_line()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;Figure Size: (640 x 480)&gt;</code></pre>
+</div>
+
+</div>
+<img data-src="index_files/figure-revealjs/unnamed-chunk-25-21.png" width="614" class="r-stretch"></section>
+<section id="box-cox-transformation" class="slide level2">
+<h2>Box-Cox transformation</h2>
+<p><span class="math display">\[
+  w_t=\begin{cases}
+    log(y_t), &amp; \text{if $\lambda=0$} \newline
+    (Y_t^\lambda - 1)/ \lambda, &amp; \text{otherwise}.
+  \end{cases}
+\]</span></p>
+<p>Different values of <span class="math inline">\(\lambda\)</span> gives you different transformations.</p>
+<ul>
+<li><p><span class="math inline">\(\lambda=1\)</span>: No <strong>substantive</strong> transformation</p></li>
+<li><p><span class="math inline">\(\lambda = \frac{1}{2}\)</span>: Square root plus linear transformation</p></li>
+<li><p><span class="math inline">\(\lambda=0\)</span>: Natural logarithm</p></li>
+<li><p><span class="math inline">\(\lambda = -1\)</span>: Inverse plus 1</p></li>
+</ul>
+<p>Balance the seasonal fluctuations and random variation across the series.</p>
+</section>
+<section id="box-cox-transformation-1" class="slide level2">
+<h2>Box-Cox transformation</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a></a><span class="co"># import modules</span></span>
+<span id="cb13-2"><a></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb13-3"><a></a><span class="im">from</span> scipy <span class="im">import</span> stats</span>
+<span id="cb13-4"><a></a> </span>
+<span id="cb13-5"><a></a>y2,fitted_lambda <span class="op">=</span> stats.boxcox(airpassenger[<span class="st">'#Passengers'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="box-cox-transformation-exploring-the-output" class="slide level2">
+<h2>Box-Cox transformation: Exploring the output</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a></a>fitted_lambda</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>0.14802265137037945</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource python number-lines code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a></a>y2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>array([ 6.82749005,  6.93282224,  7.16189151,  7.11461078,  6.98378687,
+        7.20826542,  7.39959794,  7.39959794,  7.22352834,  6.94993188,
+        6.67930112,  6.93282224,  6.88074148,  7.0663838 ,  7.29843847,
+        7.20826542,  7.05009066,  7.41371485,  7.69297755,  7.69297755,
+        7.53726005,  7.17744836,  6.86312389,  7.28363955,  7.35675408,
+        7.42775127,  7.791663  ,  7.6033268 ,  7.71801394,  7.791663  ,
+        8.03379957,  8.03379957,  7.86322651,  7.59025293,  7.3711186 ,
+        7.64214252,  7.70552693,  7.81574285,  7.96693012,  7.82769741,
+        7.85143867,  8.23478523,  8.35415797,  8.46833738,  8.14152446,
+        7.94424651,  7.71801394,  7.97819691,  8.00058286,  8.00058286,
+        8.41186604,  8.40233549,  8.34441554,  8.47763304,  8.66568618,
+        8.73398286,  8.42136224,  8.16254066,  7.81574285,  8.05570781,
+        8.08822445,  7.90983871,  8.40233549,  8.32482145,  8.39277032,
+        8.66568618,  8.97573698,  8.90544371,  8.62209995,  8.34441554,
+        8.0774311 ,  8.34441554,  8.46833738,  8.38317027,  8.69150146,
+        8.70857469,  8.71707079,  9.07418456,  9.41661628,  9.30252389,
+        9.05177744,  8.75078932,  8.42136224,  8.78409104,  8.83328615,
+        8.77580407,  9.08902184,  9.0592668 ,  9.0964106 ,  9.48162515,
+        9.72179099,  9.67415098,  9.35679401,  9.00640692,  8.72554012,
+        9.00640692,  9.07418456,  8.96801544,  9.36350433,  9.30936559,
+        9.35679401,  9.77445522, 10.01359054, 10.02424732,  9.66813973,
+        9.30252389,  8.9987716 ,  9.22613489,  9.25415593,  9.0964106 ,
+        9.40343224,  9.30936559,  9.41003199,  9.84886109, 10.14918625,
+       10.21968352,  9.66813973,  9.38353935,  9.03673716,  9.23316669,
+        9.390186  ,  9.26806127,  9.68014959,  9.61958794,  9.76283534,
+       10.05072014, 10.426264  , 10.4768849 , 10.00289463,  9.68613564,
+        9.40343224,  9.67415098,  9.74531682,  9.58881702,  9.75700771,
+        9.99215929, 10.05072014, 10.36531089, 10.75145254, 10.68404894,
+       10.23457308,  9.99215929,  9.58262264,  9.83186035])</code></pre>
+</div>
+</div>
+
+<div class="quarto-auto-generated-content">
+<div class="footer footer-default">
+
+</div>
+</div>
+</section></section>
+    </div>
+  </div>
+
+  <script>window.backupDefine = window.define; window.define = undefined;</script>
+  <script src="../site_libs/revealjs/dist/reveal.js"></script>
+  <!-- reveal.js plugins -->
+  <script src="../site_libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="../site_libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="../site_libs/revealjs/plugin/quarto-support/support.js"></script>
+  
+
+  <script src="../site_libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="../site_libs/revealjs/plugin/search/search.js"></script>
+  <script src="../site_libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="../site_libs/revealjs/plugin/math/math.js"></script>
+  <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+'controlsAuto': true,
+'previewLinksAuto': false,
+'pdfSeparateFragments': false,
+'autoAnimateEasing': "ease",
+'autoAnimateDuration': 1,
+'autoAnimateUnmatched': true,
+'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
+'smaller': false,
+ 
+        // Display controls in the bottom right corner
+        controls: false,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: false,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'edges',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: 'c/t',
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: true,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: false,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'linear',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: false,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // The "normal" size of the presentation, aspect ratio will be preserved
+        // when the presentation is scaled to fit different resolutions. Can be
+        // specified using percentage units.
+        width: 1600,
+
+        height: 900,
+
+        // Factor of the display size that should remain empty around the content
+        margin: 0.1,
+
+        math: {
+          mathjax: 'https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
+        // reveal.js plugins
+        plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
+
+          RevealMath,
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    
+
+    <script>
+
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+      // slide changes (different for each slide format).
+
+      (function () {
+
+        // dispatch for htmlwidgets
+
+        function fireSlideEnter() {
+
+          const event = window.document.createEvent("Event");
+
+          event.initEvent("slideenter", true, true);
+
+          window.document.dispatchEvent(event);
+
+        }
+
+    
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+
+          fireSlideEnter();
+
+    
+
+          // dispatch for shiny
+
+          if (window.jQuery) {
+
+            if (previousSlide) {
+
+              window.jQuery(previousSlide).trigger("hidden");
+
+            }
+
+            if (currentSlide) {
+
+              window.jQuery(currentSlide).trigger("shown");
+
+            }
+
+          }
+
+        }
+
+    
+
+        // hookup for slidy
+
+        if (window.w3c_slidy) {
+
+          window.w3c_slidy.add_observer(function (slide_num) {
+
+            // slide_num starts at position 1
+
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+          });
+
+        }
+
+    
+
+      })();
+
+    </script>
+
+    
+
+    <script id="quarto-html-after-body" type="application/javascript">
+    window.document.addEventListener("DOMContentLoaded", function (event) {
+      const toggleBodyColorMode = (bsSheetEl) => {
+        const mode = bsSheetEl.getAttribute("data-mode");
+        const bodyEl = window.document.querySelector("body");
+        if (mode === "dark") {
+          bodyEl.classList.add("quarto-dark");
+          bodyEl.classList.remove("quarto-light");
+        } else {
+          bodyEl.classList.add("quarto-light");
+          bodyEl.classList.remove("quarto-dark");
+        }
+      }
+      const toggleBodyColorPrimary = () => {
+        const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+        if (bsSheetEl) {
+          toggleBodyColorMode(bsSheetEl);
+        }
+      }
+      toggleBodyColorPrimary();  
+      const tabsets =  window.document.querySelectorAll(".panel-tabset-tabby")
+      tabsets.forEach(function(tabset) {
+        const tabby = new Tabby('#' + tabset.id);
+      });
+      const isCodeAnnotation = (el) => {
+        for (const clz of el.classList) {
+          if (clz.startsWith('code-annotation-')) {                     
+            return true;
+          }
+        }
+        return false;
+      }
+      const onCopySuccess = function(e) {
+        // button target
+        const button = e.trigger;
+        // don't keep focus
+        button.blur();
+        // flash "checked"
+        button.classList.add('code-copy-button-checked');
+        var currentTitle = button.getAttribute("title");
+        button.setAttribute("title", "Copied!");
+        let tooltip;
+        if (window.bootstrap) {
+          button.setAttribute("data-bs-toggle", "tooltip");
+          button.setAttribute("data-bs-placement", "left");
+          button.setAttribute("data-bs-title", "Copied!");
+          tooltip = new bootstrap.Tooltip(button, 
+            { trigger: "manual", 
+              customClass: "code-copy-button-tooltip",
+              offset: [0, -8]});
+          tooltip.show();    
+        }
+        setTimeout(function() {
+          if (tooltip) {
+            tooltip.hide();
+            button.removeAttribute("data-bs-title");
+            button.removeAttribute("data-bs-toggle");
+            button.removeAttribute("data-bs-placement");
+          }
+          button.setAttribute("title", currentTitle);
+          button.classList.remove('code-copy-button-checked');
+        }, 1000);
+        // clear code selection
+        e.clearSelection();
+      }
+      const getTextToCopy = function(trigger) {
+          const codeEl = trigger.previousElementSibling.cloneNode(true);
+          for (const childEl of codeEl.children) {
+            if (isCodeAnnotation(childEl)) {
+              childEl.remove();
+            }
+          }
+          return codeEl.innerText;
+      }
+      const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+        text: getTextToCopy
+      });
+      clipboard.on('success', onCopySuccess);
+      if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+        // For code content inside modals, clipBoardJS needs to be initialized with a container option
+        // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+        const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+          text: getTextToCopy,
+          container: window.document.getElementById('quarto-embedded-source-code-modal')
+        });
+        clipboardModal.on('success', onCopySuccess);
+      }
+        var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+        var mailtoRegex = new RegExp(/^mailto:/);
+          var filterRegex = new RegExp('/' + window.location.host + '/');
+        var isInternal = (href) => {
+            return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+        }
+        // Inspect non-navigation links and adorn them if external
+     	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+        for (var i=0; i<links.length; i++) {
+          const link = links[i];
+          if (!isInternal(link.href)) {
+            // undo the damage that might have been done by quarto-nav.js in the case of
+            // links that we want to consider external
+            if (link.dataset.originalHref !== undefined) {
+              link.href = link.dataset.originalHref;
+            }
+          }
+        }
+      function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+        const config = {
+          allowHTML: true,
+          maxWidth: 500,
+          delay: 100,
+          arrow: false,
+          appendTo: function(el) {
+              return el.closest('section.slide') || el.parentElement;
+          },
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start',
+        };
+        if (contentFn) {
+          config.content = contentFn;
+        }
+        if (onTriggerFn) {
+          config.onTrigger = onTriggerFn;
+        }
+        if (onUntriggerFn) {
+          config.onUntrigger = onUntriggerFn;
+        }
+          config['offset'] = [0,0];
+          config['maxWidth'] = 700;
+        window.tippy(el, config); 
+      }
+      const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+      for (var i=0; i<noterefs.length; i++) {
+        const ref = noterefs[i];
+        tippyHover(ref, function() {
+          // use id or data attribute instead here
+          let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+          try { href = new URL(href).hash; } catch {}
+          const id = href.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note) {
+            return note.innerHTML;
+          } else {
+            return "";
+          }
+        });
+      }
+      const findCites = (el) => {
+        const parentEl = el.parentElement;
+        if (parentEl) {
+          const cites = parentEl.dataset.cites;
+          if (cites) {
+            return {
+              el,
+              cites: cites.split(' ')
+            };
+          } else {
+            return findCites(el.parentElement)
+          }
+        } else {
+          return undefined;
+        }
+      };
+      var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+      for (var i=0; i<bibliorefs.length; i++) {
+        const ref = bibliorefs[i];
+        const citeInfo = findCites(ref);
+        if (citeInfo) {
+          tippyHover(citeInfo.el, function() {
+            var popup = window.document.createElement('div');
+            citeInfo.cites.forEach(function(cite) {
+              var citeDiv = window.document.createElement('div');
+              citeDiv.classList.add('hanging-indent');
+              citeDiv.classList.add('csl-entry');
+              var biblioDiv = window.document.getElementById('ref-' + cite);
+              if (biblioDiv) {
+                citeDiv.innerHTML = biblioDiv.innerHTML;
+              }
+              popup.appendChild(citeDiv);
+            });
+            return popup.innerHTML;
+          });
+        }
+      }
+    });
+    </script>
+    
+
+</body></html>

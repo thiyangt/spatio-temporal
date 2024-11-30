@@ -1,5 +1,411 @@
 [
   {
+    "objectID": "Week1/index.html#time-series",
+    "href": "Week1/index.html#time-series",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Time Series",
+    "text": "Time Series\nA time series is a sequence of observations taken sequentially in time.\nCross sectional data\nObservations that come from different individuals or groups at a single point in time.\nTime series data\nA set of observations, along with some information about what times those observations were recorded."
+  },
+  {
+    "objectID": "Week1/index.html#trend",
+    "href": "Week1/index.html#trend",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Trend",
+    "text": "Trend\nLong-term increase or decrease in the data."
+  },
+  {
+    "objectID": "Week1/index.html#seasonal",
+    "href": "Week1/index.html#seasonal",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Seasonal",
+    "text": "Seasonal\n\nA seasonal pattern exists when a series is influenced by seasonal factors (e.g., the quarter of the year, the month, or day of the week).\nSeasonality is always of a fixed and known period."
+  },
+  {
+    "objectID": "Week1/index.html#cyclic",
+    "href": "Week1/index.html#cyclic",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Cyclic",
+    "text": "Cyclic\n\nA cyclic pattern exists when data exhibit rises and falls that are not of fixed period.\nThe duration of these fluctuations is usually of at least 2 years.\nThe average length of cycles is longer than the length of a seasonal pattern."
+  },
+  {
+    "objectID": "Week1/index.html#frequency-of-a-time-series-seasonal-periods",
+    "href": "Week1/index.html#frequency-of-a-time-series-seasonal-periods",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Frequency of a time series: Seasonal periods",
+    "text": "Frequency of a time series: Seasonal periods\nFrequency: Number of observations per natural time interval (Usually year, but sometimes a week, a day, an hour)\nYour turn:\nIdentify frequencies for the following:\n\nAnnual\nQuarterly\nMonthly\nWeekly"
+  },
+  {
+    "objectID": "Week1/index.html#multiple-seasonal-patterns",
+    "href": "Week1/index.html#multiple-seasonal-patterns",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Multiple Seasonal Patterns",
+    "text": "Multiple Seasonal Patterns\nFor example, the hourly utility demand data exhibit both daily and weekly cycles.\n\nSource: https://www.robjhyndman.com/papers/multiseasonal.pdf"
+  },
+  {
+    "objectID": "Week1/index.html#your-turn",
+    "href": "Week1/index.html#your-turn",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Your turn",
+    "text": "Your turn\nIdentify multiple frequencies for the followings:\n\nDaily\nHourly\nHalf-hourly\nMinutes\nSeconds"
+  },
+  {
+    "objectID": "Week1/index.html#correlation",
+    "href": "Week1/index.html#correlation",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Correlation",
+    "text": "Correlation\n\nMeasures the strength of the linear relationship between two variables\n\n\\[r = \\frac{\\sum (x_i -\\bar{x})(y_i-\\bar{y})}{\\sqrt{\\sum (x_i -\\bar{x})^2 \\sum (y_i -\\bar{y})^2}}\\] ## Autocorrelation\nMeasures the strength of linear relationship between lagged values of time series.\n\\[r_k = \\frac{\\sum (y_t -\\bar{y})(y_{t-k}-\\bar{y})}{\\sum (y_t -\\bar{y})^2}\\]\nLagged values: in-class"
+  },
+  {
+    "objectID": "Week1/index.html#autocorrelation-plot",
+    "href": "Week1/index.html#autocorrelation-plot",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Autocorrelation plot",
+    "text": "Autocorrelation plot\n\nTime series with trend only\nTime series with seasonality only\nTime series with trend and seasonal"
+  },
+  {
+    "objectID": "Week1/index.html#example-1",
+    "href": "Week1/index.html#example-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example 1",
+    "text": "Example 1"
+  },
+  {
+    "objectID": "Week1/index.html#example-1-cont.",
+    "href": "Week1/index.html#example-1-cont.",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example 1 (cont.)",
+    "text": "Example 1 (cont.)\nSeasonal plots"
+  },
+  {
+    "objectID": "Week1/index.html#example-1-cont.-1",
+    "href": "Week1/index.html#example-1-cont.-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example 1 (cont.)",
+    "text": "Example 1 (cont.)"
+  },
+  {
+    "objectID": "Week1/index.html#example-2",
+    "href": "Week1/index.html#example-2",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example 2",
+    "text": "Example 2"
+  },
+  {
+    "objectID": "Week1/index.html#example-2cont.",
+    "href": "Week1/index.html#example-2cont.",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example 2(cont.)",
+    "text": "Example 2(cont.)\nSeasonal plots"
+  },
+  {
+    "objectID": "Week1/index.html#example-2-cont.",
+    "href": "Week1/index.html#example-2-cont.",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example 2 (cont.)",
+    "text": "Example 2 (cont.)"
+  },
+  {
+    "objectID": "Week1/index.html#example-3",
+    "href": "Week1/index.html#example-3",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example 3",
+    "text": "Example 3"
+  },
+  {
+    "objectID": "Week1/index.html#example-3-cont",
+    "href": "Week1/index.html#example-3-cont",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example 3 (cont)",
+    "text": "Example 3 (cont)"
+  },
+  {
+    "objectID": "Week1/index.html#exercise",
+    "href": "Week1/index.html#exercise",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Exercise",
+    "text": "Exercise\nQuestion 6 at https://otexts.com/fpp2/graphics-exercises.html"
+  },
+  {
+    "objectID": "Week1/index.html#notation",
+    "href": "Week1/index.html#notation",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Notation",
+    "text": "Notation\n\\[\\hat{Y}_{T+h|T}\\]"
+  },
+  {
+    "objectID": "Week1/index.html#simple-time-series-forecasting-techniques",
+    "href": "Week1/index.html#simple-time-series-forecasting-techniques",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Simple time series forecasting techniques",
+    "text": "Simple time series forecasting techniques\n\nAverage method\nNaive method/ random walk method\nSeasonal naive method\nDrift method\n\nReading"
+  },
+  {
+    "objectID": "Week1/index.html#electricity-demand",
+    "href": "Week1/index.html#electricity-demand",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Electricity Demand",
+    "text": "Electricity Demand\n\n\n       Jan   Feb   Mar   Apr   May   Jun   Jul   Aug   Sep   Oct   Nov   Dec\n1980  7366  7414  7824  7524  8279  8707  9486  8973  8231  8206  7927  7999\n1981  7834  7521  8284  7999  8940  9381 10078  9796  8471  8572  8150  8168\n1982  8166  7903  8606  8071  9178  9873 10476  9296  8818  8697  8381  8293\n1983  7942  8001  8744  8397  9115  9773 10358  9849  9083  9143  8800  8741\n1984  8492  8795  9354  8796 10072 10174 11326 10744  9806  9740  9373  9244\n1985  9407  8827  9880  9364 10580 10899 11687 11280 10208 10212  9725  9721\n1986  9846  9407 10265  9970 10801 11246 12167 11578 10645 10613 10104 10348\n1987 10263  9973 10803 10409 11458 11845 12559 12070 11221 11338 10761 11012\n1988 10923 10790 11427 10788 11772 12104 12634 12772 11764 11956 11646 11750\n1989 11485 11198 12265 11704 12419 13259 13945 13839 12387 12546 12038 11977\n1990 12336 11793 12877 11923 13306 13988 14002 14336 12867 12721 12449 12686\n1991 12810 12015 12888 12431 13499 13014 14296 14125 12817 12862 12449 12489\n1992 12621 12380 13023 12302 13339 13825 14428 14151 13355 13094 12656 12435\n1993 13287 12434 13209 12817 13746 14259 14590 14354 13254 13464 13302 13456\n1994 13171 12517 13489 12509 13785 13921 14603 14749 13540 13457 13243 13590\n1995 13487 12776 13812 13032 14268 14473 15359 14457"
+  },
+  {
+    "objectID": "Week1/index.html#mean-function",
+    "href": "Week1/index.html#mean-function",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Mean function",
+    "text": "Mean function\nLet \\({X_1, X_2, ...}\\) be a sequence of time index random variables.\nThe mean function of \\({X_t}\\) is\n\\[\\mu_X(t)=E(X_t).\\]"
+  },
+  {
+    "objectID": "Week1/index.html#covariance-function",
+    "href": "Week1/index.html#covariance-function",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Covariance function",
+    "text": "Covariance function\nThe covariance function of \\({X_t}\\) is\n\\[\\gamma_X(r, s)=Cov(X_r, X_s)=E[(X_r-\\mu_X(r))(X_s-\\mu_X(s))]\\]\nfor all integers \\((r)\\) and \\((s)\\).\nThe covariance function of \\({X_t}\\) at lag \\((h)\\) is defined by \\[\\gamma_X(h):=\\gamma_X(h, 0)=\\gamma(t+h, t)=Cov(X_{t+h}, X_t).\\]"
+  },
+  {
+    "objectID": "Week1/index.html#autocovariance-function",
+    "href": "Week1/index.html#autocovariance-function",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Autocovariance function",
+    "text": "Autocovariance function\nThe auto covariance function of \\({X_t}\\) at lag \\((h)\\) is\n\\[\\gamma_X(h)=Cov(X_{t+h}, X_t).\\] Autocorrelation function\nThe autocorrelation function of \\({X_t}\\) at lag \\((h)\\) is\n\\[\\rho_X(h)=\\frac{\\gamma_X(h)}{\\gamma_X(0)}=Cor(X_{t+h}, X_t).\\]"
+  },
+  {
+    "objectID": "Week1/index.html#weekly-stationary",
+    "href": "Week1/index.html#weekly-stationary",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Weekly stationary",
+    "text": "Weekly stationary\nA time series \\({X_t}\\) is called weekly stationary if\n\n\\(\\mu_X(t)\\) is independent of \\(t\\).\n\\(\\gamma_X(t+h, t)\\) is independent of \\((t)\\) for each \\((h)\\).\n\nIn other words the statistical properties of the time series (mean, variance, autocorrelation, etc.) do not depend on the time at which the series is observed, that is no trend or seasonality. However, a time series with cyclic behaviour (but with no trend or seasonality) is stationary."
+  },
+  {
+    "objectID": "Week1/index.html#strict-stationarity-of-a-time-series",
+    "href": "Week1/index.html#strict-stationarity-of-a-time-series",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Strict stationarity of a time series",
+    "text": "Strict stationarity of a time series\nA time series \\(\\{X_t\\}\\) is called weekly stationary if the random vector \\([X_1, X_2..., X_n]\\) and \\([X_{1+h}, X_{2+h}..., X_{n+h}]\\) have the same joint distribution for all integers \\((h)\\) and \\((n &gt; 0)\\)."
+  },
+  {
+    "objectID": "Week1/index.html#iid-noise",
+    "href": "Week1/index.html#iid-noise",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "1. iid noise",
+    "text": "1. iid noise\n\nno trend or seasonal component\nobservations are independent and identically distributed (iid) random variables with zero mean.\nNotation: \\({X_t} \\sim IID(0, \\sigma^2)\\)\nplays an important role as a building block for more complicated time series."
+  },
+  {
+    "objectID": "Week1/index.html#section",
+    "href": "Week1/index.html#section",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "",
+    "text": "import numpy\nimport matplotlib.pyplot as plt\n\nmean = 0\nstd = 1 \nnum_samples = 1000\nsamples = numpy.random.normal(mean, std, size=num_samples)\nsamples\n\narray([ 5.43753744e-01,  1.34484819e+00, -1.05394712e+00, -1.52858294e+00,\n       -1.74649527e+00,  1.80059749e-01,  3.26800235e-01, -6.61862852e-01,\n       -6.65566672e-01,  1.06027947e+00,  1.05611929e+00, -1.58158007e-01,\n       -4.45800255e-01,  3.63759340e-01, -7.71578534e-01,  4.28568558e-01,\n        2.20408986e+00,  3.13756210e-01, -1.80641742e+00,  1.04228285e+00,\n       -3.62560391e-01,  7.43919223e-01,  1.97676889e-01,  8.45836821e-01,\n       -6.50690634e-01,  6.83812138e-01, -1.49922990e+00,  3.00192894e+00,\n        5.07125207e-01, -4.84196645e-01,  3.83726614e-01,  1.43103668e+00,\n        2.73967483e-01,  9.92394909e-01,  1.37117774e+00,  5.51758158e-01,\n        1.37497610e+00,  6.78895612e-01,  1.89125100e+00,  1.37270415e-01,\n       -4.14162430e-01,  1.53650381e+00,  6.60463988e-02,  8.84487726e-01,\n        4.79819149e-01,  1.93167895e-01, -1.03817834e+00, -3.11322241e-02,\n        1.77215976e+00, -8.65087213e-01,  2.64484419e-02,  8.44203237e-01,\n        1.01109795e+00,  1.47214643e+00, -2.59020362e-01, -7.15799334e-01,\n       -1.13992485e+00,  8.35656872e-01, -1.63431594e+00, -4.53772605e-01,\n        1.49669663e+00,  2.56349199e-03,  1.72165518e-01,  4.83971996e-01,\n        9.83443259e-01, -8.42179044e-01, -9.57905500e-01,  1.64500293e+00,\n       -1.71001053e+00,  9.48098568e-01, -1.95679253e-01,  2.59290235e-02,\n        2.33392190e-02,  1.26823925e+00, -4.27203649e-02,  1.21137359e+00,\n       -6.14855101e-01, -5.01991347e-02, -1.11144400e+00,  2.73794006e-01,\n        2.90591930e-01,  1.68861137e+00, -1.12911589e+00, -1.72018997e-01,\n       -3.69276175e-01, -2.08321611e-01,  6.92788062e-01,  8.15407902e-01,\n       -1.75958643e+00,  1.42395995e+00, -5.34208499e-01, -1.48561393e-01,\n       -4.35346185e-01,  1.72866906e+00, -5.11317367e-01,  2.42475362e-01,\n        1.54818076e-01,  4.19414646e-01, -8.29392973e-01,  8.32564649e-02,\n       -1.88439891e-01, -5.85664870e-01, -1.09502450e-01,  1.16527461e-02,\n       -6.64532457e-01,  4.60072585e-01,  1.13468269e+00,  1.43897159e+00,\n       -8.55164379e-01,  1.00448793e+00, -2.33033018e-01,  1.77237510e+00,\n        9.96466712e-01, -1.21815747e+00, -8.52162685e-01, -3.35650499e-01,\n       -2.72525766e-01, -1.98613746e+00,  7.99961948e-01,  4.29997094e-01,\n        1.12835020e+00,  9.04477430e-01,  1.55220055e+00, -7.60329892e-01,\n       -5.05401539e-01, -3.24602631e-01, -4.58592055e-02,  6.36482150e-01,\n        7.35661950e-01,  1.55459808e+00,  2.52520305e-01,  1.44872719e-01,\n       -3.87166461e-01, -2.49233034e-01,  8.36155521e-01,  1.44402574e+00,\n       -1.31135451e+00,  8.57364158e-01,  1.57509229e-01, -1.84399014e+00,\n        1.95076038e+00, -3.53588221e-01, -8.23457794e-01,  1.10527173e-01,\n       -1.22526805e-01, -8.79293816e-01,  2.50893374e-01, -1.38162375e+00,\n       -1.06884760e+00, -1.07648711e+00, -2.79124824e-01, -8.48655143e-01,\n       -4.57723857e-01, -3.34373060e-01, -8.58157088e-01,  3.46394194e-01,\n        5.23688837e-01, -1.01630798e+00, -7.00151537e-01,  1.47351708e+00,\n       -5.09304622e-01,  3.25393589e-01, -9.56641354e-01,  6.22916324e-01,\n        1.45185532e+00, -1.36504145e+00, -3.98436220e-01, -1.31143297e-01,\n       -5.98170015e-01, -7.04241181e-01, -1.44768087e-01,  1.09059462e-01,\n       -8.45696571e-01, -3.76083424e-01,  6.78847716e-01, -1.23781484e+00,\n       -1.70344861e-01,  1.45585148e-01,  9.32680206e-01,  1.40365800e+00,\n       -6.64303634e-01, -4.95406554e-01,  1.70868175e+00, -1.32140432e+00,\n       -8.69810462e-01,  1.53172543e-01,  3.92909780e-01,  1.56388944e-01,\n       -5.71409735e-01, -1.06566962e+00,  1.69274395e+00, -2.23503520e-01,\n        5.61702245e-01,  1.10784255e+00,  3.09717617e-01, -9.35457985e-01,\n       -1.14326166e+00,  6.91408445e-01, -8.25008740e-01,  1.30876158e+00,\n       -4.87325957e-01,  1.02051223e+00,  9.32263130e-01, -9.17727804e-01,\n       -4.50556420e-01, -1.19383273e+00,  1.41495718e+00, -5.46732036e-01,\n        2.69154313e-01,  5.20277512e-01, -8.44999930e-01,  3.98850206e-01,\n       -1.59843434e-01, -2.10545931e-01,  1.61955786e-01, -1.04074867e+00,\n        1.58087526e-01,  2.88011971e+00, -4.68351998e-01, -7.82164757e-01,\n        5.60752681e-02, -1.12469265e+00, -1.35268156e+00,  1.03504970e+00,\n        6.94937147e-01,  7.46827679e-01, -2.58142488e-01, -1.70294030e+00,\n       -1.59769344e+00, -9.44032105e-01, -6.88100130e-01,  7.65357736e-01,\n        1.90499125e+00, -7.24207682e-01, -2.70114004e+00,  4.00433434e-01,\n        1.41516235e+00,  1.04995042e+00,  1.24790647e+00, -2.22308609e+00,\n        6.98964087e-01, -9.10588115e-01, -6.87430684e-01, -1.00895824e-01,\n       -7.56560757e-01,  2.78780325e-01,  1.68535114e-01, -1.70507569e+00,\n        2.64359956e-01, -9.48155309e-01, -4.73919215e-02,  2.53040107e-02,\n       -8.56165221e-01, -5.92028485e-02, -4.98642673e-01,  6.70818936e-01,\n       -7.40964994e-01, -1.07476907e+00,  7.39770502e-01, -2.71512663e-01,\n        1.72527806e-01,  2.05533601e+00, -2.10230347e-01, -3.44849220e-02,\n       -4.55333056e-02, -1.49393204e+00, -3.60096659e-01,  1.76876894e-01,\n        1.44178330e+00,  2.29436640e-01, -6.98672866e-01,  1.15816434e-01,\n        3.63381701e-01,  7.77611990e-01, -9.19191560e-01, -1.20155532e-01,\n       -1.23685932e+00,  2.51363795e-01, -5.85806735e-02, -3.58581956e-01,\n        1.64062799e+00, -5.19372027e-01,  3.05048472e-01, -4.40436119e-01,\n        7.31107018e-01,  2.17591847e+00,  3.48322040e-01,  7.58069255e-01,\n        3.45356931e-02,  8.12517792e-02,  4.92648844e-01, -1.17852690e+00,\n       -8.65515427e-02, -4.38627754e-02, -8.45505978e-01, -1.02319498e+00,\n        6.78204751e-01, -1.10145133e+00,  3.86611345e-01,  8.65374629e-01,\n        1.74454344e+00,  3.40853597e-01, -7.00906509e-01,  1.15876796e+00,\n        1.72543507e-01,  8.68042555e-01, -4.93153957e-01,  1.67186747e-01,\n       -1.74091708e-01, -1.10981837e+00, -6.39910553e-02,  7.55093850e-01,\n        9.84344128e-01,  1.17720970e+00,  7.91984154e-01,  6.23454441e-01,\n       -8.89075555e-01, -1.81553104e+00,  4.41533997e-01, -1.20371867e+00,\n        9.68377559e-01,  9.61390658e-01, -9.82525859e-01,  3.06584083e-02,\n        1.84364888e+00, -1.28314313e+00,  1.02768881e+00, -2.67759350e-01,\n       -5.25851275e-02, -9.28260412e-01,  1.15051400e+00,  4.28949102e-01,\n        1.41831076e+00, -9.37167332e-01, -1.47996392e+00, -7.98396293e-02,\n       -1.02407705e+00, -1.62545506e+00, -1.42416998e+00, -1.69551940e+00,\n        1.55304987e-01, -1.38018952e+00,  3.40147475e-02, -1.16005926e+00,\n        1.12028122e+00,  4.18904739e-01,  8.61974204e-01, -3.58790474e+00,\n       -6.01657123e-01,  3.68582411e-01, -1.81517491e+00,  3.20801920e-01,\n        5.70435054e-01,  2.17884048e+00, -2.66278582e+00,  1.61344843e-01,\n       -7.69160490e-01,  4.49905904e-01, -2.20286888e-01, -1.42412241e+00,\n       -2.58583127e+00, -5.36543139e-01, -1.07920364e+00, -1.42907171e+00,\n        7.34311382e-01, -1.90331744e-01, -4.00924218e-01, -1.40909318e+00,\n       -3.18519483e-01,  9.92320253e-02, -1.83060194e-01, -1.23242659e-01,\n       -7.95732176e-01,  2.94214132e-01, -1.57879293e+00, -2.46755007e+00,\n       -5.97310318e-01, -2.41406316e-01,  1.89442250e+00,  2.04208251e+00,\n       -1.72628471e+00,  1.35390073e-01, -1.11452893e-01,  1.65944024e+00,\n        1.15487058e+00, -1.51459267e+00,  9.78314588e-01, -5.75582001e-01,\n        4.54101312e-01, -4.63357891e-04, -1.40895326e+00, -4.87927731e-01,\n        2.13415156e+00, -1.11367651e+00,  1.11815035e+00,  3.36386407e+00,\n        5.06085620e-01,  1.20379204e-01, -3.10684847e-01, -1.94801439e+00,\n        9.37184307e-01,  1.90634342e-01,  1.44265681e+00, -9.24637119e-01,\n        2.80356453e-02,  1.09177539e+00,  1.82502983e+00,  6.71881166e-01,\n        9.08010306e-01, -1.95476678e-01,  4.86492589e-01, -7.56126687e-01,\n        4.09631972e-01,  1.77857539e-01, -5.93487568e-01, -2.95701383e-01,\n        1.10031810e+00, -1.50086435e+00,  1.19644484e-02, -6.09043110e-01,\n       -5.78360864e-01, -6.88891481e-02,  1.58243013e+00,  1.86966445e-01,\n       -1.04471086e+00,  1.56566433e-01, -2.16972887e+00, -7.02964967e-01,\n       -1.95033146e-02,  1.55604258e+00,  4.85815254e-01,  1.91299792e+00,\n       -1.95277379e+00,  3.39405889e-01, -1.54430105e-02,  5.57285614e-01,\n       -3.36328755e-01,  1.29245022e+00, -1.15519158e+00, -3.50086668e+00,\n       -1.25589233e+00,  2.52624045e+00, -5.33830418e-01, -9.44463885e-01,\n        1.84572861e+00,  6.83243239e-01, -5.34036850e-01, -7.81012906e-01,\n       -9.68884918e-01,  1.73110942e-01, -2.45827245e-01,  5.99010396e-01,\n       -7.14771525e-01, -1.12647638e+00,  8.04326379e-01,  4.53572915e-02,\n        2.73925937e+00,  1.13759764e+00,  5.74457993e-01, -1.41932665e+00,\n        6.02208509e-01, -1.54398605e+00, -2.45467008e-01, -4.52194183e-01,\n        9.99535173e-01, -6.13506302e-01, -1.38358717e+00,  6.91132814e-01,\n        1.22914799e+00,  1.60440375e+00, -6.89691526e-01,  7.45915927e-01,\n       -2.47819576e+00,  9.55253455e-01,  4.00209107e-01,  9.50592483e-01,\n        4.49524096e-01,  2.08726443e+00,  1.56555216e+00, -3.09714612e+00,\n       -9.12751849e-02,  6.92107658e-01, -6.50784881e-02, -1.33794668e+00,\n        1.44629809e+00, -6.24616219e-01,  8.39930225e-01, -1.55442727e-01,\n        1.13312180e-01,  1.12553681e+00, -1.60488818e-01,  2.11603647e-01,\n       -1.37131243e-01,  2.27004762e-01, -1.31197262e+00,  1.93015535e+00,\n        1.68548419e+00,  8.22449015e-01, -2.22299972e+00, -1.55871952e+00,\n        5.31115864e-01, -5.32287074e-01,  1.43645651e+00, -2.53338666e+00,\n       -1.12899105e+00,  5.70241406e-01,  2.14907902e+00, -7.50060066e-01,\n        1.37122417e+00,  2.10821128e-01,  2.53136848e-01,  1.29987296e+00,\n        8.19070597e-01,  6.07285871e-01, -1.29669046e+00, -1.09981085e-01,\n        1.44855670e+00, -1.60730286e+00,  3.36787481e-01, -8.05906831e-01,\n        1.39350505e-01,  1.43348673e+00,  1.72165962e-01,  1.03218825e+00,\n        1.84364713e+00, -7.56581327e-01,  7.52169717e-01, -1.33936665e+00,\n       -8.97291303e-01,  2.34021011e-01,  1.83317264e+00, -2.39977245e-01,\n        4.21021153e-01, -5.38139749e-01, -2.57971850e+00,  1.08955891e+00,\n       -1.94680812e-01,  6.98979968e-01,  4.38169019e-01, -7.11827128e-01,\n       -1.30921807e+00,  1.47502279e+00,  7.51124537e-01,  1.24428416e+00,\n       -1.89894987e+00,  5.68114938e-02,  1.45008608e+00,  1.08818494e+00,\n        7.05796566e-01, -4.19793663e-01, -4.33431330e-01, -8.94663273e-01,\n       -9.67309207e-01,  3.27384118e-02,  2.00691714e-01, -1.01385505e+00,\n       -6.24645704e-01, -3.96329806e-01, -2.58943388e-01, -5.85451804e-01,\n       -6.74167649e-01, -1.23146245e+00,  1.01360706e+00, -1.49899999e+00,\n        1.31413867e+00, -2.07445795e-01,  1.76153239e+00,  2.82887905e-01,\n        1.38391088e-01,  7.91095452e-01, -1.44324348e+00, -4.90350458e-02,\n       -1.19892435e+00,  1.10389286e+00,  2.15110641e-01,  7.48426370e-01,\n        1.23545353e-01,  2.52305751e-01, -7.10141478e-01, -1.08662288e+00,\n        2.45260302e-01,  1.43508222e+00,  7.67243448e-01, -6.65726251e-01,\n       -9.60501167e-01,  5.20089914e-01,  4.86162577e-01, -4.00302186e-01,\n        1.21719469e+00,  1.02391489e+00, -2.52235752e-01,  1.96581809e-02,\n       -1.48524105e+00,  8.72970300e-01,  2.57558100e-01,  6.88358904e-01,\n        1.35070497e+00, -1.80174851e-02,  1.72649104e+00, -7.64392658e-01,\n        5.51164382e-01, -1.40730861e+00,  1.00326329e+00, -4.57641735e-01,\n       -6.63070000e-01, -8.62492603e-01, -7.75754528e-01, -1.36455290e+00,\n        9.36571935e-01,  2.88202020e+00,  3.53299825e-02, -1.05975236e+00,\n        8.70410735e-01, -9.48228966e-01,  3.18942883e-01,  2.48929908e-01,\n        4.58596484e-01, -8.12038494e-01, -9.99460775e-01,  1.76261442e-01,\n       -7.12571089e-01, -1.08361525e+00, -9.13230611e-01, -8.37628803e-01,\n        2.76803025e-01,  4.28828632e-01,  1.04181559e+00,  4.14180624e-01,\n       -8.69333906e-01, -8.00910493e-01, -2.67796567e+00,  1.66895240e-01,\n       -4.56042881e-01, -6.59134559e-02,  1.31585657e+00,  9.21810956e-01,\n        1.40265590e+00, -2.80087127e-01, -6.28361258e-01,  9.80909384e-01,\n        8.41212473e-01, -2.04312971e+00, -1.23236449e+00,  1.24207975e+00,\n        2.12261592e-01, -4.03606749e-01,  5.97685829e-01, -7.38264794e-01,\n        1.36965204e+00, -9.06434571e-01, -1.00530282e-01, -1.55868849e+00,\n       -3.14966346e-01, -9.34201855e-01, -3.86748013e-01,  7.32565137e-01,\n        9.49026296e-01,  3.18842362e-02, -3.47927237e-01, -2.76843960e-01,\n        1.21583073e+00,  1.35911733e-01, -8.62651514e-01, -1.27704193e+00,\n       -1.42812294e-01, -5.04192143e-01,  3.41216491e-01,  5.79976351e-01,\n       -1.35208901e+00, -9.29939136e-01, -1.98500829e+00,  3.07813058e-02,\n        7.98109591e-01, -6.07524776e-01,  1.53963111e+00, -9.69684358e-01,\n       -1.43052209e-01,  1.15954415e+00, -3.38130937e-02,  7.70404066e-01,\n       -4.47031918e-01, -1.05931522e+00,  2.05978898e+00, -5.15817347e-01,\n        9.39017441e-01, -1.15139665e+00, -2.72347548e-01,  1.09625606e+00,\n        1.94871233e-01, -2.05624662e+00,  1.01838956e+00,  8.35329638e-01,\n        7.84567254e-01, -5.01975729e-01, -8.85152150e-01,  3.29414765e-01,\n        1.47555955e+00,  1.97938411e-01, -1.15060832e+00, -2.33571479e+00,\n        6.51344294e-01, -1.91047331e-01, -9.05685867e-01,  4.53512147e-01,\n       -5.21246050e-01, -1.83706522e-02, -7.07404300e-01, -7.02779971e-01,\n       -3.83241903e-01, -1.20575903e-01,  2.55310183e-01,  6.64528304e-01,\n        1.28365820e-01, -7.71421754e-01, -1.14992922e+00,  5.23955008e-01,\n        5.29411885e-01, -5.03434441e-02,  4.29613658e-01, -6.99373761e-01,\n        4.24327418e-01,  2.60080793e-01, -6.46194202e-02,  8.46885676e-02,\n        1.00230063e+00, -2.78493191e-01,  1.86053685e+00, -9.31408111e-01,\n        7.47049577e-01, -9.26488329e-01, -1.90694956e+00, -1.89673172e-01,\n        2.65255900e-01,  3.74332052e-01,  1.19926825e+00, -2.43130058e+00,\n        1.41745093e+00, -3.71185136e-01, -3.90715824e-01, -3.26058732e+00,\n       -9.80147204e-01, -1.96787923e-01,  1.21842420e+00,  1.73314933e+00,\n       -1.35176313e-01, -3.41957506e-01, -5.40954055e-01,  6.75632783e-02,\n       -2.19999743e-01, -8.62039554e-01,  3.63939576e-01, -4.96981007e-01,\n       -5.90082936e-02, -8.73023320e-01,  1.04885577e+00, -1.18529385e+00,\n       -1.21736655e+00, -6.53505464e-01,  1.85110286e+00,  6.42623475e-01,\n       -6.07767524e-02, -7.19179286e-01,  1.09199295e+00, -1.11551476e+00,\n       -4.20620429e-01,  1.36148744e+00, -2.19810596e-01, -1.68509993e-01,\n        1.93305046e+00, -8.12595271e-01,  6.19404483e-01, -9.18152677e-02,\n       -7.33970782e-01, -3.55031278e-01,  2.80052402e-02, -1.65210115e+00,\n        6.69432121e-01,  1.10401423e+00, -1.47095972e-01,  2.81698673e-01,\n       -1.15225698e+00,  2.08173284e-01,  3.61825122e-01,  1.54722947e+00,\n       -7.02702785e-01, -7.21056665e-01, -1.39808004e+00,  1.71585970e-01,\n        5.34793263e-02,  8.80193123e-01, -4.54200224e-01, -2.10814157e+00,\n       -1.62397903e+00, -1.52284208e-01,  3.82163964e-01,  5.29300532e-01,\n       -1.79464399e+00,  4.17758177e-01, -1.21834579e+00,  1.53932849e-01,\n        7.85992697e-01,  1.68062046e-01, -1.31435705e+00, -7.69163775e-01,\n       -1.88011910e+00, -5.04343270e-02,  1.41576514e+00,  8.89460943e-01,\n        1.36031176e+00,  9.48207912e-01, -1.34091625e+00,  1.48488906e+00,\n       -2.41168753e+00,  6.19270989e-01, -3.11599719e-02, -1.37235577e+00,\n       -2.62563771e+00, -4.01009744e-01,  7.71624938e-01, -4.10123392e-01,\n        3.35667346e-01,  9.28049551e-01,  9.41682082e-02, -4.70779785e-01,\n        9.35719860e-01,  2.30057692e-01,  1.49730414e+00, -2.15512075e-01,\n       -1.16780170e+00,  3.20848602e-01, -1.04619122e+00, -8.73661609e-01,\n       -1.64042483e-02, -9.63944351e-01,  3.69609831e-01,  4.93312046e-01,\n        2.36081752e-01,  1.29220942e+00,  9.39131122e-03,  1.07623002e+00,\n        1.76303707e+00,  4.17744353e-03,  7.12874294e-01,  5.25848301e-01,\n       -3.61091661e-01, -4.09183822e-01, -5.64516399e-01,  1.44006804e+00,\n       -1.63075372e+00, -1.20937602e+00,  5.32920972e-01,  2.25885935e-01,\n       -2.26041538e-01, -5.89979239e-01, -1.57250963e+00,  1.00291126e+00,\n        1.40805782e+00, -1.69348560e+00, -2.49054268e+00, -7.09009524e-01,\n        2.24015510e+00, -1.39253698e+00,  1.96653287e+00, -1.22936610e+00,\n       -4.79016500e-01, -1.80704461e+00, -2.33118121e-01,  1.11329702e+00,\n        5.90982937e-02, -9.66519782e-01,  3.21980731e-01, -2.86880964e+00,\n        6.56879621e-01,  1.53825696e-02, -6.40786269e-02, -1.69119751e+00,\n       -2.97968740e-02, -1.11662288e+00,  7.91062220e-02,  5.41441395e-01,\n        3.10267247e-01, -1.06817592e+00, -9.18592728e-01, -6.02744064e-01,\n       -1.29659330e+00, -7.85203239e-01,  1.71269727e-01,  1.40739923e+00,\n        2.94623509e-01,  4.25932359e-01,  1.01571557e+00,  1.02512343e-02,\n       -3.83265699e-01, -1.73795471e+00,  9.87286550e-01,  7.79138390e-01,\n        1.48531087e+00, -1.56393921e+00,  9.94629164e-01, -6.47363421e-01,\n        1.89580157e+00, -1.10264426e-01,  2.08775978e-01, -7.18848444e-01,\n       -5.89515930e-01,  1.15936025e+00, -8.42282321e-01,  4.04167103e-01,\n       -1.18443472e+00,  8.15404478e-02, -2.59519826e-01, -1.31847965e+00,\n       -5.59119474e-01,  1.33346199e-01, -2.47657988e-01,  1.35664281e+00,\n        7.33126501e-01,  3.33429961e-01, -1.44334626e+00, -1.10521821e+00,\n        6.60900748e-01,  5.91806111e-01, -6.63091511e-01, -2.06507735e-02,\n       -1.31548595e+00,  1.35653473e+00,  1.14376190e+00,  6.53219471e-01,\n        6.69745650e-01, -1.00706479e+00,  8.95123051e-01, -2.34167007e+00,\n       -1.28783896e+00, -3.66179716e-01,  1.36783838e-01,  2.22984306e+00,\n        1.63856304e+00, -7.24282003e-01,  2.72599979e-01,  5.40481907e-01,\n        2.63450511e-01, -4.29931399e-01, -1.05603042e+00, -1.41763428e+00,\n       -6.07074395e-01, -2.01368857e+00, -1.12219446e+00,  9.56796956e-01,\n       -3.80375422e-01, -1.62185782e+00,  3.33444235e-01, -4.86490055e-01,\n       -1.77512794e-01,  1.71945323e+00,  5.28318973e-01,  2.00026831e+00,\n        2.93422634e-01,  1.07569820e+00, -1.39406579e+00,  1.27924122e+00,\n        1.61183187e+00,  7.56913868e-01, -1.74537166e+00,  4.64509948e-01,\n        5.55751784e-01, -1.97140993e-01,  2.41881964e-01, -8.65615186e-03,\n        9.67782225e-01, -1.43281731e+00, -9.24822401e-01,  4.22676312e-01,\n        6.85235165e-01,  1.36712778e+00, -1.83660790e+00, -1.31662908e+00,\n        5.77385680e-01,  1.26683673e+00, -6.07511080e-01,  9.19782305e-01,\n       -1.41559422e+00,  4.06171929e-01,  5.55904903e-01, -6.86523185e-01,\n        7.51297525e-01, -4.69893616e-01, -2.52121672e-01, -4.54875471e-01,\n        2.64262689e-01,  4.95681592e-01, -7.70844187e-01,  1.69850330e+00,\n       -1.08491282e+00, -5.52770373e-01, -1.01872416e+00, -1.30405857e+00,\n       -5.32206597e-01, -8.60007467e-01,  6.40543979e-01,  9.77574159e-01])"
+  },
+  {
+    "objectID": "Week1/index.html#white-noise",
+    "href": "Week1/index.html#white-noise",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "2. White noise",
+    "text": "2. White noise\nIf \\({X_t}\\) is a sequence of uncorrelated random variables, each with zero mean and variance \\(\\sigma^2\\), then such a sequence is referred to as white noise.\nNote: Every \\((IID(0, \\sigma^2)\\) sequence is \\((WN(0, \\sigma^2)\\) but not conversely."
+  },
+  {
+    "objectID": "Week1/index.html#section-2",
+    "href": "Week1/index.html#section-2",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "",
+    "text": "import numpy\nimport matplotlib.pyplot as plt\n\nmean = 0\nstd = 1 \nnum_samples = 100\nsamples = numpy.random.normal(mean, std, size=num_samples)\nplt.plot(samples)\nplt.show()"
+  },
+  {
+    "objectID": "Week1/index.html#acf",
+    "href": "Week1/index.html#acf",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "ACF",
+    "text": "ACF\n\nWhite noise implies stationarity. Stationarity does not imply white noise."
+  },
+  {
+    "objectID": "Week1/index.html#random-walk",
+    "href": "Week1/index.html#random-walk",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "3. Random walk",
+    "text": "3. Random walk\nA random walk process is obtained by cumulatively summing iid random variables. If \\({S_t, t=0, 1, 2, ...}\\) is a random walk process, then \\(S_0 =0\\)\n\\(S_1=0+X_1\\)\n\\(S_2=0+X_1+X_2\\)\n\\(...\\)\n\\(S_t=X_1+X_2+...+X_t.\\)"
+  },
+  {
+    "objectID": "Week1/index.html#question",
+    "href": "Week1/index.html#question",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Question",
+    "text": "Question\nIs \\({S_t, t=0, 1, 2, ...}\\) a weak stationary process?"
+  },
+  {
+    "objectID": "Week1/index.html#identifying-non-stationarity-in-the-mean",
+    "href": "Week1/index.html#identifying-non-stationarity-in-the-mean",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Identifying non-stationarity in the mean",
+    "text": "Identifying non-stationarity in the mean\n\nUsing time series plot\nACF plot\n\nACF of stationary time series will drop to relatively quickly.\nThe ACF of non-stationary series decreases slowly.\nFor non-stationary series, the ACF at lag 1 is often large and positive."
+  },
+  {
+    "objectID": "Week1/index.html#backshift-notation",
+    "href": "Week1/index.html#backshift-notation",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Backshift notation:",
+    "text": "Backshift notation:\n\\[BX_t=X_{t-1}\\]"
+  },
+  {
+    "objectID": "Week1/index.html#ordinary-differencing",
+    "href": "Week1/index.html#ordinary-differencing",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Ordinary differencing",
+    "text": "Ordinary differencing\nThe first-order differencing can be defined as\n\\[\\nabla X_t = X_t-X_{t-1}=X_t-BX_t=(1-B)X_t\\] where \\(\\nabla=1-B\\).\nThe second-order differencing\n\\[\\nabla^2X_t=\\nabla(\\nabla X_t)=\\nabla(X_t-X_{t-1})=\\nabla X_t - \\nabla X_{t-1}\\]\n\\[\\nabla X_t - \\nabla X_{t-1}=(X_t-X_{t-1})-(X_{t-1}-X_{t-2})\\] - In practice, we seldom need to go beyond second order differencing."
+  },
+  {
+    "objectID": "Week1/index.html#seasonal-differencing",
+    "href": "Week1/index.html#seasonal-differencing",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Seasonal differencing",
+    "text": "Seasonal differencing\n\ndifferencing between an observation and the corresponding observation from the previous year.\n\n\\[\\nabla_mX_t=X_t-X_{t-m}=(1-B^m)X_t\\] where \\((m)\\) is the number of seasons. For monthly, \\((m=12)\\), for quarterly \\((m=4)\\).\nFor monthly series\n\\[\\nabla_{12}X_t=X_t-X_{t-12}\\]"
+  },
+  {
+    "objectID": "Week1/index.html#section-3",
+    "href": "Week1/index.html#section-3",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "",
+    "text": "Twice-differenced series\n\\[\\nabla^2_{12}X_t=\\nabla_{12}X_t-\\nabla_{12}X_{t-1}\\] \\[\\nabla_{12}X_t-\\nabla_{12}X_{t-1}=(X_t-X_{t-12})-(X_{t-1}-X_{t-13})\\] If seasonality is strong, the seasonal differencing should be done first."
+  },
+  {
+    "objectID": "Week1/index.html#non-stationary-time-series",
+    "href": "Week1/index.html#non-stationary-time-series",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Non-Stationary Time Series",
+    "text": "Non-Stationary Time Series\n1. Deterministic trend\n\\[Y_t  = f(t) + \\epsilon_t\\]\nwhere \\(\\epsilon_t \\sim iid(0, \\sigma^2)\\), \\(t = 1, 2, ...T\\)\nMean of the process is time dependent, but the variance of the process is constant.\nA trend is deterministic if it is a nonrandom function of time."
+  },
+  {
+    "objectID": "Week1/index.html#non-stationary-time-series-cont.",
+    "href": "Week1/index.html#non-stationary-time-series-cont.",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Non-Stationary Time Series (cont.)",
+    "text": "Non-Stationary Time Series (cont.)\n2. Random walk\n\\[Y_t = Y_{t-1} + \\epsilon_t\\]\n\nRandom walk has a stochastic trend.\nModel behind naive method.\n\nA trend is said to be stochastic if it is a random function of time."
+  },
+  {
+    "objectID": "Week1/index.html#non-stationary-time-series-cont.-1",
+    "href": "Week1/index.html#non-stationary-time-series-cont.-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Non-Stationary Time Series (cont.)",
+    "text": "Non-Stationary Time Series (cont.)\n3. Random walk with drift\n\\[Y_t = \\alpha+  Y_{t-1} + \\epsilon_t\\]\n\nRandom walk with drift has a stochastic trend and a deterministic trend.\nModel behind drift method."
+  },
+  {
+    "objectID": "Week1/index.html#random-walk-1",
+    "href": "Week1/index.html#random-walk-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Random walk",
+    "text": "Random walk\n\\[\n\\begin{aligned}\n  Y_t &= Y_{t-1} + \\epsilon_t \\\\\n     Y_1    &= Y_0 + \\epsilon_1 \\\\\n         Y_2 &=  Y_1 + \\epsilon_2=Y_0 + \\epsilon_1 + \\epsilon_2\\\\\n          Y_3 &=  Y_2 + \\epsilon_3=Y_0 + \\epsilon_1 + \\epsilon_2 +\\epsilon_3\\\\\n          .   \\\\\n          Y_t &=Y_{t-1} + \\epsilon_t=Y_0 + \\epsilon_1 + \\epsilon_2 + \\epsilon_3 +...+ \\epsilon_t = Y_0 + \\sum_{i=1}^{t} \\epsilon_t\n\\end{aligned}\n\\]\nMean: \\(E(Y_t) = Y_0\\).\nVariance: \\(Var(Y_t)=t \\sigma^2\\)."
+  },
+  {
+    "objectID": "Week1/index.html#random-walk-with-drift",
+    "href": "Week1/index.html#random-walk-with-drift",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Random walk with drift",
+    "text": "Random walk with drift\n\\[\n\\begin{aligned}\n  Y_t &= Y_{t-1} + \\epsilon_t \\\\\n     Y_1    &= \\alpha+Y_0 + \\epsilon_1 \\\\\n         Y_2 &= \\alpha+ Y_1 + \\epsilon_2=2 \\alpha+Y_0 + \\epsilon_1 + \\epsilon_2\\\\\n          Y_3 &= \\alpha+ Y_2 + \\epsilon_3= 3 \\alpha+ Y_0 + \\epsilon_1 + \\epsilon_2 +\\epsilon_3\\\\\n          .   \\\\\n          Y_t &= \\alpha+Y_{t-1} + \\epsilon_t= t \\alpha+ Y_0 + \\epsilon_1 + \\epsilon_2 + \\epsilon_3 +...+ \\epsilon_t \\\\\n          Y_t &= t \\alpha + Y_0 + \\sum_{i=1}^{t} \\epsilon_t\n\\end{aligned}\n\\]"
+  },
+  {
+    "objectID": "Week1/index.html#random-walk-with-drift-cont.",
+    "href": "Week1/index.html#random-walk-with-drift-cont.",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Random walk with drift (cont.)",
+    "text": "Random walk with drift (cont.)\nIt has a deterministic trend \\((Y_0 + t \\alpha)\\) and a stochastic trend \\(\\sum_{i=1}^{t} \\epsilon_t\\).\nMean: \\(E(Y_t) = Y_0 + t\\alpha\\)\nVariance: \\(Var(Y_t) = t\\sigma^2\\).\nThere is a trend in both mean and variance."
+  },
+  {
+    "objectID": "Week1/index.html#common-trend-removal-de-trending-procedures",
+    "href": "Week1/index.html#common-trend-removal-de-trending-procedures",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Common trend removal (de-trending) procedures",
+    "text": "Common trend removal (de-trending) procedures\n\nDeterministic trend: Time-trend regression\nThe trend can be removed by fitting a deterministic polynomial time trend. The residual series after removing the trend will give us the de-trended series.\nStochastic trend: Differencing\nThe process is also known as a Difference-stationary process."
+  },
+  {
+    "objectID": "Week1/index.html#random-walk-2",
+    "href": "Week1/index.html#random-walk-2",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Random walk",
+    "text": "Random walk\n\nimport numpy as np\nrw = np.cumsum(samples)\nplt.plot(rw)\nplt.show()"
+  },
+  {
+    "objectID": "Week1/index.html#random-walk---acf",
+    "href": "Week1/index.html#random-walk---acf",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Random walk - ACF",
+    "text": "Random walk - ACF"
+  },
+  {
+    "objectID": "Week1/index.html#difference-series",
+    "href": "Week1/index.html#difference-series",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Difference series",
+    "text": "Difference series\n\n\n      Values     Lag 1     Lag 2\n0  -0.947646       NaN       NaN\n1  -2.682392 -1.734746       NaN\n2  -3.148751 -0.466359  1.268387\n3  -2.827525  0.321226  0.787585\n4  -2.544523  0.283002 -0.038223\n..       ...       ...       ...\n95 -7.438711 -1.234723 -1.869760\n96 -7.009771  0.428940  1.663663\n97 -6.348209  0.661562  0.232622\n98 -6.580049 -0.231839 -0.893401\n99 -7.218645 -0.638597 -0.406757\n\n[100 rows x 3 columns]"
+  },
+  {
+    "objectID": "Week1/index.html#plot-lag-1-series",
+    "href": "Week1/index.html#plot-lag-1-series",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Plot Lag 1 series",
+    "text": "Plot Lag 1 series"
+  },
+  {
+    "objectID": "Week1/index.html#acf-lag-1-series",
+    "href": "Week1/index.html#acf-lag-1-series",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "ACF Lag 1 series",
+    "text": "ACF Lag 1 series"
+  },
+  {
+    "objectID": "Week1/index.html#example-2-1",
+    "href": "Week1/index.html#example-2-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example 2",
+    "text": "Example 2\n\nimport numpy as np, pandas as pd\nfrom statsmodels.graphics.tsaplots import plot_acf, plot_pacf\nimport matplotlib.pyplot as plt\nplt.rcParams.update({'figure.figsize':(9,7), 'figure.dpi':120})\n\n# Import data\ndf = pd.read_csv('wwwusage.csv', names=['value'], header=0)\n\n# Original Series\nfig, axes = plt.subplots(2, 2, sharex=True)\naxes[0, 0].plot(df.value); axes[0, 0].set_title('Original Series')\nplot_acf(df.value, ax=axes[0, 1], lags=np.arange(len(df)))\n\n# 1st Differencing\naxes[1, 0].plot(df.value.diff()); axes[1, 0].set_title('1st Order Differencing')\nplot_acf(df.value.diff().dropna(), ax=axes[1, 1], lags=np.arange(len(df) - 1))\nplt.show()"
+  },
+  {
+    "objectID": "Week1/index.html#nd-order-differencing",
+    "href": "Week1/index.html#nd-order-differencing",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "2nd order differencing",
+    "text": "2nd order differencing\n\nplot_acf(df.value.diff().diff().dropna())\nplt.show()"
+  },
+  {
+    "objectID": "Week1/index.html#variance-stabilization",
+    "href": "Week1/index.html#variance-stabilization",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Variance stabilization",
+    "text": "Variance stabilization\nEg:\n\nSquare root: \\(W_t = \\sqrt{Y_t}\\)\nLogarithm: \\(W_t = log({Y_t})\\)\n\nThis very useful.\nInterpretable: Changes in a log value are relative (percent) changes on the original sclae."
+  },
+  {
+    "objectID": "Week1/index.html#monthly-airline-passenger-numbers-1949-1960",
+    "href": "Week1/index.html#monthly-airline-passenger-numbers-1949-1960",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Monthly Airline Passenger Numbers 1949-1960",
+    "text": "Monthly Airline Passenger Numbers 1949-1960\n\nairpassenger = pd.read_csv('AirPassengers.csv')\nfrom datetime import datetime\nimport plotnine\nfrom plotnine import *\nairpassenger['Month']= pd.to_datetime(airpassenger['Month'])\nggplot(airpassenger, aes(x='Month', y='#Passengers'))+geom_line()\n\n&lt;Figure Size: (640 x 480)&gt;"
+  },
+  {
+    "objectID": "Week1/index.html#monthly-airline-passenger-numbers-1949-1960---log",
+    "href": "Week1/index.html#monthly-airline-passenger-numbers-1949-1960---log",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Monthly Airline Passenger Numbers 1949-1960 - log",
+    "text": "Monthly Airline Passenger Numbers 1949-1960 - log\n\nimport numpy as np\nairpassenger['naturallog'] = np.log(airpassenger['#Passengers']) \nggplot(airpassenger, aes(x='Month', y='naturallog'))+geom_line()\n\n&lt;Figure Size: (640 x 480)&gt;"
+  },
+  {
+    "objectID": "Week1/index.html#box-cox-transformation",
+    "href": "Week1/index.html#box-cox-transformation",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Box-Cox transformation",
+    "text": "Box-Cox transformation\n\\[\n  w_t=\\begin{cases}\n    log(y_t), & \\text{if $\\lambda=0$} \\newline\n    (Y_t^\\lambda - 1)/ \\lambda, & \\text{otherwise}.\n  \\end{cases}\n\\]\nDifferent values of \\(\\lambda\\) gives you different transformations.\n\n\\(\\lambda=1\\): No substantive transformation\n\\(\\lambda = \\frac{1}{2}\\): Square root plus linear transformation\n\\(\\lambda=0\\): Natural logarithm\n\\(\\lambda = -1\\): Inverse plus 1\n\nBalance the seasonal fluctuations and random variation across the series."
+  },
+  {
+    "objectID": "Week1/index.html#box-cox-transformation-1",
+    "href": "Week1/index.html#box-cox-transformation-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Box-Cox transformation",
+    "text": "Box-Cox transformation\n\n# import modules\nimport numpy as np\nfrom scipy import stats\n \ny2,fitted_lambda = stats.boxcox(airpassenger['#Passengers'])"
+  },
+  {
+    "objectID": "Week1/index.html#box-cox-transformation-exploring-the-output",
+    "href": "Week1/index.html#box-cox-transformation-exploring-the-output",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Box-Cox transformation: Exploring the output",
+    "text": "Box-Cox transformation: Exploring the output\n\nfitted_lambda\n\n0.14802265137037945\n\n\n\ny2\n\narray([ 6.82749005,  6.93282224,  7.16189151,  7.11461078,  6.98378687,\n        7.20826542,  7.39959794,  7.39959794,  7.22352834,  6.94993188,\n        6.67930112,  6.93282224,  6.88074148,  7.0663838 ,  7.29843847,\n        7.20826542,  7.05009066,  7.41371485,  7.69297755,  7.69297755,\n        7.53726005,  7.17744836,  6.86312389,  7.28363955,  7.35675408,\n        7.42775127,  7.791663  ,  7.6033268 ,  7.71801394,  7.791663  ,\n        8.03379957,  8.03379957,  7.86322651,  7.59025293,  7.3711186 ,\n        7.64214252,  7.70552693,  7.81574285,  7.96693012,  7.82769741,\n        7.85143867,  8.23478523,  8.35415797,  8.46833738,  8.14152446,\n        7.94424651,  7.71801394,  7.97819691,  8.00058286,  8.00058286,\n        8.41186604,  8.40233549,  8.34441554,  8.47763304,  8.66568618,\n        8.73398286,  8.42136224,  8.16254066,  7.81574285,  8.05570781,\n        8.08822445,  7.90983871,  8.40233549,  8.32482145,  8.39277032,\n        8.66568618,  8.97573698,  8.90544371,  8.62209995,  8.34441554,\n        8.0774311 ,  8.34441554,  8.46833738,  8.38317027,  8.69150146,\n        8.70857469,  8.71707079,  9.07418456,  9.41661628,  9.30252389,\n        9.05177744,  8.75078932,  8.42136224,  8.78409104,  8.83328615,\n        8.77580407,  9.08902184,  9.0592668 ,  9.0964106 ,  9.48162515,\n        9.72179099,  9.67415098,  9.35679401,  9.00640692,  8.72554012,\n        9.00640692,  9.07418456,  8.96801544,  9.36350433,  9.30936559,\n        9.35679401,  9.77445522, 10.01359054, 10.02424732,  9.66813973,\n        9.30252389,  8.9987716 ,  9.22613489,  9.25415593,  9.0964106 ,\n        9.40343224,  9.30936559,  9.41003199,  9.84886109, 10.14918625,\n       10.21968352,  9.66813973,  9.38353935,  9.03673716,  9.23316669,\n        9.390186  ,  9.26806127,  9.68014959,  9.61958794,  9.76283534,\n       10.05072014, 10.426264  , 10.4768849 , 10.00289463,  9.68613564,\n        9.40343224,  9.67415098,  9.74531682,  9.58881702,  9.75700771,\n        9.99215929, 10.05072014, 10.36531089, 10.75145254, 10.68404894,\n       10.23457308,  9.99215929,  9.58262264,  9.83186035])"
+  },
+  {
     "objectID": "index.html",
     "href": "index.html",
     "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
