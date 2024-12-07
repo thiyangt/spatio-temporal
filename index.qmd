@@ -6,7 +6,10 @@ title: "DSA 554 3.0 Spatio-temporal Data Analysis"
 
 [Slides 1](/Week1/index.html)
 
-
 ## Lecture 2: December 7, 2024
 
 [Slides 2](/Week2/index.html)
+
+[Practicl 1](/Practical1/index.html)
+
+[Air Passengers Dataset](/Practical1/AirPassengers.csv)

@@ -1,0 +1,293 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "---\n",
+        "title: \"DSA 554 3.0 Spatio-temporal Data Analysis\"\n",
+        "subtitle: \"Time Series Analysis Using Python\"\n",
+        "jupyter: python3\n",
+        "---\n",
+        "\n",
+        "\n",
+        "# Loading packages\n"
+      ],
+      "id": "2bd086e3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "import plotnine as p9 \n",
+        "from plotnine import *\n",
+        "from plotnine.data import *\n",
+        "import pandas as pd\n",
+        "import numpy as np"
+      ],
+      "id": "1d31d576",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Data\n",
+        "\n",
+        "## `economics` data set\n"
+      ],
+      "id": "799383c7"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "economics"
+      ],
+      "id": "94e24688",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "economics.info()"
+      ],
+      "id": "932516b8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Time Series Data Wrangling\n",
+        "\n",
+        "## Task 1: Create `year` and `month` columns\n"
+      ],
+      "id": "8fb88daa"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "economics['year'] = economics['date'].dt.year\n",
+        "economics['month'] = economics['date'].dt.month\n",
+        "economics"
+      ],
+      "id": "28a43a63",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Time Series Visualization\n",
+        "\n",
+        "## Time Series Plots\n",
+        "\n",
+        "### Plot 1: Dot chart\n"
+      ],
+      "id": "7925f226"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "%matplotlib inline\n",
+        "(\n",
+        "    ggplot(economics, aes(x='date', y='uempmed')) \n",
+        "    + geom_point() # line plot\n",
+        "    + labs(x='date', y='median duration of unemployment, in week')\n",
+        ")"
+      ],
+      "id": "24a636c2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Plot 2: Line chart\n"
+      ],
+      "id": "44e8a892"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "%matplotlib inline\n",
+        "(\n",
+        "    ggplot(economics, aes(x='date', y='uempmed')) + geom_line() \n",
+        ")"
+      ],
+      "id": "c0115de9",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Plot 3: Dot and Line Chart\n"
+      ],
+      "id": "3b95ffa8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "%matplotlib inline\n",
+        "(\n",
+        "    ggplot(economics, aes(x='date', y='uempmed')) + geom_line() + geom_point()\n",
+        ")"
+      ],
+      "id": "6f84234b",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Change Point Size\n"
+      ],
+      "id": "83b29d57"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ggplot(economics, aes(x='date', y='uempmed')) + geom_line() + geom_point(size=0.3)"
+      ],
+      "id": "5ab8de04",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Change Point Colour\n"
+      ],
+      "id": "b355fe0e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ggplot(economics, aes(x='date', y='uempmed')) + geom_line() + geom_point(size=0.3, colour=\"blue\")"
+      ],
+      "id": "b935cad1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Question 1: Which is the best? Plot1, Plot 2, or Plot 3\n",
+        "\n",
+        "## Seasonal plots\n",
+        "\n",
+        "### Seasonal plot with lines\n"
+      ],
+      "id": "ba93bb17"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ggplot(economics, aes(x='month', y='uempmed', color='year'))+geom_point()"
+      ],
+      "id": "54ee3731",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Seasonal plot with lines\n"
+      ],
+      "id": "fa291cc4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ggplot(economics, aes(x='month', y='uempmed',group='year' ,color='year'))+geom_point()+geom_line()"
+      ],
+      "id": "56f74248",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Question 2: What potential issues or areas for improvement can you identify in the plot?\n",
+        "\n",
+        "### Fix x-axis\n"
+      ],
+      "id": "a1465638"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ggplot(economics, aes(x='month', y='uempmed',group='year' ,color='year'))+geom_point()+geom_line()+scale_x_continuous(breaks=range(1, 13))  "
+      ],
+      "id": "f819c63f",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Add titles\n"
+      ],
+      "id": "b9b2d248"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "    ggplot(economics, aes(x='month', y='uempmed', group='year', color='year')) + geom_point() + geom_line() + scale_x_continuous(breaks=range(1, 13)) +  labs(\n",
+        "        title=\"Median Duration of Unemployment by Month\",\n",
+        "        x=\"Month\",\n",
+        "        y=\"Unemployment\",\n",
+        "        color=\"Year\"\n",
+        "    ) + theme_minimal()\n"
+      ],
+      "id": "defca2ec",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Exercise 1\n",
+        "\n",
+        "Visualize [Air Passengers](AirPassengers.csv) dataset.\n"
+      ],
+      "id": "ee86c599"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

@@ -1,0 +1,127 @@
+---
+title: "DSA 554 3.0 Spatio-temporal Data Analysis"
+subtitle: "Time Series Analysis Using Python"
+jupyter: python3
+---
+
+# Loading packages
+
+```{python}
+import pandas as pd
+import plotnine as p9 
+from plotnine import *
+from plotnine.data import *
+import pandas as pd
+import numpy as np
+```
+
+# Data
+
+## `economics` data set
+
+```{python}
+economics
+```
+
+
+```{python}
+economics.info()
+```
+
+# Time Series Data Wrangling
+
+## Task 1: Create `year` and `month` columns
+
+```{python}
+economics['year'] = economics['date'].dt.year
+economics['month'] = economics['date'].dt.month
+economics
+```
+
+# Time Series Visualization
+
+## Time Series Plots
+
+### Plot 1: Dot chart
+
+```{python}
+%matplotlib inline
+(
+    ggplot(economics, aes(x='date', y='uempmed')) 
+    + geom_point() # line plot
+    + labs(x='date', y='median duration of unemployment, in week')
+)
+```
+
+### Plot 2: Line chart
+
+```{python}
+%matplotlib inline
+(
+    ggplot(economics, aes(x='date', y='uempmed')) + geom_line() 
+)
+```
+
+### Plot 3: Dot and Line Chart
+
+```{python}
+%matplotlib inline
+(
+    ggplot(economics, aes(x='date', y='uempmed')) + geom_line() + geom_point()
+)
+```
+
+### Change Point Size
+
+```{python}
+ggplot(economics, aes(x='date', y='uempmed')) + geom_line() + geom_point(size=0.3)
+```
+
+### Change Point Colour
+
+```{python}
+ggplot(economics, aes(x='date', y='uempmed')) + geom_line() + geom_point(size=0.3, colour="blue")
+```
+
+### Question 1: Which is the best? Plot1, Plot 2, or Plot 3
+
+## Seasonal plots
+
+### Seasonal plot with lines
+
+```{python}
+ggplot(economics, aes(x='month', y='uempmed', color='year'))+geom_point()
+```
+
+### Seasonal plot with lines
+
+```{python}
+ggplot(economics, aes(x='month', y='uempmed',group='year' ,color='year'))+geom_point()+geom_line()
+```
+
+
+### Question 2: What potential issues or areas for improvement can you identify in the plot?
+
+### Fix x-axis
+
+```{python}
+ggplot(economics, aes(x='month', y='uempmed',group='year' ,color='year'))+geom_point()+geom_line()+scale_x_continuous(breaks=range(1, 13))  
+```
+
+### Add titles
+
+```{python}
+    ggplot(economics, aes(x='month', y='uempmed', group='year', color='year')) + geom_point() + geom_line() + scale_x_continuous(breaks=range(1, 13)) +  labs(
+        title="Median Duration of Unemployment by Month",
+        x="Month",
+        y="Unemployment",
+        color="Year"
+    ) + theme_minimal()
+
+
+```
+
+# Exercise 1
+
+Visualize [Air Passengers](AirPassengers.csv) dataset.
+
