@@ -11,11 +11,10 @@ import pandas as pd
 import plotnine as p9 
 from plotnine import *
 from plotnine.data import *
-import pandas as pd
 import numpy as np
 ```
 
-# Data
+# Working with Built-in Data Set
 
 ## `economics` data set
 
@@ -23,12 +22,11 @@ import numpy as np
 economics
 ```
 
-
 ```{python}
 economics.info()
 ```
 
-# Time Series Data Wrangling
+# Time Series Data Wrangling Part 1: Create new time-based variables
 
 ## Task 1: Create `year` and `month` columns
 
@@ -99,7 +97,6 @@ ggplot(economics, aes(x='month', y='uempmed', color='year'))+geom_point()
 ggplot(economics, aes(x='month', y='uempmed',group='year' ,color='year'))+geom_point()+geom_line()
 ```
 
-
 ### Question 2: What potential issues or areas for improvement can you identify in the plot?
 
 ### Fix x-axis
@@ -121,7 +118,331 @@ ggplot(economics, aes(x='month', y='uempmed',group='year' ,color='year'))+geom_p
 
 ```
 
+### Box-plots: monthly variation
+
+```{python}
+    ggplot(economics, aes(x='month', y='uempmed', group='month', color='month')) + geom_boxplot() + scale_x_continuous(breaks=range(1, 13))
+
+
+```
+
+### Box-plots: yearly variation
+
+```{python}
+    ggplot(economics, aes(x='year', y='uempmed', group='year', color='year')) + geom_boxplot() 
+
+
+```
+
 # Exercise 1
 
 Visualize [Air Passengers](AirPassengers.csv) dataset.
 
+Step 1: Read data
+
+```{python}
+airpassenger = pd.read_csv('AirPassengers.csv')
+```
+
+Step 2: About the dataset
+
+```{python}
+airpassenger
+```
+
+```{python}
+airpassenger.head()
+```
+
+```{python}
+airpassenger.info()
+```
+
+
+# Time Series Data Wrangling Part 2: Type Convertions
+
+## Cross Sectional Dataset
+
+```{python}
+import pandas as pd
+data = {
+  "ID": [1, 2, 3],
+  "calories": [420, 380, 390]
+  
+}
+
+#load data into a DataFrame object:
+dfc = pd.DataFrame(data)
+dfc
+dfc.info()
+```
+
+## Time Series Dataset
+
+```{python}
+data = {
+  "Year": [2019, 2020, 2021],
+  "Sales": [490, 980, 260]
+  
+}
+
+#load data into a DataFrame object:
+dft = pd.DataFrame(data)
+dft
+dft.info()
+```
+
+## Air Passenger Dataset
+
+```{python}
+airpassenger.info()
+```
+
+### Time Series Plot for Air Passenger Dataset
+
+```{python}
+ggplot(airpassenger, aes(x='Month', y='#Passengers'))+geom_line()
+```
+
+## Convert to Time Column
+
+```{python}
+from datetime import datetime
+airpassenger['Month']= pd.to_datetime(airpassenger['Month'])
+airpassenger.info()
+```
+
+<!--https://thiyanga-spatiotemporal.netlify.app/posts/time_series/file1.html#/seasonal-plots-6-->
+
+# Index - Yearly
+
+## Method 1
+
+```{python}
+index1 = pd.DatetimeIndex(['2012', '2013', '2014', '2015', '2016'])
+data1 = pd.Series([123, 39, 78, 52, 110], index=index1)
+data1
+```
+
+## Method 2
+
+freq='AS' for start of year
+
+```{python}
+index2 = pd.date_range("2012", periods=5, freq='AS')
+index2
+```
+
+
+```{python}
+data2 = pd.Series([123, 39, 78, 52, 110], index=index2)
+data2
+```
+
+## Method 3
+
+freq='A' end of year frequency
+
+```{python}
+index3 = pd.date_range("2012", periods=5, freq='A')
+index3
+```
+
+
+```{python}
+data3 = pd.Series([123, 39, 78, 52, 110], index=index3)
+data3
+```
+
+## Method 4
+
+Annual indexing with arbitrary month
+
+```{python}
+index4 = pd.date_range("2012", periods=5, freq='AS-NOV')
+index4
+```
+
+
+```{python}
+data4 = pd.Series([123, 39, 78, 52, 110], index=index4)
+data4
+
+```
+
+## Method 5
+
+Year Only
+
+```{python}
+index = pd.period_range('2012-01', periods=8, freq='A')
+index
+```
+
+# Index - Monthly
+
+## Method 1
+
+```{python}
+index = pd.period_range('2022-01', periods=8, freq='M')
+index
+```
+
+## Method 2
+
+```{python}
+index = pd.period_range(start='2022-01-01', end='2022-08-02', freq='M')
+index
+```
+
+# Index - Quarterly
+
+```{python}
+index = pd.period_range('2022-01', periods=8, freq='Q')
+index
+```
+
+# Index - Daily
+
+```{python}
+index = pd.period_range('2022-01-01', periods=8, freq='D')
+index
+```
+
+# Index - hourly
+
+## Method 1
+
+Range of hourly timestamps
+
+```{python}
+pd.period_range('2022-01', periods=8, freq='H')
+```
+
+## Method 2
+
+```{python}
+pd.timedelta_range(0, periods=10, freq='H')
+```
+
+# ACF and PACF plots
+
+## Preparing data
+
+```{python}
+import pandas as pd
+from matplotlib import pyplot as plt
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+# Select relevant data, index by Date
+data = airpassenger[['Month', '#Passengers']].set_index(['Month'])
+# Calculate the ACF (via statsmodel)
+data
+```
+
+## ACF plot
+
+```{python}
+data.info()
+```
+
+```{python}
+fig, axes = plt.subplots(1, 2, figsize=(12, 5))
+plot_acf(data, lags=50)
+axes[0].set_title('ACF Plot')
+
+plot_pacf(data, lags=50)
+axes[1].set_title('PACF Plot')
+plt.tight_layout()
+plt.show()
+```
+
+### Your turn: Obtain ACF and PACF plot for economics dataset
+
+# Generate Time Dependent Variables
+
+## Generate a sequence
+
+```{python}
+%matplotlib inline
+%config InlineBackend.figure_format = 'svg' 
+import warnings
+warnings.filterwarnings('ignore')
+
+import numpy as np
+import pandas as pd
+import datetime
+from math import ceil
+from plotnine import * # use python's ggplot2
+
+ts = pd.date_range('1/1/2020', periods = 366) # generate 2020 all year data, sum up 366 days
+ts
+
+```
+
+## convert Datetime into string
+
+```{python}
+ts = pd.Series(ts).apply(str) 
+```
+
+## extract YYYY-MM-DD date 
+
+```{python}
+new = ts.str.split(" ", n = 1, expand = True) # extract YYYY-MM-DD date 
+new
+```
+
+```{python}
+ts = new[0]
+ts
+```
+
+##  Slicing month from YYYY-MM-DD format
+
+```{python}
+month = ts.apply(lambda x: int(x[5:7])) 
+month
+```
+
+##  Slicing day from YYYY-MM-DD format
+
+```{python}
+month = ts.apply(lambda x: int(x[8:10])) 
+month
+```
+
+
+## Extrating days of the week
+
+```{python}
+def week_day(date):
+    '''generate week days from YYYY-MM-DD format'''
+    year, month, day = (int(x) for x in date.split('-'))   
+    answer = datetime.date(year, month, day).weekday() 
+    answer = int(answer) + 1
+    return answer
+
+weekdays = ts.apply(week_day)
+weekdays
+
+```
+
+```{python}
+df = pd.DataFrame({'date_time': ts, 'weekdays':weekdays,
+              'mday':mday,'month': month,
+              'val': np.random.randn(366)}) # val is random numbers
+              df
+```
+
+## Labelling days and months
+
+```{python}
+num_weekdays = {1:'Mon',2:'Tue',3: 'Wed',4:'Thu',5 :'Fri',6:'Sat', 7 : 'Sun'} # map between number and weekdays
+num_mont = {1:'Jan',2:'Feb',3:'Mar',4:'Apr', 5: 'May',6:'Jun', 7:'Jul', 8:'Aug',
+            9:'Sep',10:'Oct',11:'Nov', 12:'Dec'}
+
+df['weekdays'] = df['weekdays'].map(num_weekdays)
+df['month'] = df['month'].map(num_mont)
+
+df
+```

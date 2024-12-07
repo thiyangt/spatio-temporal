@@ -256,9 +256,9 @@ The autocorrelation function of ${X_t}$ at lag $(h)$ is
 
 $$\rho_X(h)=\frac{\gamma_X(h)}{\gamma_X(0)}=Cor(X_{t+h}, X_t).$$
 
-## Weekly stationary
+## Weakly stationary
 
-A time series ${X_t}$ is called weekly stationary if
+A time series ${X_t}$ is called weakly stationary if
 
 -   $\mu_X(t)$ is independent of $t$.
 

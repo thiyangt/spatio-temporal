@@ -13,7 +13,7 @@
         "\n",
         "# Loading packages\n"
       ],
-      "id": "2bd086e3"
+      "id": "2f0fe40e"
     },
     {
       "cell_type": "code",
@@ -23,10 +23,9 @@
         "import plotnine as p9 \n",
         "from plotnine import *\n",
         "from plotnine.data import *\n",
-        "import pandas as pd\n",
         "import numpy as np"
       ],
-      "id": "1d31d576",
+      "id": "7c8270b7",
       "execution_count": null,
       "outputs": []
     },
@@ -34,11 +33,11 @@
       "cell_type": "markdown",
       "metadata": {},
       "source": [
-        "# Data\n",
+        "# Working with Built-in Data Set\n",
         "\n",
         "## `economics` data set\n"
       ],
-      "id": "799383c7"
+      "id": "2499da0b"
     },
     {
       "cell_type": "code",
@@ -46,7 +45,7 @@
       "source": [
         "economics"
       ],
-      "id": "94e24688",
+      "id": "2d8ccde2",
       "execution_count": null,
       "outputs": []
     },
@@ -56,7 +55,7 @@
       "source": [
         "economics.info()"
       ],
-      "id": "932516b8",
+      "id": "0dbb7763",
       "execution_count": null,
       "outputs": []
     },
@@ -64,11 +63,11 @@
       "cell_type": "markdown",
       "metadata": {},
       "source": [
-        "# Time Series Data Wrangling\n",
+        "# Time Series Data Wrangling Part 1: Create new time-based variables\n",
         "\n",
         "## Task 1: Create `year` and `month` columns\n"
       ],
-      "id": "8fb88daa"
+      "id": "773dbde5"
     },
     {
       "cell_type": "code",
@@ -78,7 +77,7 @@
         "economics['month'] = economics['date'].dt.month\n",
         "economics"
       ],
-      "id": "28a43a63",
+      "id": "a0c36806",
       "execution_count": null,
       "outputs": []
     },
@@ -92,7 +91,7 @@
         "\n",
         "### Plot 1: Dot chart\n"
       ],
-      "id": "7925f226"
+      "id": "99ffcf67"
     },
     {
       "cell_type": "code",
@@ -105,7 +104,7 @@
         "    + labs(x='date', y='median duration of unemployment, in week')\n",
         ")"
       ],
-      "id": "24a636c2",
+      "id": "f2c3ca98",
       "execution_count": null,
       "outputs": []
     },
@@ -115,7 +114,7 @@
       "source": [
         "### Plot 2: Line chart\n"
       ],
-      "id": "44e8a892"
+      "id": "3a4861b5"
     },
     {
       "cell_type": "code",
@@ -126,7 +125,7 @@
         "    ggplot(economics, aes(x='date', y='uempmed')) + geom_line() \n",
         ")"
       ],
-      "id": "c0115de9",
+      "id": "50d911ff",
       "execution_count": null,
       "outputs": []
     },
@@ -136,7 +135,7 @@
       "source": [
         "### Plot 3: Dot and Line Chart\n"
       ],
-      "id": "3b95ffa8"
+      "id": "953da7ea"
     },
     {
       "cell_type": "code",
@@ -147,7 +146,7 @@
         "    ggplot(economics, aes(x='date', y='uempmed')) + geom_line() + geom_point()\n",
         ")"
       ],
-      "id": "6f84234b",
+      "id": "e4646a72",
       "execution_count": null,
       "outputs": []
     },
@@ -157,7 +156,7 @@
       "source": [
         "### Change Point Size\n"
       ],
-      "id": "83b29d57"
+      "id": "c8259703"
     },
     {
       "cell_type": "code",
@@ -165,7 +164,7 @@
       "source": [
         "ggplot(economics, aes(x='date', y='uempmed')) + geom_line() + geom_point(size=0.3)"
       ],
-      "id": "5ab8de04",
+      "id": "5632d5b7",
       "execution_count": null,
       "outputs": []
     },
@@ -175,7 +174,7 @@
       "source": [
         "### Change Point Colour\n"
       ],
-      "id": "b355fe0e"
+      "id": "5be4eff5"
     },
     {
       "cell_type": "code",
@@ -183,7 +182,7 @@
       "source": [
         "ggplot(economics, aes(x='date', y='uempmed')) + geom_line() + geom_point(size=0.3, colour=\"blue\")"
       ],
-      "id": "b935cad1",
+      "id": "92b88772",
       "execution_count": null,
       "outputs": []
     },
@@ -197,7 +196,7 @@
         "\n",
         "### Seasonal plot with lines\n"
       ],
-      "id": "ba93bb17"
+      "id": "e4efa747"
     },
     {
       "cell_type": "code",
@@ -205,7 +204,7 @@
       "source": [
         "ggplot(economics, aes(x='month', y='uempmed', color='year'))+geom_point()"
       ],
-      "id": "54ee3731",
+      "id": "41d21820",
       "execution_count": null,
       "outputs": []
     },
@@ -215,7 +214,7 @@
       "source": [
         "### Seasonal plot with lines\n"
       ],
-      "id": "fa291cc4"
+      "id": "7b2bdb7a"
     },
     {
       "cell_type": "code",
@@ -223,7 +222,7 @@
       "source": [
         "ggplot(economics, aes(x='month', y='uempmed',group='year' ,color='year'))+geom_point()+geom_line()"
       ],
-      "id": "56f74248",
+      "id": "fcf6cb77",
       "execution_count": null,
       "outputs": []
     },
@@ -235,7 +234,7 @@
         "\n",
         "### Fix x-axis\n"
       ],
-      "id": "a1465638"
+      "id": "2a79f2be"
     },
     {
       "cell_type": "code",
@@ -243,7 +242,7 @@
       "source": [
         "ggplot(economics, aes(x='month', y='uempmed',group='year' ,color='year'))+geom_point()+geom_line()+scale_x_continuous(breaks=range(1, 13))  "
       ],
-      "id": "f819c63f",
+      "id": "5bcc2827",
       "execution_count": null,
       "outputs": []
     },
@@ -253,7 +252,7 @@
       "source": [
         "### Add titles\n"
       ],
-      "id": "b9b2d248"
+      "id": "7524f435"
     },
     {
       "cell_type": "code",
@@ -266,7 +265,43 @@
         "        color=\"Year\"\n",
         "    ) + theme_minimal()\n"
       ],
-      "id": "defca2ec",
+      "id": "61aac9fd",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Box-plots: monthly variation\n"
+      ],
+      "id": "b2e16174"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "    ggplot(economics, aes(x='month', y='uempmed', group='month', color='month')) + geom_boxplot() + scale_x_continuous(breaks=range(1, 13))\n"
+      ],
+      "id": "3a402482",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Box-plots: yearly variation\n"
+      ],
+      "id": "824f9d89"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "    ggplot(economics, aes(x='year', y='uempmed', group='year', color='year')) + geom_boxplot() \n"
+      ],
+      "id": "c55c3e84",
       "execution_count": null,
       "outputs": []
     },
@@ -276,9 +311,676 @@
       "source": [
         "# Exercise 1\n",
         "\n",
-        "Visualize [Air Passengers](AirPassengers.csv) dataset.\n"
+        "Visualize [Air Passengers](AirPassengers.csv) dataset.\n",
+        "\n",
+        "Step 1: Read data\n"
       ],
-      "id": "ee86c599"
+      "id": "939c1653"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "airpassenger = pd.read_csv('AirPassengers.csv')"
+      ],
+      "id": "2c70b370",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "Step 2: About the dataset\n"
+      ],
+      "id": "c1808607"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "airpassenger"
+      ],
+      "id": "f289ca00",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "airpassenger.head()"
+      ],
+      "id": "1d03eda7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "airpassenger.info()"
+      ],
+      "id": "5e57c235",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Time Series Data Wrangling Part 2: Type Convertions\n",
+        "\n",
+        "## Cross Sectional Dataset\n"
+      ],
+      "id": "af8d8f71"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "data = {\n",
+        "  \"ID\": [1, 2, 3],\n",
+        "  \"calories\": [420, 380, 390]\n",
+        "  \n",
+        "}\n",
+        "\n",
+        "#load data into a DataFrame object:\n",
+        "dfc = pd.DataFrame(data)\n",
+        "dfc\n",
+        "dfc.info()"
+      ],
+      "id": "fa5bb463",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Time Series Dataset\n"
+      ],
+      "id": "b9e78dec"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data = {\n",
+        "  \"Year\": [2019, 2020, 2021],\n",
+        "  \"Sales\": [490, 980, 260]\n",
+        "  \n",
+        "}\n",
+        "\n",
+        "#load data into a DataFrame object:\n",
+        "dft = pd.DataFrame(data)\n",
+        "dft\n",
+        "dft.info()"
+      ],
+      "id": "d4a7bd5e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Air Passenger Dataset\n"
+      ],
+      "id": "6d97420c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "airpassenger.info()"
+      ],
+      "id": "184afcbb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Time Series Plot for Air Passenger Dataset\n"
+      ],
+      "id": "e109a504"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ggplot(airpassenger, aes(x='Month', y='#Passengers'))+geom_line()"
+      ],
+      "id": "4ea9f3d6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Convert to Time Column\n"
+      ],
+      "id": "57a8b6b8"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "from datetime import datetime\n",
+        "airpassenger['Month']= pd.to_datetime(airpassenger['Month'])\n",
+        "airpassenger.info()"
+      ],
+      "id": "57b9ea77",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "<!--https://thiyanga-spatiotemporal.netlify.app/posts/time_series/file1.html#/seasonal-plots-6-->\n",
+        "\n",
+        "# Index - Yearly\n",
+        "\n",
+        "## Method 1\n"
+      ],
+      "id": "1d10ef72"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "index1 = pd.DatetimeIndex(['2012', '2013', '2014', '2015', '2016'])\n",
+        "data1 = pd.Series([123, 39, 78, 52, 110], index=index1)\n",
+        "data1"
+      ],
+      "id": "084fcfbc",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Method 2\n",
+        "\n",
+        "freq='AS' for start of year\n"
+      ],
+      "id": "0506efca"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "index2 = pd.date_range(\"2012\", periods=5, freq='AS')\n",
+        "index2"
+      ],
+      "id": "1eb65f75",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data2 = pd.Series([123, 39, 78, 52, 110], index=index2)\n",
+        "data2"
+      ],
+      "id": "1f45a8d8",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Method 3\n",
+        "\n",
+        "freq='A' end of year frequency\n"
+      ],
+      "id": "67cb8a24"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "index3 = pd.date_range(\"2012\", periods=5, freq='A')\n",
+        "index3"
+      ],
+      "id": "d65ddfa5",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data3 = pd.Series([123, 39, 78, 52, 110], index=index3)\n",
+        "data3"
+      ],
+      "id": "124542ad",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Method 4\n",
+        "\n",
+        "Annual indexing with arbitrary month\n"
+      ],
+      "id": "cc953637"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "index4 = pd.date_range(\"2012\", periods=5, freq='AS-NOV')\n",
+        "index4"
+      ],
+      "id": "5b344fd7",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data4 = pd.Series([123, 39, 78, 52, 110], index=index4)\n",
+        "data4"
+      ],
+      "id": "0a2732c1",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Method 5\n",
+        "\n",
+        "Year Only\n"
+      ],
+      "id": "3fa91043"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "index = pd.period_range('2012-01', periods=8, freq='A')\n",
+        "index"
+      ],
+      "id": "ee86cedb",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Index - Monthly\n",
+        "\n",
+        "## Method 1\n"
+      ],
+      "id": "3542fb48"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "index = pd.period_range('2022-01', periods=8, freq='M')\n",
+        "index"
+      ],
+      "id": "cb0309d6",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Method 2\n"
+      ],
+      "id": "7027d297"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "index = pd.period_range(start='2022-01-01', end='2022-08-02', freq='M')\n",
+        "index"
+      ],
+      "id": "c4b55385",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Index - Quarterly\n"
+      ],
+      "id": "9fe4fdbd"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "index = pd.period_range('2022-01', periods=8, freq='Q')\n",
+        "index"
+      ],
+      "id": "65c03650",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Index - Daily\n"
+      ],
+      "id": "0dc347f4"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "index = pd.period_range('2022-01-01', periods=8, freq='D')\n",
+        "index"
+      ],
+      "id": "dd469112",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Index - hourly\n",
+        "\n",
+        "## Method 1\n",
+        "\n",
+        "Range of hourly timestamps\n"
+      ],
+      "id": "5466a04c"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "pd.period_range('2022-01', periods=8, freq='H')"
+      ],
+      "id": "c762f9ee",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Method 2\n"
+      ],
+      "id": "823c44c5"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "pd.timedelta_range(0, periods=10, freq='H')"
+      ],
+      "id": "c206f884",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# ACF and PACF plots\n",
+        "\n",
+        "## Preparing data\n"
+      ],
+      "id": "3ef189f1"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "import pandas as pd\n",
+        "from matplotlib import pyplot as plt\n",
+        "from statsmodels.graphics.tsaplots import plot_acf, plot_pacf\n",
+        "# Select relevant data, index by Date\n",
+        "data = airpassenger[['Month', '#Passengers']].set_index(['Month'])\n",
+        "# Calculate the ACF (via statsmodel)\n",
+        "data"
+      ],
+      "id": "e28418d2",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## ACF plot\n"
+      ],
+      "id": "4ce34c1e"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "data.info()"
+      ],
+      "id": "f1bbf198",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "fig, axes = plt.subplots(1, 2, figsize=(12, 5))\n",
+        "plot_acf(data, lags=50)\n",
+        "axes[0].set_title('ACF Plot')\n",
+        "\n",
+        "plot_pacf(data, lags=50)\n",
+        "axes[1].set_title('PACF Plot')\n",
+        "plt.tight_layout()\n",
+        "plt.show()"
+      ],
+      "id": "c7982048",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "### Your turn: Obtain ACF and PACF plot for economics dataset\n",
+        "\n",
+        "# Generate Time Dependent Variables\n",
+        "\n",
+        "## Generate a sequence\n"
+      ],
+      "id": "357ba45b"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "%matplotlib inline\n",
+        "%config InlineBackend.figure_format = 'svg' \n",
+        "import warnings\n",
+        "warnings.filterwarnings('ignore')\n",
+        "\n",
+        "import numpy as np\n",
+        "import pandas as pd\n",
+        "import datetime\n",
+        "from math import ceil\n",
+        "from plotnine import * # use python's ggplot2\n",
+        "\n",
+        "ts = pd.date_range('1/1/2020', periods = 366) # generate 2020 all year data, sum up 366 days\n",
+        "ts"
+      ],
+      "id": "50b27bfa",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## convert Datetime into string\n"
+      ],
+      "id": "3f67306a"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ts = pd.Series(ts).apply(str) "
+      ],
+      "id": "03602854",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## extract YYYY-MM-DD date \n"
+      ],
+      "id": "4ea62d68"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "new = ts.str.split(\" \", n = 1, expand = True) # extract YYYY-MM-DD date \n",
+        "new"
+      ],
+      "id": "a3ca3c77",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "ts = new[0]\n",
+        "ts"
+      ],
+      "id": "0738350a",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "##  Slicing month from YYYY-MM-DD format\n"
+      ],
+      "id": "a64a8b82"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "month = ts.apply(lambda x: int(x[5:7])) \n",
+        "month"
+      ],
+      "id": "eb1fd22e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "##  Slicing day from YYYY-MM-DD format\n"
+      ],
+      "id": "8b460f78"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "month = ts.apply(lambda x: int(x[8:10])) \n",
+        "month"
+      ],
+      "id": "e2f4e54e",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Extrating days of the week\n"
+      ],
+      "id": "7b4e34f3"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "def week_day(date):\n",
+        "    '''generate week days from YYYY-MM-DD format'''\n",
+        "    year, month, day = (int(x) for x in date.split('-'))   \n",
+        "    answer = datetime.date(year, month, day).weekday() \n",
+        "    answer = int(answer) + 1\n",
+        "    return answer\n",
+        "\n",
+        "weekdays = ts.apply(week_day)\n",
+        "weekdays"
+      ],
+      "id": "86ebf668",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "df = pd.DataFrame({'date_time': ts, 'weekdays':weekdays,\n",
+        "              'mday':mday,'month': month,\n",
+        "              'val': np.random.randn(366)}) # val is random numbers\n",
+        "              df"
+      ],
+      "id": "30a7c431",
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "## Labelling days and months\n"
+      ],
+      "id": "c39df6be"
+    },
+    {
+      "cell_type": "code",
+      "metadata": {},
+      "source": [
+        "num_weekdays = {1:'Mon',2:'Tue',3: 'Wed',4:'Thu',5 :'Fri',6:'Sat', 7 : 'Sun'} # map between number and weekdays\n",
+        "num_mont = {1:'Jan',2:'Feb',3:'Mar',4:'Apr', 5: 'May',6:'Jun', 7:'Jul', 8:'Aug',\n",
+        "            9:'Sep',10:'Oct',11:'Nov', 12:'Dec'}\n",
+        "\n",
+        "df['weekdays'] = df['weekdays'].map(num_weekdays)\n",
+        "df['month'] = df['month'].map(num_mont)\n",
+        "\n",
+        "df"
+      ],
+      "id": "2d137a24",
+      "execution_count": null,
+      "outputs": []
     }
   ],
   "metadata": {
