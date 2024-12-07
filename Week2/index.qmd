@@ -31,7 +31,7 @@ Derive
 
 -   Autocorrelation function of an MA(1) process
 
-- Partial autocorrelation function of MA(1)
+-   Partial autocorrelation function of MA(1)
 
 ## In-class: Properties of MA(2) process
 
@@ -45,7 +45,7 @@ Derive
 
 -   Autocorrelation function of an MA(2) process
 
-- Partial autocorrelation function of MA(2)
+-   Partial autocorrelation function of MA(2)
 
 ## In-class: Properties of MA(q) process
 

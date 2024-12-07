@@ -1,0 +1,44 @@
+[
+  {
+    "objectID": "Week2/index.html#in-class-properties-of-ma1-process",
+    "href": "Week2/index.html#in-class-properties-of-ma1-process",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "In-class: Properties of MA(1) process",
+    "text": "In-class: Properties of MA(1) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(1) process\nPartial autocorrelation function of MA(1)"
+  },
+  {
+    "objectID": "Week2/index.html#in-class-properties-of-ma2-process",
+    "href": "Week2/index.html#in-class-properties-of-ma2-process",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "In-class: Properties of MA(2) process",
+    "text": "In-class: Properties of MA(2) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(2) process\nPartial autocorrelation function of MA(2)"
+  },
+  {
+    "objectID": "Week2/index.html#in-class-properties-of-maq-process",
+    "href": "Week2/index.html#in-class-properties-of-maq-process",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "In-class: Properties of MA(q) process",
+    "text": "In-class: Properties of MA(q) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an AR(P) process"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "",
+    "text": "Slides 1"
+  },
+  {
+    "objectID": "index.html#lecture-1-november-30-2024",
+    "href": "index.html#lecture-1-november-30-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "",
+    "text": "Slides 1"
+  },
+  {
+    "objectID": "index.html#lecture-2-december-7-2024",
+    "href": "index.html#lecture-2-december-7-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 2: December 7, 2024",
+    "text": "Lecture 2: December 7, 2024\nSlides 2\nPractical 1"
+  }
+]
