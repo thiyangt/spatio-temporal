@@ -103,7 +103,7 @@ Identify multiple frequencies for the followings:
 
 -   Measures the strength of the linear relationship between two variables
 
-$$r = \frac{\sum_{i=1}^{n} (x_i -\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i -\bar{x})^2 \sum_{i=1}^{n} (y_i -\bar{y})^2}}$$  
+$$r = \frac{\sum_{i=1}^{n} (x_i -\bar{x})(y_i-\bar{y})}{\sqrt{\sum_{i=1}^{n} (x_i -\bar{x})^2 \sum_{i=1}^{n} (y_i -\bar{y})^2}}$$
 
 ## Autocorrelation
 
@@ -677,8 +677,6 @@ y2
 
 # Linear Time Series Analysis
 
-
-
 ## Autoregressive Models
 
 $Y_t = \alpha + \phi_1 Y_{t-1} + \phi_2 Y_{t-2} + \dots + \phi_p Y_{t-p} + \epsilon_t$
@@ -695,39 +693,38 @@ $\epsilon_t$ is white noise (error term),
 
 $p$ is the order of the AR model.
 
-
 ## In-class: Properties of AR(1) process
 
 Derive
 
-- Mean
+-   Mean
 
-- Variance
+-   Variance
 
-- Covariance
+-   Covariance
 
-- Autocorrelation function of an AR(1) process
+-   Autocorrelation function of an AR(1) process
 
 ## In-class: Properties of AR(2) process
 
 Derive
 
-- Mean
+-   Mean
 
-- Variance
+-   Variance
 
-- Covariance
+-   Covariance
 
-- Autocorrelation function of an AR(1) process
+-   Autocorrelation function of an AR(2) process
 
 ## In-class: Properties of AR(P) process
 
 Derive
 
-- Mean
+-   Mean
 
-- Variance
+-   Variance
 
-- Covariance
+-   Covariance
 
-- Autocorrelation function of an AR(P) process
+-   Autocorrelation function of an AR(P) process

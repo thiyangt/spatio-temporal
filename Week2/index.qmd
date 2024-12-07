@@ -1,0 +1,60 @@
+---
+title: "DSA 554 3.0 Spatio-temporal Data Analysis"
+subtitle: ""
+author: "Dr. Thiyanga S. Talagala <br/>  Department of Statistics, Faculty of Applied Sciences <br/> University of Sri Jayewardenepura, Sri Lanka"
+format:
+  revealjs:
+    css:
+        - "custom.css"
+    width: 1600
+    height: 900
+    margin: 0.1
+    theme: simple
+    transition: slide
+    background-transition: fade
+    slide-number: true
+    show-slide-number: all
+    title-slide-attributes: 
+      data-background-color: "#081d58"
+      data-background-image: none
+---
+
+## In-class: Properties of MA(1) process
+
+Derive
+
+-   Mean
+
+-   Variance
+
+-   Covariance
+
+-   Autocorrelation function of an MA(1) process
+
+- Partial autocorrelation function of MA(1)
+
+## In-class: Properties of MA(2) process
+
+Derive
+
+-   Mean
+
+-   Variance
+
+-   Covariance
+
+-   Autocorrelation function of an MA(2) process
+
+- Partial autocorrelation function of MA(2)
+
+## In-class: Properties of MA(q) process
+
+Derive
+
+-   Mean
+
+-   Variance
+
+-   Covariance
+
+-   Autocorrelation function of an AR(P) process
