@@ -11,3 +11,9 @@ title: "DSA 554 3.0 Spatio-temporal Data Analysis"
 [Slides 2](/Week2/index.html)
 
 [Practical 1](https://thiyangt.github.io/spts_python_practical/Practical1/)
+
+## Public Holiday: December 14, 2024
+
+## Lecture 3: December 21, 2024
+
+[Slides 3](/Week3/index.html)
