@@ -19,3 +19,5 @@ title: "DSA 554 3.0 Spatio-temporal Data Analysis"
 [Slides 3](/Week3/index.html)
 
 [Practical 2](/Week3p/index.html)
+
+[Practical 3](/Week3p2/index.html)
