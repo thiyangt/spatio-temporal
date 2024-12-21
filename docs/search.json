@@ -1,5 +1,19 @@
 [
   {
+    "objectID": "Week3p/index.html",
+    "href": "Week3p/index.html",
+    "title": "Time Series Forecasting with Python",
+    "section": "",
+    "text": "import pandas as pd\nimport plotnine as p9 \nfrom plotnine import *\nfrom plotnine.data import *\nimport numpy as np"
+  },
+  {
+    "objectID": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
+    "href": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
+    "title": "Time Series Forecasting with Python",
+    "section": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset.",
+    "text": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset."
+  },
+  {
     "objectID": "Week2/index.html#in-class-properties-of-ma1-process",
     "href": "Week2/index.html#in-class-properties-of-ma1-process",
     "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
@@ -53,7 +67,7 @@
     "href": "index.html#lecture-3-december-21-2024",
     "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
     "section": "Lecture 3: December 21, 2024",
-    "text": "Lecture 3: December 21, 2024\nSlides 3"
+    "text": "Lecture 3: December 21, 2024\nSlides 3\nPractical 2"
   },
   {
     "objectID": "Week1/index.html#time-series",

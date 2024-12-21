@@ -2,3 +2,240 @@
 title: "Time Series Forecasting with Python"
 jupyter: python3
 ---
+
+
+# Loading packages
+
+```{python}
+import pandas as pd
+import plotnine as p9 
+from plotnine import *
+from plotnine.data import *
+import numpy as np
+```
+
+# Read data
+
+```{python}
+airpassenger = pd.read_csv('AirPassengers.csv')
+airpassenger['Month']= pd.to_datetime(airpassenger['Month'])
+```
+
+# Visualise data 
+
+```{python}
+ggplot(airpassenger, aes(x='Month', y='#Passengers'))+geom_line()
+```
+
+# Training set vs Test set
+
+```{python}
+# Define training and test separation point
+split_date = '1960-01'
+
+# Visualize data
+g = (
+    ggplot(airpassenger, aes(x='Month', y='#Passengers')) +
+    geom_line(color='blue') +
+    geom_vline(xintercept=pd.to_datetime(split_date), linetype='dashed', color='red') +
+    labs(
+        title='Air Passenger Counts Over Time',
+        x='Month',
+        y='Number of Passengers'
+    ) +
+    theme_minimal()
+)
+
+# Print plot
+print(g)
+
+```
+
+# Apply log transformation
+
+```{python}
+airpassenger['Log_Passengers'] = np.log(airpassenger['#Passengers'])
+
+# Define training and test separation point
+split_date = '1960-01-01'
+
+# Visualize data
+g = (
+    ggplot(airpassenger, aes(x='Month', y='Log_Passengers')) +
+    geom_line(color='blue') +
+    geom_vline(xintercept=pd.to_datetime(split_date), linetype='dashed', color='red') +
+    labs(
+        title='Log-Transformed Air Passenger Counts Over Time',
+        x='Month',
+        y='Log(Number of Passengers)'
+    ) +
+    theme_minimal()
+)
+
+# Print plot
+print(g)
+```
+
+# Set training data set and test dataset 
+
+```{python}
+training_data = airpassenger[airpassenger['Month'] < pd.to_datetime(split_date)]
+test_data = airpassenger[airpassenger['Month'] >= pd.to_datetime(split_date)]
+```
+
+# Plot ACF and PACF for training data
+
+```{python}
+import matplotlib.pyplot as plt
+from statsmodels.graphics.tsaplots import plot_acf, plot_pacf
+plt.figure(figsize=(12, 6))
+plt.subplot(1, 2, 1)
+plot_acf(training_data['Log_Passengers'], lags=40, ax=plt.gca())
+plt.title('ACF of Log-Transformed Training Data')
+
+plt.subplot(1, 2, 2)
+plot_pacf(training_data['Log_Passengers'], lags=40, ax=plt.gca(), method='ywm')
+plt.title('PACF of Log-Transformed Training Data')
+
+plt.tight_layout()
+plt.show()
+```
+
+# Apply First-Order Seasonal Difference and Obtain ACF and PACF
+
+```{python}
+airpassenger['LogSeasonal_Diff'] = airpassenger['Log_Passengers'] - airpassenger['Log_Passengers'].shift(12)
+airpassenger.head(14)
+
+```
+
+```{python}
+airpassenger.tail(12)
+```
+
+
+
+# Remove rows with NaN values from the airpassenger DataFrame
+
+```{python}
+airpassenger.dropna(inplace=True)
+
+# Display the cleaned DataFrame
+print(airpassenger)
+
+```
+
+# Plot ACF and PACF of the log-seasonally differenced series
+
+```{python}
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+# ACF plot
+plot_acf(airpassenger['LogSeasonal_Diff'], ax=axes[0], lags=40)
+axes[0].set_title('ACF of Log-Seasonally Differenced Series')
+
+# PACF plot
+plot_pacf(airpassenger['LogSeasonal_Diff'], ax=axes[1], lags=40)
+axes[1].set_title('PACF of Log-Seasonally Differenced Series')
+
+plt.tight_layout()
+plt.show()
+```
+
+
+# Apply First-Order Differencing 
+
+
+```{python}
+airpassenger['LogSeasonal_Diff.NonSeaDiff'] = airpassenger['LogSeasonal_Diff'] - airpassenger['LogSeasonal_Diff'].shift(1)
+airpassenger.head(14)
+airpassenger.dropna(inplace=True)
+```
+
+
+```{python}
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+# ACF plot
+plot_acf(airpassenger['LogSeasonal_Diff.NonSeaDiff'], ax=axes[0], lags=40)
+axes[0].set_title('ACF of Log-Seasonally Differenced and Non Seasonally Differenced Series')
+
+# PACF plot
+plot_pacf(airpassenger['LogSeasonal_Diff.NonSeaDiff'], ax=axes[1], lags=40)
+axes[1].set_title('PACF of Log-Seasonally Differenced and Non-Seasonally DIfferenced Series')
+
+plt.tight_layout()
+plt.show()
+```
+
+# Fit ARIMA(0,1,1)(0,1,1)[12] model
+
+```{python}
+from statsmodels.tsa.arima.model import ARIMA
+model = ARIMA(airpassenger['Log_Passengers'], order=(0, 1, 1), seasonal_order=(0, 1, 1, 12))
+fitted_model = model.fit()
+forecast = fitted_model.forecast(steps=13)
+forecast
+```
+
+# Residual Analysis
+
+```{python}
+import seaborn as sns
+# Compute residuals
+train_forecast = fitted_model.fittedvalues
+residuals = airpassenger['Log_Passengers'] - train_forecast
+
+# Plot residuals
+plt.figure(figsize=(10, 6))
+plt.plot(airpassenger['Month'], residuals, label='Residuals', color='purple')
+plt.axhline(0, color='black', linewidth=1)
+plt.title('Residuals from ARIMA Model')
+plt.xlabel('Month')
+plt.ylabel('Residuals')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+# Plot the ACF and PACF of residuals to check for autocorrelation
+plt.figure(figsize=(12, 6))
+
+plt.subplot(1, 2, 1)
+plot_acf(residuals, lags=20, ax=plt.gca())
+plt.title('ACF of Residuals')
+
+plt.subplot(1, 2, 2)
+plot_pacf(residuals, lags=20, ax=plt.gca())
+plt.title('PACF of Residuals')
+
+plt.tight_layout()
+plt.show()
+
+# Histogram of residuals to check for normality
+plt.figure(figsize=(10, 6))
+sns.histplot(residuals, kde=True, color='purple', bins=20)
+plt.title('Histogram of Residuals')
+plt.xlabel('Residuals')
+plt.ylabel('Frequency')
+plt.show()
+```
+
+# Back-transform forecasted log values to original scale
+
+```{python}
+forecast_original = np.exp(forecast)
+test_data['forecast_log'] = forecast
+test_data['forecast_passengers'] = forecast_original
+test_data
+```
+
+# Compute MSE
+
+```{python}
+from sklearn.metrics import mean_squared_error
+mse = mean_squared_error(test_data['#Passengers'], test_data['forecast_passengers'])
+
+print(f'Mean Squared Error (MSE): {mse}')
+```
+
+## Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset.
