@@ -21,3 +21,5 @@ title: "DSA 554 3.0 Spatio-temporal Data Analysis"
 [Practical 2](/Week3p/index.html)
 
 [Practical 3](/Week3p2/index.html)
+
+[Slides 4](https://thiyanga-spatiotemporal.netlify.app/posts/spatial/spatial_analysis.pdf)
