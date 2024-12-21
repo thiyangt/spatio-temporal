@@ -1,8 +1,7 @@
 ---
-title: "Time Series Forecasting with Python"
+title: "Time Series Forecasting with Python: Method 1"
 jupyter: python3
 ---
-
 
 # Loading packages
 
@@ -21,7 +20,7 @@ airpassenger = pd.read_csv('AirPassengers.csv')
 airpassenger['Month']= pd.to_datetime(airpassenger['Month'])
 ```
 
-# Visualise data 
+# Visualise data
 
 ```{python}
 ggplot(airpassenger, aes(x='Month', y='#Passengers'))+geom_line()
@@ -76,7 +75,7 @@ g = (
 print(g)
 ```
 
-# Set training data set and test dataset 
+# Set training data set and test dataset
 
 ```{python}
 training_data = airpassenger[airpassenger['Month'] < pd.to_datetime(split_date)]
@@ -113,8 +112,6 @@ airpassenger.head(14)
 airpassenger.tail(12)
 ```
 
-
-
 # Remove rows with NaN values from the airpassenger DataFrame
 
 ```{python}
@@ -142,16 +139,13 @@ plt.tight_layout()
 plt.show()
 ```
 
-
-# Apply First-Order Differencing 
-
+# Apply First-Order Differencing
 
 ```{python}
 airpassenger['LogSeasonal_Diff.NonSeaDiff'] = airpassenger['LogSeasonal_Diff'] - airpassenger['LogSeasonal_Diff'].shift(1)
 airpassenger.head(14)
 airpassenger.dropna(inplace=True)
 ```
-
 
 ```{python}
 fig, axes = plt.subplots(1, 2, figsize=(16, 6))
@@ -168,7 +162,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-# Fit ARIMA(0,1,1)(0,1,1)[12] model
+# Fit ARIMA(0,1,1)(0,1,1)\[12\] model
 
 ```{python}
 from statsmodels.tsa.arima.model import ARIMA
