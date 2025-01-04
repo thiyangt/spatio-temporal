@@ -30,4 +30,6 @@ title: "DSA 554 3.0 Spatio-temporal Data Analysis"
 
 <!--[Slides 5](https://thiyangt.github.io/spatial-modelling/#/outline)-->
 
-[Practical 4](/Week4p/index.R)
+[Practical 4 - With R](/Week4p/index.R)
+
+[Practical 5 - With Python](/Week4p2/index.html)
