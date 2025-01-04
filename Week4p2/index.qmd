@@ -1,0 +1,46 @@
+---
+title: "Spatial Visualization with Python"
+jupyter: python3
+---
+
+# Loading packages
+
+```{python}
+import geopandas as gpd
+```
+
+# Load and inspect meuse data
+
+```{python}
+meuse = gpd.read_file("meuse.shp")  # Adjust the file path as needed
+
+# Inspect the first few rows of the data
+print(meuse.head())
+```
+
+# Visualise the data
+
+```{python}
+import matplotlib.pyplot as plt
+
+# Plot the meuse dataset (points in this case)
+meuse.plot(marker='o', color='blue', markersize=5)
+
+# Show the plot
+plt.title('Meuse Spatial Data Visualization')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
+plt.show()
+```
+
+# Customize plot
+
+```{python}
+meuse.plot(column='zinc', cmap='viridis', legend=True, markersize=5)
+
+# Show the plot
+plt.title('Zinc Concentration in Meuse Data')
+plt.xlabel('Longitude')
+plt.ylabel('Latitude')
+plt.show()
+```
