@@ -1,339 +1,80 @@
 [
   {
-    "objectID": "Week3p2/index.html",
-    "href": "Week3p2/index.html",
-    "title": "Time Series Forecasting with Python: Method 2",
+    "objectID": "Week3p/index.html",
+    "href": "Week3p/index.html",
+    "title": "Time Series Forecasting with Python: Method 1",
     "section": "",
-    "text": "import pandas as pd\nimport plotnine as p9 \nfrom plotnine import *\nfrom plotnine.data import *\nimport numpy as np\n\n\n\n\nPlot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\n\n3. If the data are non-stationary, take first differences of the data until the data are stationary.\n4. Examine the ACF/PACF to identify a suitable model.\n5. Try your chosen model(s), and use the AICc to search for a better model.\n\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts.\n\n\n\n\n\nPlot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nUse AutoARIMA to select a model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts.\n\n\n\n\n\nfrom sktime import *\nfrom sktime.datasets import load_airline\nfrom sktime.utils.plotting import plot_series\ny = load_airline()\nplot_series(y)\n\n(&lt;Figure size 1536x384 with 1 Axes&gt;,\n &lt;Axes: ylabel='Number of airline passengers'&gt;)\n\n\n\n\n\n\n\n\n\n\n\n\nTake other important visualizations\n\n\n\n\nimport numpy as np\nimport pandas as pd\nfrom sktime.forecasting.base import ForecastingHorizon\nfh = ForecastingHorizon(\n    pd.PeriodIndex(pd.date_range(\"1960-01\", periods=12, freq=\"M\")), is_relative=False\n)\nfh\n\nForecastingHorizon(['1960-01', '1960-02', '1960-03', '1960-04', '1960-05', '1960-06',\n             '1960-07', '1960-08', '1960-09', '1960-10', '1960-11', '1960-12'],\n            dtype='period[M]', is_relative=False)\n\n\n\n\n\n\nfrom sktime.forecasting.model_selection import temporal_train_test_split\ny_train, y_test = temporal_train_test_split(y, fh=fh)\n\n\n\n\n\nfrom sktime.forecasting.statsforecast import StatsForecastAutoARIMA\nimport numpy as np\nforecaster = StatsForecastAutoARIMA(  \n    sp=12,  max_p=2, max_q=2\n)\ny_train.naturallog = np.log(y_train)\nforecaster.fit(y_train.naturallog)\n\nStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)Please rerun this cell to show the HTML repr or trust the notebook.StatsForecastAutoARIMA?Documentation for StatsForecastAutoARIMAStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)\n\n\nsp: Number of observations per unit of time.\nHelp: https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html\n\n\n\nPreferm residual analysis\n\n\n\n\ny_pred = forecaster.predict(fh)\ny_pred \n\n1960-01    6.038882\n1960-02    5.989590\n1960-03    6.146032\n1960-04    6.119674\n1960-05    6.159455\n1960-06    6.304701\n1960-07    6.432675\n1960-08    6.444805\n1960-09    6.266803\n1960-10    6.136178\n1960-11    6.007715\n1960-12    6.114486\nFreq: M, Name: Number of airline passengers, dtype: float64\n\n\n\n\n\nWrite a code to obtain model parameter estimates.\n\n\n\nStep 1: Select the number of differences d and D via unit root tests and strength of seasonality measure.\nStep 2: Try four possible models to start with:\n\n\n\n\n\\(ARIMA(2, d, 2)\\) if \\(m = 1\\) and \\(ARIMA(2, d, 2)(1, D, 1)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 0)(0, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(1, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(1, d, 0)(1, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 1)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 1)(0, D, 1)_m\\) if \\(m &gt; 1\\).\n\n\n\n\nStep 3: Select the model with the smallest AICc from step 2. This becomes the current model.\nStep 4: Consider up to 13 variations on the current model:\n\nVary one of \\(p, q, P\\) and \\(Q\\) from the current model by \\(\\pm 1\\).\n\\(p, q\\) both vary from the current model by \\(\\pm 1\\).\n\\(P, Q\\) both vary from the current model by \\(\\pm 1\\).\nInclude or exclude the constant term from the current model. Repeat step 4 until no lower AICc can be found."
+    "text": "import pandas as pd\nimport plotnine as p9 \nfrom plotnine import *\nfrom plotnine.data import *\nimport numpy as np"
   },
   {
-    "objectID": "Week3p2/index.html#modelling-steps",
-    "href": "Week3p2/index.html#modelling-steps",
-    "title": "Time Series Forecasting with Python: Method 2",
+    "objectID": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
+    "href": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
+    "title": "Time Series Forecasting with Python: Method 1",
+    "section": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset.",
+    "text": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset."
+  },
+  {
+    "objectID": "Week2/index.html#in-class-properties-of-ma1-process",
+    "href": "Week2/index.html#in-class-properties-of-ma1-process",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "In-class: Properties of MA(1) process",
+    "text": "In-class: Properties of MA(1) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(1) process\nPartial autocorrelation function of MA(1)"
+  },
+  {
+    "objectID": "Week2/index.html#in-class-properties-of-ma2-process",
+    "href": "Week2/index.html#in-class-properties-of-ma2-process",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "In-class: Properties of MA(2) process",
+    "text": "In-class: Properties of MA(2) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(2) process\nPartial autocorrelation function of MA(2)"
+  },
+  {
+    "objectID": "Week2/index.html#in-class-properties-of-maq-process",
+    "href": "Week2/index.html#in-class-properties-of-maq-process",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "In-class: Properties of MA(q) process",
+    "text": "In-class: Properties of MA(q) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an AR(P) process"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
     "section": "",
-    "text": "Plot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\n\n3. If the data are non-stationary, take first differences of the data until the data are stationary.\n4. Examine the ACF/PACF to identify a suitable model.\n5. Try your chosen model(s), and use the AICc to search for a better model.\n\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+    "text": "Slides 1"
   },
   {
-    "objectID": "Week3p2/index.html#modelling-steps-autoarima",
-    "href": "Week3p2/index.html#modelling-steps-autoarima",
-    "title": "Time Series Forecasting with Python: Method 2",
+    "objectID": "index.html#lecture-1-november-30-2024",
+    "href": "index.html#lecture-1-november-30-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
     "section": "",
-    "text": "Plot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nUse AutoARIMA to select a model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+    "text": "Slides 1"
   },
   {
-    "objectID": "Week3p2/index.html#modeling-with-python",
-    "href": "Week3p2/index.html#modeling-with-python",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "from sktime import *\nfrom sktime.datasets import load_airline\nfrom sktime.utils.plotting import plot_series\ny = load_airline()\nplot_series(y)\n\n(&lt;Figure size 1536x384 with 1 Axes&gt;,\n &lt;Axes: ylabel='Number of airline passengers'&gt;)"
+    "objectID": "index.html#lecture-2-december-7-2024",
+    "href": "index.html#lecture-2-december-7-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 2: December 7, 2024",
+    "text": "Lecture 2: December 7, 2024\nSlides 2\nPractical 1"
   },
   {
-    "objectID": "Week3p2/index.html#your-turn",
-    "href": "Week3p2/index.html#your-turn",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Take other important visualizations"
+    "objectID": "index.html#public-holiday-december-14-2024",
+    "href": "index.html#public-holiday-december-14-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Public Holiday: December 14, 2024",
+    "text": "Public Holiday: December 14, 2024"
   },
   {
-    "objectID": "Week3p2/index.html#define-forecast-horizon",
-    "href": "Week3p2/index.html#define-forecast-horizon",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "import numpy as np\nimport pandas as pd\nfrom sktime.forecasting.base import ForecastingHorizon\nfh = ForecastingHorizon(\n    pd.PeriodIndex(pd.date_range(\"1960-01\", periods=12, freq=\"M\")), is_relative=False\n)\nfh\n\nForecastingHorizon(['1960-01', '1960-02', '1960-03', '1960-04', '1960-05', '1960-06',\n             '1960-07', '1960-08', '1960-09', '1960-10', '1960-11', '1960-12'],\n            dtype='period[M]', is_relative=False)"
+    "objectID": "index.html#lecture-3-december-21-2024",
+    "href": "index.html#lecture-3-december-21-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 3: December 21, 2024",
+    "text": "Lecture 3: December 21, 2024\nSlides 3\nPractical 2\nPractical 3\nSlides 4"
   },
   {
-    "objectID": "Week3p2/index.html#split-data-into-training-and-test",
-    "href": "Week3p2/index.html#split-data-into-training-and-test",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "from sktime.forecasting.model_selection import temporal_train_test_split\ny_train, y_test = temporal_train_test_split(y, fh=fh)"
-  },
-  {
-    "objectID": "Week3p2/index.html#define-forecaster-with-sktime",
-    "href": "Week3p2/index.html#define-forecaster-with-sktime",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "from sktime.forecasting.statsforecast import StatsForecastAutoARIMA\nimport numpy as np\nforecaster = StatsForecastAutoARIMA(  \n    sp=12,  max_p=2, max_q=2\n)\ny_train.naturallog = np.log(y_train)\nforecaster.fit(y_train.naturallog)\n\nStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)Please rerun this cell to show the HTML repr or trust the notebook.StatsForecastAutoARIMA?Documentation for StatsForecastAutoARIMAStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)\n\n\nsp: Number of observations per unit of time.\nHelp: https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html"
-  },
-  {
-    "objectID": "Week3p2/index.html#your-turn-1",
-    "href": "Week3p2/index.html#your-turn-1",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Preferm residual analysis"
-  },
-  {
-    "objectID": "Week3p2/index.html#obtain-predictions-for-the-training-period",
-    "href": "Week3p2/index.html#obtain-predictions-for-the-training-period",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "y_pred = forecaster.predict(fh)\ny_pred \n\n1960-01    6.038882\n1960-02    5.989590\n1960-03    6.146032\n1960-04    6.119674\n1960-05    6.159455\n1960-06    6.304701\n1960-07    6.432675\n1960-08    6.444805\n1960-09    6.266803\n1960-10    6.136178\n1960-11    6.007715\n1960-12    6.114486\nFreq: M, Name: Number of airline passengers, dtype: float64"
-  },
-  {
-    "objectID": "Week3p2/index.html#model-parameter-estimates",
-    "href": "Week3p2/index.html#model-parameter-estimates",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Write a code to obtain model parameter estimates."
-  },
-  {
-    "objectID": "Week3p2/index.html#what-is-happening-under-the-hood-of-autoarima",
-    "href": "Week3p2/index.html#what-is-happening-under-the-hood-of-autoarima",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Step 1: Select the number of differences d and D via unit root tests and strength of seasonality measure.\nStep 2: Try four possible models to start with:"
-  },
-  {
-    "objectID": "Week3p2/index.html#section",
-    "href": "Week3p2/index.html#section",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "\\(ARIMA(2, d, 2)\\) if \\(m = 1\\) and \\(ARIMA(2, d, 2)(1, D, 1)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 0)(0, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(1, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(1, d, 0)(1, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 1)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 1)(0, D, 1)_m\\) if \\(m &gt; 1\\)."
-  },
-  {
-    "objectID": "Week3p2/index.html#section-1",
-    "href": "Week3p2/index.html#section-1",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Step 3: Select the model with the smallest AICc from step 2. This becomes the current model.\nStep 4: Consider up to 13 variations on the current model:\n\nVary one of \\(p, q, P\\) and \\(Q\\) from the current model by \\(\\pm 1\\).\n\\(p, q\\) both vary from the current model by \\(\\pm 1\\).\n\\(P, Q\\) both vary from the current model by \\(\\pm 1\\).\nInclude or exclude the constant term from the current model. Repeat step 4 until no lower AICc can be found."
-  },
-  {
-    "objectID": "Week3/index.html#identify-the-features-of-the-time-series",
-    "href": "Week3/index.html#identify-the-features-of-the-time-series",
-    "title": "Time Series Analysis",
-    "section": "Identify the features of the time series",
-    "text": "Identify the features of the time series"
-  },
-  {
-    "objectID": "Week3/index.html#acf-plot",
-    "href": "Week3/index.html#acf-plot",
-    "title": "Time Series Analysis",
-    "section": "ACF plot",
-    "text": "ACF plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhite noise implies stationarity."
-  },
-  {
-    "objectID": "Week3/index.html#series-with-trend",
-    "href": "Week3/index.html#series-with-trend",
-    "title": "Time Series Analysis",
-    "section": "Series with trend",
-    "text": "Series with trend"
-  },
-  {
-    "objectID": "Week3/index.html#common-trend-removal-de-trending-procedures",
-    "href": "Week3/index.html#common-trend-removal-de-trending-procedures",
-    "title": "Time Series Analysis",
-    "section": "Common trend removal (de-trending) procedures",
-    "text": "Common trend removal (de-trending) procedures\n\nDeterministic trend: Time-trend regression\nThe trend can be removed by fitting a deterministic polynomial time trend. The residual series after removing the trend will give us the de-trended series.\nStochastic trend: Differencing\nThe process is also known as a Difference-stationary process."
-  },
-  {
-    "objectID": "Week3/index.html#notation-id",
-    "href": "Week3/index.html#notation-id",
-    "title": "Time Series Analysis",
-    "section": "Notation: I(d)",
-    "text": "Notation: I(d)\nIntegrated to order \\(d\\): Series can be made stationary by differencing \\(d\\) times.\n\nKnown as \\(I(d)\\) process.\n\nQuestion: Show that random walk process is an \\(I(1)\\) process.\nThe random walk process is called a unit root process. (If one of the roots turns out to be one, then the process is called unit root process.)"
-  },
-  {
-    "objectID": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960",
-    "href": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960",
-    "title": "Time Series Analysis",
-    "section": "Monthly Airline Passenger Numbers 1949-1960",
-    "text": "Monthly Airline Passenger Numbers 1949-1960\nWithout transformations"
-  },
-  {
-    "objectID": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960-1",
-    "href": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960-1",
-    "title": "Time Series Analysis",
-    "section": "Monthly Airline Passenger Numbers 1949-1960",
-    "text": "Monthly Airline Passenger Numbers 1949-1960\nLogarithm transformation"
-  },
-  {
-    "objectID": "Week3/index.html#modelling-steps",
-    "href": "Week3/index.html#modelling-steps",
-    "title": "Time Series Analysis",
-    "section": "Modelling steps",
-    "text": "Modelling steps\n\nPlot the data.\nSplit time series into training, validation (optional), test.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nIf the data are non-stationary, take first differences of the data until the data are stationary.\nExamine the ACF/PACF to identify a suitable model.\nTry your chosen model(s), and to search for a better model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
-  },
-  {
-    "objectID": "Week3/index.html#step-4-take-difference-series",
-    "href": "Week3/index.html#step-4-take-difference-series",
-    "title": "Time Series Analysis",
-    "section": "Step 4: Take difference series",
-    "text": "Step 4: Take difference series\nIdentifying non-stationarity by looking at plots\n\nTime series plot\nThe ACF of stationary data drops to zero relatively quickly.\nThe ACF of non-stationary data decreases slowly.\nFor non-stationary data, the value of \\(r_1\\) is often large and positive."
-  },
-  {
-    "objectID": "Week3/index.html#non-seasonal-differencing-and-seasonal-differencing",
-    "href": "Week3/index.html#non-seasonal-differencing-and-seasonal-differencing",
-    "title": "Time Series Analysis",
-    "section": "Non-seasonal differencing and seasonal differencing",
-    "text": "Non-seasonal differencing and seasonal differencing\nNon seasonal first-order differencing: \\(Y'_t=Y_t - Y_{t-1}\\)\n\nNon seasonal second-order differencing: \\(Y''_t=Y'_t - Y'_{t-1}\\)\n\nSeasonal differencing: \\(Y_t - Y_{t-m}\\)\n\n\nFor monthly, \\(m=12\\), for quarterly, \\(m=4\\).\n\n\n\nSeasonally differenced series will have \\(T-m\\) observations. \n\n\nThere are times differencing once is not enough. However, in practice,it is almost never necessary to go beyond second-order differencing."
-  },
-  {
-    "objectID": "Week3/index.html#non-seasonal-differencing",
-    "href": "Week3/index.html#non-seasonal-differencing",
-    "title": "Time Series Analysis",
-    "section": "Non-Seasonal differencing",
-    "text": "Non-Seasonal differencing\nWithout differencing\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWith differencing"
-  },
-  {
-    "objectID": "Week3/index.html#seasonal-differencing",
-    "href": "Week3/index.html#seasonal-differencing",
-    "title": "Time Series Analysis",
-    "section": "Seasonal differencing",
-    "text": "Seasonal differencing"
-  },
-  {
-    "objectID": "Week3/index.html#seasonal-differencing-non-seasonal-differencing",
-    "href": "Week3/index.html#seasonal-differencing-non-seasonal-differencing",
-    "title": "Time Series Analysis",
-    "section": "Seasonal differencing + Non-seasonal differencing",
-    "text": "Seasonal differencing + Non-seasonal differencing"
-  },
-  {
-    "objectID": "Week3/index.html#kpss-test",
-    "href": "Week3/index.html#kpss-test",
-    "title": "Time Series Analysis",
-    "section": "KPSS test",
-    "text": "KPSS test\nH0: Series is level or trend stationary.\nH1: Series is not stationary.\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 3 lags. \n\nValue of test-statistic is: 0.0942 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739"
-  },
-  {
-    "objectID": "Week3/index.html#kpss-test-1",
-    "href": "Week3/index.html#kpss-test-1",
-    "title": "Time Series Analysis",
-    "section": "KPSS test",
-    "text": "KPSS test\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 4 lags. \n\nValue of test-statistic is: 2.113 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739\n\n\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 3 lags. \n\nValue of test-statistic is: 0.1264 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739"
-  },
-  {
-    "objectID": "Week3/index.html#arp",
-    "href": "Week3/index.html#arp",
-    "title": "Time Series Analysis",
-    "section": "AR(p)",
-    "text": "AR(p)\n\nACF dies out in an exponential or damped sine-wave manner.\nthere is a significant spike at lag \\(p\\) in PACF, but none beyond \\(p\\)."
-  },
-  {
-    "objectID": "Week3/index.html#maq",
-    "href": "Week3/index.html#maq",
-    "title": "Time Series Analysis",
-    "section": "MA(q)",
-    "text": "MA(q)\n\nACF has all zero spikes beyond the \\(q^{th}\\) spike.\nPACF dies out in an exponential or damped sine-wave manner."
-  },
-  {
-    "objectID": "Week3/index.html#seasonal-components",
-    "href": "Week3/index.html#seasonal-components",
-    "title": "Time Series Analysis",
-    "section": "Seasonal components",
-    "text": "Seasonal components\n\nThe seasonal part of an AR or MA model will be seen in the seasonal lags of the PACF and ACF.\n\n::::\n\nARIMA(0,0,0)(0,0,1)12 will show\n\na spike at lag 12 in the ACF but no other significant spikes.\nThe PACF will show exponential decay in the seasonal lags 12, 24, 36, . . . .\n\n\nARIMA(0,0,0)(1,0,0)12 will show\n\nexponential decay in the seasonal lags of the ACF.\na single significant spike at lag 12 in the PACF.\n\n::::"
-  },
-  {
-    "objectID": "Week3/index.html#acf",
-    "href": "Week3/index.html#acf",
-    "title": "Time Series Analysis",
-    "section": "ACF",
-    "text": "ACF"
-  },
-  {
-    "objectID": "Week3/index.html#pacf",
-    "href": "Week3/index.html#pacf",
-    "title": "Time Series Analysis",
-    "section": "PACF",
-    "text": "PACF"
-  },
-  {
-    "objectID": "Week3/index.html#step-5-examine-the-acfpacf-to-identify-a-suitable-model",
-    "href": "Week3/index.html#step-5-examine-the-acfpacf-to-identify-a-suitable-model",
-    "title": "Time Series Analysis",
-    "section": "Step 5: Examine the ACF/PACF to identify a suitable model",
-    "text": "Step 5: Examine the ACF/PACF to identify a suitable model\n\n\\(d=1\\) and \\(D=1\\) (from step 3)\nSignificant spike at lag 1 in ACF suggests non-seasonal MA(1) component.\nSignificant spike at lag 12 in ACF suggests seasonal MA(1) component.\nInitial candidate model: \\(ARIMA(0,1,1)(0,1,1)_{12}\\).\nBy analogous logic applied to the PACF, we could also have started with \\(ARIMA(1,1,0)(1,1,0)_{12}\\).\nLet’s try both"
-  },
-  {
-    "objectID": "Week3/index.html#section-2",
-    "href": "Week3/index.html#section-2",
-    "title": "Time Series Analysis",
-    "section": "",
-    "text": "Initial model:\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\\(ARIMA(1,1,0)(1,1,0)_{12}\\)\nTry some variations of the initial model:\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\\(ARIMA(1,1,1)(1,1,0)_{12}\\)\n\\(ARIMA(1,1,1)(1,1,1)_{12}\\)\nBoth the ACF and PACF show significant spikes at lag 3, and almost significant spikes at lag 3, indicating that some additional non-seasonal terms need to be included in the model.\n\\(ARIMA(3,1,1)(1,1,1)_{12}\\)\n\\(ARIMA(1,1,3)(1,1,1)_{12}\\)\n\\(ARIMA(3,1,3)(1,1,1)_{12}\\)"
-  },
-  {
-    "objectID": "Week3/index.html#aicc",
-    "href": "Week3/index.html#aicc",
-    "title": "Time Series Analysis",
-    "section": "AICc",
-    "text": "AICc\nInitial model: AICc\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\): -344.33 (the smallest AICc)\n\\(ARIMA(1,1,0)(1,1,0)_{12}\\): -336.32\nTry some variations of the initial model:\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\): -342.3 (second smallest AICc)\n\\(ARIMA(1,1,1)(1,1,0)_{12}\\): -336.08\n\\(ARIMA(1,1,1)(1,1,1)_{12}\\): -340.74\n\\(ARIMA(3,1,1)(1,1,1)_{12}\\): -338.89\n\\(ARIMA(1,1,3)(1,1,1)_{12}\\): -339.42\n\\(ARIMA(3,1,3)(1,1,1)_{12}\\): -335.65"
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics",
-    "href": "Week3/index.html#step-7-residual-diagnostics",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics",
-    "text": "Step 7: Residual diagnostics\nFitted values:\n\\(\\hat{Y}_{t|t-1}\\): Forecast of \\(Y_t\\) based on observations \\(Y_1,...Y_t\\).\nResiduals\n\\[e_t=Y_t - \\hat{Y}_{t|t-1}\\]\nAssumptions of residuals\n\n\\(\\{e_t\\}\\) uncorrelated. If they aren’t, then information left in residuals that should be used in computing forecasts.\n\n\n\n\\(\\{e_t\\}\\) have mean zero. If they don’t, then forecasts are biased."
-  },
-  {
-    "objectID": "Week3/index.html#useful-properties-for-prediction-intervals",
-    "href": "Week3/index.html#useful-properties-for-prediction-intervals",
-    "title": "Time Series Analysis",
-    "section": "Useful properties (for prediction intervals)",
-    "text": "Useful properties (for prediction intervals)\n\n\\(\\{e_t\\}\\) have constant variance.\n\\(\\{e_t\\}\\) are normally distributed."
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.",
-    "href": "Week3/index.html#step-7-residual-diagnostics-cont.",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics (cont.)",
-    "text": "Step 7: Residual diagnostics (cont.)\nH0: Data are not serially correlated.\nH1: Data are serially correlated.\n\n\n\n\n    Ljung-Box test\n\ndata:  Residuals from ARIMA(0,1,1)(0,1,1)[12]\nQ* = 14.495, df = 20, p-value = 0.8045\n\nModel df: 2.   Total lags used: 22"
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-1",
-    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-1",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics (cont.)",
-    "text": "Step 7: Residual diagnostics (cont.)"
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-2",
-    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-2",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics (cont.)",
-    "text": "Step 7: Residual diagnostics (cont.)\n\n\n\n\n    Ljung-Box test\n\ndata:  Residuals from ARIMA(0,1,1)(1,1,1)[12]\nQ* = 13.971, df = 19, p-value = 0.7854\n\nModel df: 3.   Total lags used: 22"
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-3",
-    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-3",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics (cont.)",
-    "text": "Step 7: Residual diagnostics (cont.)"
-  },
-  {
-    "objectID": "Week3/index.html#step-8-calculate-forecasts",
-    "href": "Week3/index.html#step-8-calculate-forecasts",
-    "title": "Time Series Analysis",
-    "section": "Step 8: Calculate forecasts",
-    "text": "Step 8: Calculate forecasts\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)"
-  },
-  {
-    "objectID": "Week3/index.html#section-3",
-    "href": "Week3/index.html#section-3",
-    "title": "Time Series Analysis",
-    "section": "",
-    "text": "\\(ARIMA(0,1,1)(1,1,1)_{12}\\)"
-  },
-  {
-    "objectID": "Week3/index.html#section-4",
-    "href": "Week3/index.html#section-4",
-    "title": "Time Series Analysis",
-    "section": "",
-    "text": "\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\n\n          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug\n1958 350.6592 339.1766 396.7654 389.3934 394.7295 460.6986 512.2818 507.5185\n1959 394.8025 381.8745 446.7129 438.4129 444.4207 518.6945 576.7713 571.4083\n1960 444.5029 429.9474 502.9482 493.6032 500.3674 583.9912 649.3792 643.3411\n          Sep      Oct      Nov      Dec\n1958 445.0042 386.2473 339.3564 381.5803\n1959 501.0243 434.8708 382.0769 429.6162\n1960 564.0966 489.6152 430.1753 483.6992\n\n\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\n\n          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug\n1958 351.0115 339.0589 396.3161 389.4484 395.0305 461.6590 513.6099 507.9900\n1959 395.2760 381.5215 446.3245 438.4261 444.8906 520.5608 578.7432 573.0358\n1960 444.7886 429.3347 502.2289 493.3544 500.6143 585.7116 651.2077 644.7354\n          Sep      Oct      Nov      Dec\n1958 445.3297 386.3269 339.4872 381.8812\n1959 501.8766 435.0725 382.3290 429.4328\n1960 564.7108 489.5677 430.2174 483.2724"
-  },
-  {
-    "objectID": "Week3/index.html#step-9-evaluate-forecast-accuracy",
-    "href": "Week3/index.html#step-9-evaluate-forecast-accuracy",
-    "title": "Time Series Analysis",
-    "section": "Step 9: Evaluate forecast accuracy",
-    "text": "Step 9: Evaluate forecast accuracy\nHow well our model is doing for out-of-sample?\n\n\nForecast error = True value - Observed value\n\\[e_{T+h}=Y_{T+h}-\\hat{Y}_{T+h|T}\\]\nWhere,\n\\(Y_{T+h}\\): \\((T+h)^{th}\\) observation, \\(h=1,..., H\\)\n\\(\\hat{Y}_{T+h|T}\\): Forecast based on data uo to time \\(T\\).\n\nTrue forecast error as the test data is not used in computing \\(\\hat{Y}_{T+h|T}\\).\nUnlike, residuals, forecast errors on the test set involve multi-step forecasts.\nUse forecast error measures to evaluate the models."
-  },
-  {
-    "objectID": "Week3/index.html#step-9-evaluate-forecast-accuracy-1",
-    "href": "Week3/index.html#step-9-evaluate-forecast-accuracy-1",
-    "title": "Time Series Analysis",
-    "section": "Step 9: Evaluate forecast accuracy",
-    "text": "Step 9: Evaluate forecast accuracy\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\n\n                ME   RMSE      MAE       MPE     MAPE       ACF1 Theil's U\nTest set -33.71566 36.559 33.71566 -8.112567 8.112567 0.08524612 0.7974916\n\n\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\n\n                ME     RMSE      MAE       MPE     MAPE       ACF1 Theil's U\nTest set -34.12174 36.87661 34.12174 -8.190874 8.190874 0.06782644 0.8019226\n\n\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\) MAE, MAPE is smaller than \\(ARIMA(0,1,1)(1,1,1)_{12}\\). Hence, we select \\(ARIMA(0,1,1)(0,1,1)_{12}\\) to forecast future values."
+    "objectID": "index.html#lecture-4-4-january-2025",
+    "href": "index.html#lecture-4-4-january-2025",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 4: 4 January 2025",
+    "text": "Lecture 4: 4 January 2025\nSlides 5"
   },
   {
     "objectID": "Week1/index.html#time-series",
@@ -784,73 +525,339 @@
     "text": "In-class: Properties of AR(P) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an AR(P) process"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "objectID": "Week3/index.html#identify-the-features-of-the-time-series",
+    "href": "Week3/index.html#identify-the-features-of-the-time-series",
+    "title": "Time Series Analysis",
+    "section": "Identify the features of the time series",
+    "text": "Identify the features of the time series"
+  },
+  {
+    "objectID": "Week3/index.html#acf-plot",
+    "href": "Week3/index.html#acf-plot",
+    "title": "Time Series Analysis",
+    "section": "ACF plot",
+    "text": "ACF plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhite noise implies stationarity."
+  },
+  {
+    "objectID": "Week3/index.html#series-with-trend",
+    "href": "Week3/index.html#series-with-trend",
+    "title": "Time Series Analysis",
+    "section": "Series with trend",
+    "text": "Series with trend"
+  },
+  {
+    "objectID": "Week3/index.html#common-trend-removal-de-trending-procedures",
+    "href": "Week3/index.html#common-trend-removal-de-trending-procedures",
+    "title": "Time Series Analysis",
+    "section": "Common trend removal (de-trending) procedures",
+    "text": "Common trend removal (de-trending) procedures\n\nDeterministic trend: Time-trend regression\nThe trend can be removed by fitting a deterministic polynomial time trend. The residual series after removing the trend will give us the de-trended series.\nStochastic trend: Differencing\nThe process is also known as a Difference-stationary process."
+  },
+  {
+    "objectID": "Week3/index.html#notation-id",
+    "href": "Week3/index.html#notation-id",
+    "title": "Time Series Analysis",
+    "section": "Notation: I(d)",
+    "text": "Notation: I(d)\nIntegrated to order \\(d\\): Series can be made stationary by differencing \\(d\\) times.\n\nKnown as \\(I(d)\\) process.\n\nQuestion: Show that random walk process is an \\(I(1)\\) process.\nThe random walk process is called a unit root process. (If one of the roots turns out to be one, then the process is called unit root process.)"
+  },
+  {
+    "objectID": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960",
+    "href": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960",
+    "title": "Time Series Analysis",
+    "section": "Monthly Airline Passenger Numbers 1949-1960",
+    "text": "Monthly Airline Passenger Numbers 1949-1960\nWithout transformations"
+  },
+  {
+    "objectID": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960-1",
+    "href": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960-1",
+    "title": "Time Series Analysis",
+    "section": "Monthly Airline Passenger Numbers 1949-1960",
+    "text": "Monthly Airline Passenger Numbers 1949-1960\nLogarithm transformation"
+  },
+  {
+    "objectID": "Week3/index.html#modelling-steps",
+    "href": "Week3/index.html#modelling-steps",
+    "title": "Time Series Analysis",
+    "section": "Modelling steps",
+    "text": "Modelling steps\n\nPlot the data.\nSplit time series into training, validation (optional), test.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nIf the data are non-stationary, take first differences of the data until the data are stationary.\nExamine the ACF/PACF to identify a suitable model.\nTry your chosen model(s), and to search for a better model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+  },
+  {
+    "objectID": "Week3/index.html#step-4-take-difference-series",
+    "href": "Week3/index.html#step-4-take-difference-series",
+    "title": "Time Series Analysis",
+    "section": "Step 4: Take difference series",
+    "text": "Step 4: Take difference series\nIdentifying non-stationarity by looking at plots\n\nTime series plot\nThe ACF of stationary data drops to zero relatively quickly.\nThe ACF of non-stationary data decreases slowly.\nFor non-stationary data, the value of \\(r_1\\) is often large and positive."
+  },
+  {
+    "objectID": "Week3/index.html#non-seasonal-differencing-and-seasonal-differencing",
+    "href": "Week3/index.html#non-seasonal-differencing-and-seasonal-differencing",
+    "title": "Time Series Analysis",
+    "section": "Non-seasonal differencing and seasonal differencing",
+    "text": "Non-seasonal differencing and seasonal differencing\nNon seasonal first-order differencing: \\(Y'_t=Y_t - Y_{t-1}\\)\n\nNon seasonal second-order differencing: \\(Y''_t=Y'_t - Y'_{t-1}\\)\n\nSeasonal differencing: \\(Y_t - Y_{t-m}\\)\n\n\nFor monthly, \\(m=12\\), for quarterly, \\(m=4\\).\n\n\n\nSeasonally differenced series will have \\(T-m\\) observations. \n\n\nThere are times differencing once is not enough. However, in practice,it is almost never necessary to go beyond second-order differencing."
+  },
+  {
+    "objectID": "Week3/index.html#non-seasonal-differencing",
+    "href": "Week3/index.html#non-seasonal-differencing",
+    "title": "Time Series Analysis",
+    "section": "Non-Seasonal differencing",
+    "text": "Non-Seasonal differencing\nWithout differencing\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWith differencing"
+  },
+  {
+    "objectID": "Week3/index.html#seasonal-differencing",
+    "href": "Week3/index.html#seasonal-differencing",
+    "title": "Time Series Analysis",
+    "section": "Seasonal differencing",
+    "text": "Seasonal differencing"
+  },
+  {
+    "objectID": "Week3/index.html#seasonal-differencing-non-seasonal-differencing",
+    "href": "Week3/index.html#seasonal-differencing-non-seasonal-differencing",
+    "title": "Time Series Analysis",
+    "section": "Seasonal differencing + Non-seasonal differencing",
+    "text": "Seasonal differencing + Non-seasonal differencing"
+  },
+  {
+    "objectID": "Week3/index.html#kpss-test",
+    "href": "Week3/index.html#kpss-test",
+    "title": "Time Series Analysis",
+    "section": "KPSS test",
+    "text": "KPSS test\nH0: Series is level or trend stationary.\nH1: Series is not stationary.\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 3 lags. \n\nValue of test-statistic is: 0.0942 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739"
+  },
+  {
+    "objectID": "Week3/index.html#kpss-test-1",
+    "href": "Week3/index.html#kpss-test-1",
+    "title": "Time Series Analysis",
+    "section": "KPSS test",
+    "text": "KPSS test\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 4 lags. \n\nValue of test-statistic is: 2.113 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739\n\n\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 3 lags. \n\nValue of test-statistic is: 0.1264 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739"
+  },
+  {
+    "objectID": "Week3/index.html#arp",
+    "href": "Week3/index.html#arp",
+    "title": "Time Series Analysis",
+    "section": "AR(p)",
+    "text": "AR(p)\n\nACF dies out in an exponential or damped sine-wave manner.\nthere is a significant spike at lag \\(p\\) in PACF, but none beyond \\(p\\)."
+  },
+  {
+    "objectID": "Week3/index.html#maq",
+    "href": "Week3/index.html#maq",
+    "title": "Time Series Analysis",
+    "section": "MA(q)",
+    "text": "MA(q)\n\nACF has all zero spikes beyond the \\(q^{th}\\) spike.\nPACF dies out in an exponential or damped sine-wave manner."
+  },
+  {
+    "objectID": "Week3/index.html#seasonal-components",
+    "href": "Week3/index.html#seasonal-components",
+    "title": "Time Series Analysis",
+    "section": "Seasonal components",
+    "text": "Seasonal components\n\nThe seasonal part of an AR or MA model will be seen in the seasonal lags of the PACF and ACF.\n\n::::\n\nARIMA(0,0,0)(0,0,1)12 will show\n\na spike at lag 12 in the ACF but no other significant spikes.\nThe PACF will show exponential decay in the seasonal lags 12, 24, 36, . . . .\n\n\nARIMA(0,0,0)(1,0,0)12 will show\n\nexponential decay in the seasonal lags of the ACF.\na single significant spike at lag 12 in the PACF.\n\n::::"
+  },
+  {
+    "objectID": "Week3/index.html#acf",
+    "href": "Week3/index.html#acf",
+    "title": "Time Series Analysis",
+    "section": "ACF",
+    "text": "ACF"
+  },
+  {
+    "objectID": "Week3/index.html#pacf",
+    "href": "Week3/index.html#pacf",
+    "title": "Time Series Analysis",
+    "section": "PACF",
+    "text": "PACF"
+  },
+  {
+    "objectID": "Week3/index.html#step-5-examine-the-acfpacf-to-identify-a-suitable-model",
+    "href": "Week3/index.html#step-5-examine-the-acfpacf-to-identify-a-suitable-model",
+    "title": "Time Series Analysis",
+    "section": "Step 5: Examine the ACF/PACF to identify a suitable model",
+    "text": "Step 5: Examine the ACF/PACF to identify a suitable model\n\n\\(d=1\\) and \\(D=1\\) (from step 3)\nSignificant spike at lag 1 in ACF suggests non-seasonal MA(1) component.\nSignificant spike at lag 12 in ACF suggests seasonal MA(1) component.\nInitial candidate model: \\(ARIMA(0,1,1)(0,1,1)_{12}\\).\nBy analogous logic applied to the PACF, we could also have started with \\(ARIMA(1,1,0)(1,1,0)_{12}\\).\nLet’s try both"
+  },
+  {
+    "objectID": "Week3/index.html#section-2",
+    "href": "Week3/index.html#section-2",
+    "title": "Time Series Analysis",
     "section": "",
-    "text": "Slides 1"
+    "text": "Initial model:\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\\(ARIMA(1,1,0)(1,1,0)_{12}\\)\nTry some variations of the initial model:\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\\(ARIMA(1,1,1)(1,1,0)_{12}\\)\n\\(ARIMA(1,1,1)(1,1,1)_{12}\\)\nBoth the ACF and PACF show significant spikes at lag 3, and almost significant spikes at lag 3, indicating that some additional non-seasonal terms need to be included in the model.\n\\(ARIMA(3,1,1)(1,1,1)_{12}\\)\n\\(ARIMA(1,1,3)(1,1,1)_{12}\\)\n\\(ARIMA(3,1,3)(1,1,1)_{12}\\)"
   },
   {
-    "objectID": "index.html#lecture-1-november-30-2024",
-    "href": "index.html#lecture-1-november-30-2024",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "objectID": "Week3/index.html#aicc",
+    "href": "Week3/index.html#aicc",
+    "title": "Time Series Analysis",
+    "section": "AICc",
+    "text": "AICc\nInitial model: AICc\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\): -344.33 (the smallest AICc)\n\\(ARIMA(1,1,0)(1,1,0)_{12}\\): -336.32\nTry some variations of the initial model:\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\): -342.3 (second smallest AICc)\n\\(ARIMA(1,1,1)(1,1,0)_{12}\\): -336.08\n\\(ARIMA(1,1,1)(1,1,1)_{12}\\): -340.74\n\\(ARIMA(3,1,1)(1,1,1)_{12}\\): -338.89\n\\(ARIMA(1,1,3)(1,1,1)_{12}\\): -339.42\n\\(ARIMA(3,1,3)(1,1,1)_{12}\\): -335.65"
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics",
+    "href": "Week3/index.html#step-7-residual-diagnostics",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics",
+    "text": "Step 7: Residual diagnostics\nFitted values:\n\\(\\hat{Y}_{t|t-1}\\): Forecast of \\(Y_t\\) based on observations \\(Y_1,...Y_t\\).\nResiduals\n\\[e_t=Y_t - \\hat{Y}_{t|t-1}\\]\nAssumptions of residuals\n\n\\(\\{e_t\\}\\) uncorrelated. If they aren’t, then information left in residuals that should be used in computing forecasts.\n\n\n\n\\(\\{e_t\\}\\) have mean zero. If they don’t, then forecasts are biased."
+  },
+  {
+    "objectID": "Week3/index.html#useful-properties-for-prediction-intervals",
+    "href": "Week3/index.html#useful-properties-for-prediction-intervals",
+    "title": "Time Series Analysis",
+    "section": "Useful properties (for prediction intervals)",
+    "text": "Useful properties (for prediction intervals)\n\n\\(\\{e_t\\}\\) have constant variance.\n\\(\\{e_t\\}\\) are normally distributed."
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.",
+    "href": "Week3/index.html#step-7-residual-diagnostics-cont.",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics (cont.)",
+    "text": "Step 7: Residual diagnostics (cont.)\nH0: Data are not serially correlated.\nH1: Data are serially correlated.\n\n\n\n\n    Ljung-Box test\n\ndata:  Residuals from ARIMA(0,1,1)(0,1,1)[12]\nQ* = 14.495, df = 20, p-value = 0.8045\n\nModel df: 2.   Total lags used: 22"
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-1",
+    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-1",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics (cont.)",
+    "text": "Step 7: Residual diagnostics (cont.)"
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-2",
+    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-2",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics (cont.)",
+    "text": "Step 7: Residual diagnostics (cont.)\n\n\n\n\n    Ljung-Box test\n\ndata:  Residuals from ARIMA(0,1,1)(1,1,1)[12]\nQ* = 13.971, df = 19, p-value = 0.7854\n\nModel df: 3.   Total lags used: 22"
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-3",
+    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-3",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics (cont.)",
+    "text": "Step 7: Residual diagnostics (cont.)"
+  },
+  {
+    "objectID": "Week3/index.html#step-8-calculate-forecasts",
+    "href": "Week3/index.html#step-8-calculate-forecasts",
+    "title": "Time Series Analysis",
+    "section": "Step 8: Calculate forecasts",
+    "text": "Step 8: Calculate forecasts\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)"
+  },
+  {
+    "objectID": "Week3/index.html#section-3",
+    "href": "Week3/index.html#section-3",
+    "title": "Time Series Analysis",
     "section": "",
-    "text": "Slides 1"
+    "text": "\\(ARIMA(0,1,1)(1,1,1)_{12}\\)"
   },
   {
-    "objectID": "index.html#lecture-2-december-7-2024",
-    "href": "index.html#lecture-2-december-7-2024",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 2: December 7, 2024",
-    "text": "Lecture 2: December 7, 2024\nSlides 2\nPractical 1"
-  },
-  {
-    "objectID": "index.html#public-holiday-december-14-2024",
-    "href": "index.html#public-holiday-december-14-2024",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Public Holiday: December 14, 2024",
-    "text": "Public Holiday: December 14, 2024"
-  },
-  {
-    "objectID": "index.html#lecture-3-december-21-2024",
-    "href": "index.html#lecture-3-december-21-2024",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 3: December 21, 2024",
-    "text": "Lecture 3: December 21, 2024\nSlides 3\nPractical 2\nPractical 3\nSlides 4"
-  },
-  {
-    "objectID": "Week2/index.html#in-class-properties-of-ma1-process",
-    "href": "Week2/index.html#in-class-properties-of-ma1-process",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "In-class: Properties of MA(1) process",
-    "text": "In-class: Properties of MA(1) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(1) process\nPartial autocorrelation function of MA(1)"
-  },
-  {
-    "objectID": "Week2/index.html#in-class-properties-of-ma2-process",
-    "href": "Week2/index.html#in-class-properties-of-ma2-process",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "In-class: Properties of MA(2) process",
-    "text": "In-class: Properties of MA(2) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(2) process\nPartial autocorrelation function of MA(2)"
-  },
-  {
-    "objectID": "Week2/index.html#in-class-properties-of-maq-process",
-    "href": "Week2/index.html#in-class-properties-of-maq-process",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "In-class: Properties of MA(q) process",
-    "text": "In-class: Properties of MA(q) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an AR(P) process"
-  },
-  {
-    "objectID": "Week3p/index.html",
-    "href": "Week3p/index.html",
-    "title": "Time Series Forecasting with Python: Method 1",
+    "objectID": "Week3/index.html#section-4",
+    "href": "Week3/index.html#section-4",
+    "title": "Time Series Analysis",
     "section": "",
-    "text": "import pandas as pd\nimport plotnine as p9 \nfrom plotnine import *\nfrom plotnine.data import *\nimport numpy as np"
+    "text": "\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\n\n          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug\n1958 350.6592 339.1766 396.7654 389.3934 394.7295 460.6986 512.2818 507.5185\n1959 394.8025 381.8745 446.7129 438.4129 444.4207 518.6945 576.7713 571.4083\n1960 444.5029 429.9474 502.9482 493.6032 500.3674 583.9912 649.3792 643.3411\n          Sep      Oct      Nov      Dec\n1958 445.0042 386.2473 339.3564 381.5803\n1959 501.0243 434.8708 382.0769 429.6162\n1960 564.0966 489.6152 430.1753 483.6992\n\n\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\n\n          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug\n1958 351.0115 339.0589 396.3161 389.4484 395.0305 461.6590 513.6099 507.9900\n1959 395.2760 381.5215 446.3245 438.4261 444.8906 520.5608 578.7432 573.0358\n1960 444.7886 429.3347 502.2289 493.3544 500.6143 585.7116 651.2077 644.7354\n          Sep      Oct      Nov      Dec\n1958 445.3297 386.3269 339.4872 381.8812\n1959 501.8766 435.0725 382.3290 429.4328\n1960 564.7108 489.5677 430.2174 483.2724"
   },
   {
-    "objectID": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
-    "href": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
-    "title": "Time Series Forecasting with Python: Method 1",
-    "section": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset.",
-    "text": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset."
+    "objectID": "Week3/index.html#step-9-evaluate-forecast-accuracy",
+    "href": "Week3/index.html#step-9-evaluate-forecast-accuracy",
+    "title": "Time Series Analysis",
+    "section": "Step 9: Evaluate forecast accuracy",
+    "text": "Step 9: Evaluate forecast accuracy\nHow well our model is doing for out-of-sample?\n\n\nForecast error = True value - Observed value\n\\[e_{T+h}=Y_{T+h}-\\hat{Y}_{T+h|T}\\]\nWhere,\n\\(Y_{T+h}\\): \\((T+h)^{th}\\) observation, \\(h=1,..., H\\)\n\\(\\hat{Y}_{T+h|T}\\): Forecast based on data uo to time \\(T\\).\n\nTrue forecast error as the test data is not used in computing \\(\\hat{Y}_{T+h|T}\\).\nUnlike, residuals, forecast errors on the test set involve multi-step forecasts.\nUse forecast error measures to evaluate the models."
+  },
+  {
+    "objectID": "Week3/index.html#step-9-evaluate-forecast-accuracy-1",
+    "href": "Week3/index.html#step-9-evaluate-forecast-accuracy-1",
+    "title": "Time Series Analysis",
+    "section": "Step 9: Evaluate forecast accuracy",
+    "text": "Step 9: Evaluate forecast accuracy\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\n\n                ME   RMSE      MAE       MPE     MAPE       ACF1 Theil's U\nTest set -33.71566 36.559 33.71566 -8.112567 8.112567 0.08524612 0.7974916\n\n\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\n\n                ME     RMSE      MAE       MPE     MAPE       ACF1 Theil's U\nTest set -34.12174 36.87661 34.12174 -8.190874 8.190874 0.06782644 0.8019226\n\n\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\) MAE, MAPE is smaller than \\(ARIMA(0,1,1)(1,1,1)_{12}\\). Hence, we select \\(ARIMA(0,1,1)(0,1,1)_{12}\\) to forecast future values."
+  },
+  {
+    "objectID": "Week3p2/index.html",
+    "href": "Week3p2/index.html",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "import pandas as pd\nimport plotnine as p9 \nfrom plotnine import *\nfrom plotnine.data import *\nimport numpy as np\n\n\n\n\nPlot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\n\n3. If the data are non-stationary, take first differences of the data until the data are stationary.\n4. Examine the ACF/PACF to identify a suitable model.\n5. Try your chosen model(s), and use the AICc to search for a better model.\n\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts.\n\n\n\n\n\nPlot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nUse AutoARIMA to select a model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts.\n\n\n\n\n\nfrom sktime import *\nfrom sktime.datasets import load_airline\nfrom sktime.utils.plotting import plot_series\ny = load_airline()\nplot_series(y)\n\n(&lt;Figure size 1536x384 with 1 Axes&gt;,\n &lt;Axes: ylabel='Number of airline passengers'&gt;)\n\n\n\n\n\n\n\n\n\n\n\n\nTake other important visualizations\n\n\n\n\nimport numpy as np\nimport pandas as pd\nfrom sktime.forecasting.base import ForecastingHorizon\nfh = ForecastingHorizon(\n    pd.PeriodIndex(pd.date_range(\"1960-01\", periods=12, freq=\"M\")), is_relative=False\n)\nfh\n\nForecastingHorizon(['1960-01', '1960-02', '1960-03', '1960-04', '1960-05', '1960-06',\n             '1960-07', '1960-08', '1960-09', '1960-10', '1960-11', '1960-12'],\n            dtype='period[M]', is_relative=False)\n\n\n\n\n\n\nfrom sktime.forecasting.model_selection import temporal_train_test_split\ny_train, y_test = temporal_train_test_split(y, fh=fh)\n\n\n\n\n\nfrom sktime.forecasting.statsforecast import StatsForecastAutoARIMA\nimport numpy as np\nforecaster = StatsForecastAutoARIMA(  \n    sp=12,  max_p=2, max_q=2\n)\ny_train.naturallog = np.log(y_train)\nforecaster.fit(y_train.naturallog)\n\nStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)Please rerun this cell to show the HTML repr or trust the notebook.StatsForecastAutoARIMA?Documentation for StatsForecastAutoARIMAStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)\n\n\nsp: Number of observations per unit of time.\nHelp: https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html\n\n\n\nPreferm residual analysis\n\n\n\n\ny_pred = forecaster.predict(fh)\ny_pred \n\n1960-01    6.038882\n1960-02    5.989590\n1960-03    6.146032\n1960-04    6.119674\n1960-05    6.159455\n1960-06    6.304701\n1960-07    6.432675\n1960-08    6.444805\n1960-09    6.266803\n1960-10    6.136178\n1960-11    6.007715\n1960-12    6.114486\nFreq: M, Name: Number of airline passengers, dtype: float64\n\n\n\n\n\nWrite a code to obtain model parameter estimates.\n\n\n\nStep 1: Select the number of differences d and D via unit root tests and strength of seasonality measure.\nStep 2: Try four possible models to start with:\n\n\n\n\n\\(ARIMA(2, d, 2)\\) if \\(m = 1\\) and \\(ARIMA(2, d, 2)(1, D, 1)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 0)(0, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(1, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(1, d, 0)(1, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 1)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 1)(0, D, 1)_m\\) if \\(m &gt; 1\\).\n\n\n\n\nStep 3: Select the model with the smallest AICc from step 2. This becomes the current model.\nStep 4: Consider up to 13 variations on the current model:\n\nVary one of \\(p, q, P\\) and \\(Q\\) from the current model by \\(\\pm 1\\).\n\\(p, q\\) both vary from the current model by \\(\\pm 1\\).\n\\(P, Q\\) both vary from the current model by \\(\\pm 1\\).\nInclude or exclude the constant term from the current model. Repeat step 4 until no lower AICc can be found."
+  },
+  {
+    "objectID": "Week3p2/index.html#modelling-steps",
+    "href": "Week3p2/index.html#modelling-steps",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Plot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\n\n3. If the data are non-stationary, take first differences of the data until the data are stationary.\n4. Examine the ACF/PACF to identify a suitable model.\n5. Try your chosen model(s), and use the AICc to search for a better model.\n\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+  },
+  {
+    "objectID": "Week3p2/index.html#modelling-steps-autoarima",
+    "href": "Week3p2/index.html#modelling-steps-autoarima",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Plot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nUse AutoARIMA to select a model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+  },
+  {
+    "objectID": "Week3p2/index.html#modeling-with-python",
+    "href": "Week3p2/index.html#modeling-with-python",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "from sktime import *\nfrom sktime.datasets import load_airline\nfrom sktime.utils.plotting import plot_series\ny = load_airline()\nplot_series(y)\n\n(&lt;Figure size 1536x384 with 1 Axes&gt;,\n &lt;Axes: ylabel='Number of airline passengers'&gt;)"
+  },
+  {
+    "objectID": "Week3p2/index.html#your-turn",
+    "href": "Week3p2/index.html#your-turn",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Take other important visualizations"
+  },
+  {
+    "objectID": "Week3p2/index.html#define-forecast-horizon",
+    "href": "Week3p2/index.html#define-forecast-horizon",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "import numpy as np\nimport pandas as pd\nfrom sktime.forecasting.base import ForecastingHorizon\nfh = ForecastingHorizon(\n    pd.PeriodIndex(pd.date_range(\"1960-01\", periods=12, freq=\"M\")), is_relative=False\n)\nfh\n\nForecastingHorizon(['1960-01', '1960-02', '1960-03', '1960-04', '1960-05', '1960-06',\n             '1960-07', '1960-08', '1960-09', '1960-10', '1960-11', '1960-12'],\n            dtype='period[M]', is_relative=False)"
+  },
+  {
+    "objectID": "Week3p2/index.html#split-data-into-training-and-test",
+    "href": "Week3p2/index.html#split-data-into-training-and-test",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "from sktime.forecasting.model_selection import temporal_train_test_split\ny_train, y_test = temporal_train_test_split(y, fh=fh)"
+  },
+  {
+    "objectID": "Week3p2/index.html#define-forecaster-with-sktime",
+    "href": "Week3p2/index.html#define-forecaster-with-sktime",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "from sktime.forecasting.statsforecast import StatsForecastAutoARIMA\nimport numpy as np\nforecaster = StatsForecastAutoARIMA(  \n    sp=12,  max_p=2, max_q=2\n)\ny_train.naturallog = np.log(y_train)\nforecaster.fit(y_train.naturallog)\n\nStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)Please rerun this cell to show the HTML repr or trust the notebook.StatsForecastAutoARIMA?Documentation for StatsForecastAutoARIMAStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)\n\n\nsp: Number of observations per unit of time.\nHelp: https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html"
+  },
+  {
+    "objectID": "Week3p2/index.html#your-turn-1",
+    "href": "Week3p2/index.html#your-turn-1",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Preferm residual analysis"
+  },
+  {
+    "objectID": "Week3p2/index.html#obtain-predictions-for-the-training-period",
+    "href": "Week3p2/index.html#obtain-predictions-for-the-training-period",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "y_pred = forecaster.predict(fh)\ny_pred \n\n1960-01    6.038882\n1960-02    5.989590\n1960-03    6.146032\n1960-04    6.119674\n1960-05    6.159455\n1960-06    6.304701\n1960-07    6.432675\n1960-08    6.444805\n1960-09    6.266803\n1960-10    6.136178\n1960-11    6.007715\n1960-12    6.114486\nFreq: M, Name: Number of airline passengers, dtype: float64"
+  },
+  {
+    "objectID": "Week3p2/index.html#model-parameter-estimates",
+    "href": "Week3p2/index.html#model-parameter-estimates",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Write a code to obtain model parameter estimates."
+  },
+  {
+    "objectID": "Week3p2/index.html#what-is-happening-under-the-hood-of-autoarima",
+    "href": "Week3p2/index.html#what-is-happening-under-the-hood-of-autoarima",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Step 1: Select the number of differences d and D via unit root tests and strength of seasonality measure.\nStep 2: Try four possible models to start with:"
+  },
+  {
+    "objectID": "Week3p2/index.html#section",
+    "href": "Week3p2/index.html#section",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "\\(ARIMA(2, d, 2)\\) if \\(m = 1\\) and \\(ARIMA(2, d, 2)(1, D, 1)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 0)(0, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(1, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(1, d, 0)(1, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 1)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 1)(0, D, 1)_m\\) if \\(m &gt; 1\\)."
+  },
+  {
+    "objectID": "Week3p2/index.html#section-1",
+    "href": "Week3p2/index.html#section-1",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Step 3: Select the model with the smallest AICc from step 2. This becomes the current model.\nStep 4: Consider up to 13 variations on the current model:\n\nVary one of \\(p, q, P\\) and \\(Q\\) from the current model by \\(\\pm 1\\).\n\\(p, q\\) both vary from the current model by \\(\\pm 1\\).\n\\(P, Q\\) both vary from the current model by \\(\\pm 1\\).\nInclude or exclude the constant term from the current model. Repeat step 4 until no lower AICc can be found."
   }
 ]

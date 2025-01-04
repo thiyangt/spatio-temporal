@@ -23,3 +23,7 @@ title: "DSA 554 3.0 Spatio-temporal Data Analysis"
 [Practical 3](/Week3p2/index.html)
 
 [Slides 4](https://thiyanga-spatiotemporal.netlify.app/posts/spatial/spatial_analysis.pdf)
+
+## Lecture 4: 4 January 2025
+
+[Slides 5](https://thiyangt.github.io/spatial-modelling/#/outline)
