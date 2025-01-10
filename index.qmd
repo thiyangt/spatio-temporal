@@ -41,3 +41,5 @@ title: "DSA 554 3.0 Spatio-temporal Data Analysis"
 [Data 1](/Week5/datasets/us-states.json)
 
 [Data 2](/Week5/datasets/world-happiness-report-2019.csv)
+
+[Slides 5](https://thiyangt.github.io/spatial-modelling/#/title-slide)
