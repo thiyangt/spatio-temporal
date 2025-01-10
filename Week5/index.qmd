@@ -22,6 +22,34 @@ world.plot()
 world.geometry.head()
 ```
 
+```{python}
+world.crs.name
+```
+
+## Centroid
+
+```{python}
+world["geometry"].centroid.head() # method 1
+```
+
+```{python}
+world.centroid.plot(markersize=1) # method 2
+
+```
+
+## unary union operation
+
+```{python}
+combined_geometry = world.unary_union
+combined_geometry
+
+```
+
+## Bounding polygon
+
+```{python}
+world.envelope.head()
+```
 
 ## Read GeoJson file
 

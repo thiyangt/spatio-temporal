@@ -908,5 +908,26 @@
     "title": "Spatial Visualization with Python",
     "section": "Reading",
     "text": "Reading\nhttps://pythongis.org/part2/chapter-06/nb/01-geodataframe.html"
+  },
+  {
+    "objectID": "Week5/index.html#centroid",
+    "href": "Week5/index.html#centroid",
+    "title": "Spatial Visualization with Python",
+    "section": "Centroid",
+    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_31480\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_31480\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
+  },
+  {
+    "objectID": "Week5/index.html#unary-union-operation",
+    "href": "Week5/index.html#unary-union-operation",
+    "title": "Spatial Visualization with Python",
+    "section": "unary union operation",
+    "text": "unary union operation\n\ncombined_geometry = world.unary_union\ncombined_geometry"
+  },
+  {
+    "objectID": "Week5/index.html#bounding-polygon",
+    "href": "Week5/index.html#bounding-polygon",
+    "title": "Spatial Visualization with Python",
+    "section": "Bounding polygon",
+    "text": "Bounding polygon\n\nworld.envelope.head()\n\n0    POLYGON ((-180.00000 -18.28799, 180.00000 -18....\n1    POLYGON ((29.34000 -11.72094, 40.31659 -11.720...\n2    POLYGON ((-17.06342 20.99975, -8.66512 20.9997...\n3    POLYGON ((-140.99778 41.67511, -52.64810 41.67...\n4    POLYGON ((-171.79111 18.91619, -66.96466 18.91...\ndtype: geometry"
   }
 ]
