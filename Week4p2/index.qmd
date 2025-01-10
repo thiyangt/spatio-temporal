@@ -7,6 +7,7 @@ jupyter: python3
 
 ```{python}
 import geopandas as gpd
+import folium
 ```
 
 # Load and inspect meuse data
@@ -43,4 +44,28 @@ plt.title('Zinc Concentration in Meuse Data')
 plt.xlabel('Longitude')
 plt.ylabel('Latitude')
 plt.show()
+```
+
+```{python}
+# Ensure the GeoDataFrame has the correct CRS and reproject to WGS84 for folium
+gdf = meuse.to_crs(epsg=4326)
+
+# Create a folium map centered on the data
+map_center = [gdf.geometry.y.mean(), gdf.geometry.x.mean()]
+m = folium.Map(location=map_center, zoom_start=12)
+
+# Add points to the map with a popup for one of the attributes
+for _, row in gdf.iterrows():
+    folium.CircleMarker(
+        location=[row.geometry.y, row.geometry.x],
+        radius=5,
+        color='blue',
+        fill=True,
+        fill_opacity=0.6,
+        popup=f"Zinc: {row['zinc']}"  # Replace 'zinc' with a column from your shapefile
+    ).add_to(m)
+
+# Save or display the map
+m.save("meuse_map.html")
+m
 ```

@@ -1,0 +1,74 @@
+---
+title: "Spatial Visualization with Python"
+jupyter: python3
+---
+
+# Loading packages
+
+```{python}
+import geopandas as gpd
+import folium
+import pandas as pd
+```
+
+# Reading spatial data
+
+```{python}
+world = gpd.read_file(gpd.datasets.get_path("naturalearth_lowres"))
+print("Geometry Column Name:", world.geometry.name)
+print("Dataset Size:", world.shape)
+world.head()
+world.plot()
+world.geometry.head()
+```
+
+
+## Read GeoJson file
+
+```{python}
+us_states_geo = gpd.read_file("datasets/us-states.json")
+us_states_geo.head()
+```
+
+## Read .csv file
+
+```{python}
+world_happiness = pd.read_csv("datasets/world-happiness-report-2019.csv")
+world_happiness.head()
+```
+
+## Merge data files
+
+```{python}
+world_total_data = world.merge(world_happiness, left_on = "name", 
+right_on = "Country (region)")
+world_total_data.head()
+```
+
+## Choropleth Map
+
+```{python}
+from plotnine import ggplot, geom_map, aes, scale_fill_cmap, theme, labs
+
+chart = ggplot(world_total_data) + \
+    geom_map(aes(fill="Freedom", map_id="name", geometry="geometry")) + \
+    scale_fill_cmap(cmap_name="Blues") + \
+    labs(title="Freedom") + \
+    theme(figure_size=(12, 6))
+
+print(chart)
+```
+
+```{python}
+chart = ggplot(world_total_data) + \
+    geom_map(aes(fill="Healthy life\nexpectancy", map_id="name", geometry="geometry")) + \
+    scale_fill_cmap(cmap_name="Blues") + \
+    labs(title="Healthy life and expectancy") + \
+    theme(figure_size=(12, 6))
+
+print(chart)
+```
+
+## Reading
+
+https://pythongis.org/part2/chapter-06/nb/01-geodataframe.html

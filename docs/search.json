@@ -4,7 +4,7 @@
     "href": "Week4p2/index.html",
     "title": "Spatial Visualization with Python",
     "section": "",
-    "text": "Loading packages\n\nimport geopandas as gpd\n\n\n\nLoad and inspect meuse data\n\nmeuse = gpd.read_file(\"meuse.shp\")  # Adjust the file path as needed\n\n# Inspect the first few rows of the data\nprint(meuse.head())\n\n   cadmium  copper   lead    zinc   elev      dist    om ffreq soil lime  \\\n0     11.7    85.0  299.0  1022.0  7.909  0.001358  13.6     1    1    1   \n1      8.6    81.0  277.0  1141.0  6.983  0.012224  14.0     1    1    1   \n2      6.5    68.0  199.0   640.0  7.800  0.103029  13.0     1    1    1   \n3      2.6    81.0  116.0   257.0  7.655  0.190094   8.0     1    2    0   \n4      2.8    48.0  117.0   269.0  7.480  0.277090   8.7     1    2    0   \n\n  landuse  dist_m                       geometry  \n0      Ah    50.0  POINT (181072.000 333611.000)  \n1      Ah    30.0  POINT (181025.000 333558.000)  \n2      Ah   150.0  POINT (181165.000 333537.000)  \n3      Ga   270.0  POINT (181298.000 333484.000)  \n4      Ah   380.0  POINT (181307.000 333330.000)  \n\n\n\n\nVisualise the data\n\nimport matplotlib.pyplot as plt\n\n# Plot the meuse dataset (points in this case)\nmeuse.plot(marker='o', color='blue', markersize=5)\n\n# Show the plot\nplt.title('Meuse Spatial Data Visualization')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()\n\n\n\n\n\n\n\n\n\n\nCustomize plot\n\nmeuse.plot(column='zinc', cmap='viridis', legend=True, markersize=5)\n\n# Show the plot\nplt.title('Zinc Concentration in Meuse Data')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()"
+    "text": "Loading packages\n\nimport geopandas as gpd\nimport folium\n\n\n\nLoad and inspect meuse data\n\nmeuse = gpd.read_file(\"meuse.shp\")  # Adjust the file path as needed\n\n# Inspect the first few rows of the data\nprint(meuse.head())\n\n   cadmium  copper   lead    zinc   elev      dist    om ffreq soil lime  \\\n0     11.7    85.0  299.0  1022.0  7.909  0.001358  13.6     1    1    1   \n1      8.6    81.0  277.0  1141.0  6.983  0.012224  14.0     1    1    1   \n2      6.5    68.0  199.0   640.0  7.800  0.103029  13.0     1    1    1   \n3      2.6    81.0  116.0   257.0  7.655  0.190094   8.0     1    2    0   \n4      2.8    48.0  117.0   269.0  7.480  0.277090   8.7     1    2    0   \n\n  landuse  dist_m                       geometry  \n0      Ah    50.0  POINT (181072.000 333611.000)  \n1      Ah    30.0  POINT (181025.000 333558.000)  \n2      Ah   150.0  POINT (181165.000 333537.000)  \n3      Ga   270.0  POINT (181298.000 333484.000)  \n4      Ah   380.0  POINT (181307.000 333330.000)  \n\n\n\n\nVisualise the data\n\nimport matplotlib.pyplot as plt\n\n# Plot the meuse dataset (points in this case)\nmeuse.plot(marker='o', color='blue', markersize=5)\n\n# Show the plot\nplt.title('Meuse Spatial Data Visualization')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()\n\n\n\n\n\n\n\n\n\n\nCustomize plot\n\nmeuse.plot(column='zinc', cmap='viridis', legend=True, markersize=5)\n\n# Show the plot\nplt.title('Zinc Concentration in Meuse Data')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()\n\n\n\n\n\n\n\n\n\n# Ensure the GeoDataFrame has the correct CRS and reproject to WGS84 for folium\ngdf = meuse.to_crs(epsg=4326)\n\n# Create a folium map centered on the data\nmap_center = [gdf.geometry.y.mean(), gdf.geometry.x.mean()]\nm = folium.Map(location=map_center, zoom_start=12)\n\n# Add points to the map with a popup for one of the attributes\nfor _, row in gdf.iterrows():\n    folium.CircleMarker(\n        location=[row.geometry.y, row.geometry.x],\n        radius=5,\n        color='blue',\n        fill=True,\n        fill_opacity=0.6,\n        popup=f\"Zinc: {row['zinc']}\"  # Replace 'zinc' with a column from your shapefile\n    ).add_to(m)\n\n# Save or display the map\nm.save(\"meuse_map.html\")\nm\n\nMake this Notebook Trusted to load map: File -&gt; Trust Notebook"
   },
   {
     "objectID": "Week3p2/index.html",
@@ -866,5 +866,47 @@
     "title": "Time Series Forecasting with Python: Method 1",
     "section": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset.",
     "text": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset."
+  },
+  {
+    "objectID": "Week5/index.html",
+    "href": "Week5/index.html",
+    "title": "Spatial Visualization with Python",
+    "section": "",
+    "text": "import geopandas as gpd\nimport folium\nimport pandas as pd"
+  },
+  {
+    "objectID": "Week5/index.html#read-geojson-file",
+    "href": "Week5/index.html#read-geojson-file",
+    "title": "Spatial Visualization with Python",
+    "section": "Read GeoJson file",
+    "text": "Read GeoJson file\n\nus_states_geo = gpd.read_file(\"datasets/us-states.json\")\nus_states_geo.head()\n\n\n\n\n\n\n\n\nid\nname\ngeometry\n\n\n\n\n0\n01\nAlabama\nPOLYGON ((-87.35930 35.00118, -85.60667 34.984...\n\n\n1\n02\nAlaska\nMULTIPOLYGON (((-131.60202 55.11798, -131.5691...\n\n\n2\n04\nArizona\nPOLYGON ((-109.04250 37.00026, -109.04798 31.3...\n\n\n3\n05\nArkansas\nPOLYGON ((-94.47384 36.50186, -90.15254 36.496...\n\n\n4\n06\nCalifornia\nPOLYGON ((-123.23326 42.00619, -122.37885 42.0..."
+  },
+  {
+    "objectID": "Week5/index.html#read-.csv-file",
+    "href": "Week5/index.html#read-.csv-file",
+    "title": "Spatial Visualization with Python",
+    "section": "Read .csv file",
+    "text": "Read .csv file\n\nworld_happiness = pd.read_csv(\"datasets/world-happiness-report-2019.csv\")\nworld_happiness.head()\n\n\n\n\n\n\n\n\nCountry (region)\nLadder\nSD of Ladder\nPositive affect\nNegative affect\nSocial support\nFreedom\nCorruption\nGenerosity\nLog of GDP\\nper capita\nHealthy life\\nexpectancy\n\n\n\n\n0\nFinland\n1\n4\n41.0\n10.0\n2.0\n5.0\n4.0\n47.0\n22.0\n27.0\n\n\n1\nDenmark\n2\n13\n24.0\n26.0\n4.0\n6.0\n3.0\n22.0\n14.0\n23.0\n\n\n2\nNorway\n3\n8\n16.0\n29.0\n3.0\n3.0\n8.0\n11.0\n7.0\n12.0\n\n\n3\nIceland\n4\n9\n3.0\n3.0\n1.0\n7.0\n45.0\n3.0\n15.0\n13.0\n\n\n4\nNetherlands\n5\n1\n12.0\n25.0\n15.0\n19.0\n12.0\n7.0\n12.0\n18.0"
+  },
+  {
+    "objectID": "Week5/index.html#merge-data-files",
+    "href": "Week5/index.html#merge-data-files",
+    "title": "Spatial Visualization with Python",
+    "section": "Merge data files",
+    "text": "Merge data files\n\nworld_total_data = world.merge(world_happiness, left_on = \"name\", \nright_on = \"Country (region)\")\nworld_total_data.head()\n\n\n\n\n\n\n\n\npop_est\ncontinent\nname\niso_a3\ngdp_md_est\ngeometry\nCountry (region)\nLadder\nSD of Ladder\nPositive affect\nNegative affect\nSocial support\nFreedom\nCorruption\nGenerosity\nLog of GDP\\nper capita\nHealthy life\\nexpectancy\n\n\n\n\n0\n58005463.0\nAfrica\nTanzania\nTZA\n63177\nPOLYGON ((33.90371 -0.95000, 34.07262 -1.05982...\nTanzania\n153\n122\n78.0\n50.0\n131.0\n78.0\n34.0\n49.0\n125.0\n118.0\n\n\n1\n37589262.0\nNorth America\nCanada\nCAN\n1736425\nMULTIPOLYGON (((-122.84000 49.00000, -122.9742...\nCanada\n9\n23\n18.0\n49.0\n20.0\n9.0\n11.0\n14.0\n19.0\n8.0\n\n\n2\n18513930.0\nAsia\nKazakhstan\nKAZ\n181665\nPOLYGON ((87.35997 49.21498, 86.59878 48.54918...\nKazakhstan\n60\n40\n81.0\n5.0\n19.0\n80.0\n57.0\n57.0\n47.0\n88.0\n\n\n3\n33580650.0\nAsia\nUzbekistan\nUZB\n57921\nPOLYGON ((55.96819 41.30864, 55.92892 44.99586...\nUzbekistan\n41\n99\n19.0\n15.0\n11.0\n1.0\n18.0\n29.0\n104.0\n83.0\n\n\n4\n270625568.0\nAsia\nIndonesia\nIDN\n1119190\nMULTIPOLYGON (((141.00021 -2.60015, 141.01706 ...\nIndonesia\n92\n108\n9.0\n104.0\n94.0\n48.0\n129.0\n2.0\n83.0\n98.0"
+  },
+  {
+    "objectID": "Week5/index.html#choropleth-map",
+    "href": "Week5/index.html#choropleth-map",
+    "title": "Spatial Visualization with Python",
+    "section": "Choropleth Map",
+    "text": "Choropleth Map\n\nfrom plotnine import ggplot, geom_map, aes, scale_fill_cmap, theme, labs\n\nchart = ggplot(world_total_data) + \\\n    geom_map(aes(fill=\"Freedom\", map_id=\"name\", geometry=\"geometry\")) + \\\n    scale_fill_cmap(cmap_name=\"Blues\") + \\\n    labs(title=\"Freedom\") + \\\n    theme(figure_size=(12, 6))\n\nprint(chart)\n\n\n\n\n\n\n\n\n\n\n\n\nchart = ggplot(world_total_data) + \\\n    geom_map(aes(fill=\"Healthy life\\nexpectancy\", map_id=\"name\", geometry=\"geometry\")) + \\\n    scale_fill_cmap(cmap_name=\"Blues\") + \\\n    labs(title=\"Healthy life and expectancy\") + \\\n    theme(figure_size=(12, 6))\n\nprint(chart)"
+  },
+  {
+    "objectID": "Week5/index.html#reading",
+    "href": "Week5/index.html#reading",
+    "title": "Spatial Visualization with Python",
+    "section": "Reading",
+    "text": "Reading\nhttps://pythongis.org/part2/chapter-06/nb/01-geodataframe.html"
   }
 ]
