@@ -221,7 +221,7 @@ window.Quarto = {
 
 <section id="loading-packages" class="level1">
 <h1>Loading packages</h1>
-<div id="ac1603d3" class="cell" data-execution_count="1">
+<div id="c9975315" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9 </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
@@ -254,7 +254,7 @@ window.Quarto = {
 </section>
 <section id="modeling-with-python" class="level2">
 <h2 class="anchored" data-anchor-id="modeling-with-python">Modeling with Python</h2>
-<div id="a1a06b33" class="cell" data-execution_count="2">
+<div id="bbcb3545" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sktime <span class="im">import</span> <span class="op">*</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sktime.datasets <span class="im">import</span> load_airline</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sktime.utils.plotting <span class="im">import</span> plot_series</span>
@@ -279,7 +279,7 @@ window.Quarto = {
 </section>
 <section id="define-forecast-horizon" class="level2">
 <h2 class="anchored" data-anchor-id="define-forecast-horizon">Define forecast horizon</h2>
-<div id="c5f2d4c8" class="cell" data-execution_count="3">
+<div id="9a39e274" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sktime.forecasting.base <span class="im">import</span> ForecastingHorizon</span>
@@ -296,14 +296,14 @@ window.Quarto = {
 </section>
 <section id="split-data-into-training-and-test" class="level2">
 <h2 class="anchored" data-anchor-id="split-data-into-training-and-test">Split data into training and test</h2>
-<div id="a0545c62" class="cell" data-execution_count="4">
+<div id="2d58b818" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sktime.forecasting.model_selection <span class="im">import</span> temporal_train_test_split</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>y_train, y_test <span class="op">=</span> temporal_train_test_split(y, fh<span class="op">=</span>fh)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="define-forecaster-with-sktime" class="level2">
 <h2 class="anchored" data-anchor-id="define-forecaster-with-sktime">Define forecaster with sktime</h2>
-<div id="0d9c608e" class="cell" data-execution_count="5">
+<div id="e453f3fc" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sktime.forecasting.statsforecast <span class="im">import</span> StatsForecastAutoARIMA</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>forecaster <span class="op">=</span> StatsForecastAutoARIMA(  </span>
@@ -312,7 +312,7 @@ window.Quarto = {
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>y_train.naturallog <span class="op">=</span> np.log(y_train)</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>forecaster.fit(y_train.naturallog)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="5">
-<style>#sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a {
+<style>#sk-a892dbb7-138c-434a-8e92-28976f5be304 {
     /* Definition of color scheme common for light and dark mode */
     --sklearn-color-text: black;
     --sklearn-color-line: gray;
@@ -337,15 +337,15 @@ window.Quarto = {
     }
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 {
     color: var(--sklearn-color-text);
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a pre {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 pre {
     padding: 0;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a input.sk-hidden--visually {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 input.sk-hidden--visually {
     border: 0;
     clip: rect(1px 1px 1px 1px);
     clip: rect(1px, 1px, 1px, 1px);
@@ -357,7 +357,7 @@ window.Quarto = {
     width: 1px;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-dashed-wrapped {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-dashed-wrapped {
     border: 1px dashed var(--sklearn-color-line);
     margin: 0 0.4em 0.5em 0.4em;
     box-sizing: border-box;
@@ -365,7 +365,7 @@ window.Quarto = {
     background-color: var(--sklearn-color-background);
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-container {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-container {
     /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
        but bootstrap.min.css set `[hidden] { display: none !important; }`
        so we also need the `!important` here to be able to override the
@@ -375,7 +375,7 @@ window.Quarto = {
     position: relative;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-text-repr-fallback {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-text-repr-fallback {
     display: none;
   }
 
@@ -391,14 +391,14 @@ window.Quarto = {
 
   /* Parallel-specific style estimator block */
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-parallel-item::after {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-parallel-item::after {
     content: "";
     width: 100%;
     border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
     flex-grow: 1;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-parallel {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-parallel {
     display: flex;
     align-items: stretch;
     justify-content: center;
@@ -406,28 +406,28 @@ window.Quarto = {
     position: relative;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-parallel-item {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-parallel-item {
     display: flex;
     flex-direction: column;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-parallel-item:first-child::after {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-parallel-item:first-child::after {
     align-self: flex-end;
     width: 50%;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-parallel-item:last-child::after {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-parallel-item:last-child::after {
     align-self: flex-start;
     width: 50%;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-parallel-item:only-child::after {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-parallel-item:only-child::after {
     width: 0;
   }
 
   /* Serial-specific style estimator block */
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-serial {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-serial {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -445,14 +445,14 @@ window.Quarto = {
 
   /* Pipeline and ColumnTransformer style (default) */
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-toggleable {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-toggleable {
     /* Default theme specific background. It is overwritten whether we have a
     specific estimator or a Pipeline/ColumnTransformer */
     background-color: var(--sklearn-color-background);
   }
 
   /* Toggleable label */
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a label.sk-toggleable__label {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 label.sk-toggleable__label {
     cursor: pointer;
     display: block;
     width: 100%;
@@ -462,7 +462,7 @@ window.Quarto = {
     text-align: center;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a label.sk-toggleable__label-arrow:before {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 label.sk-toggleable__label-arrow:before {
     /* Arrow on the left of the label */
     content: "▸";
     float: left;
@@ -470,13 +470,13 @@ window.Quarto = {
     color: var(--sklearn-color-icon);
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a label.sk-toggleable__label-arrow:hover:before {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 label.sk-toggleable__label-arrow:hover:before {
     color: var(--sklearn-color-text);
   }
 
   /* Toggleable content - dropdown */
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-toggleable__content {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-toggleable__content {
     max-height: 0;
     max-width: 0;
     overflow: hidden;
@@ -484,27 +484,27 @@ window.Quarto = {
     background-color: var(--sklearn-color-level-0);
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-toggleable__content pre {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-toggleable__content pre {
     margin: 0.2em;
     border-radius: 0.25em;
     color: var(--sklearn-color-text);
     background-color: var(--sklearn-color-level-0);
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 input.sk-toggleable__control:checked~div.sk-toggleable__content {
     /* Expand drop-down */
     max-height: 200px;
     max-width: 100%;
     overflow: auto;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
     content: "▾";
   }
 
   /* Pipeline/ColumnTransformer-specific style */
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
     color: var(--sklearn-color-text);
     background-color: var(--sklearn-color-level-2);
   }
@@ -512,38 +512,38 @@ window.Quarto = {
   /* Estimator-specific style */
 
   /* Colorize estimator box */
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
     /* unfitted */
     background-color: var(--sklearn-color-level-2);
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-label label.sk-toggleable__label,
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-label label {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-label label.sk-toggleable__label,
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-label label {
     /* The background is the default theme color */
     color: var(--sklearn-color-text-on-default-background);
   }
 
   /* On hover, darken the color of the background */
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-label:hover label.sk-toggleable__label {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-label:hover label.sk-toggleable__label {
     color: var(--sklearn-color-text);
     background-color: var(--sklearn-color-level-2);
   }
 
   /* Estimator label */
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-label label {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-label label {
     font-family: monospace;
     font-weight: bold;
     display: inline-block;
     line-height: 1.2em;
   }
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-label-container {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-label-container {
     text-align: center;
   }
 
   /* Estimator-specific */
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-estimator {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-estimator {
     font-family: monospace;
     border: 1px dotted var(--sklearn-color-border-box);
     border-radius: 0.25em;
@@ -553,7 +553,7 @@ window.Quarto = {
   }
 
   /* on hover */
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a div.sk-estimator:hover {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 div.sk-estimator:hover {
     background-color: var(--sklearn-color-level-2);
   }
 
@@ -610,7 +610,7 @@ window.Quarto = {
 
   /* "?"-specific style due to the `<a>` HTML tag */
 
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a a.estimator_doc_link {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 a.estimator_doc_link {
     float: right;
     font-size: 1rem;
     line-height: 1em;
@@ -625,12 +625,12 @@ window.Quarto = {
   }
 
   /* On hover */
-  #sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a a.estimator_doc_link:hover {
+  #sk-a892dbb7-138c-434a-8e92-28976f5be304 a.estimator_doc_link:hover {
     background-color: var(--sklearn-color-level-3);
     color: var(--sklearn-color-background);
     text-decoration: none;
   }
-</a></style><div id="sk-f90e9618-ad78-45b1-a224-c2f5585a0b6a" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>StatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)</pre><b>Please rerun this cell to show the HTML repr or trust the notebook.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="UUID('7c0671c9-d93e-4030-bf21-afab08009c94')" type="checkbox" checked=""><label for="UUID('7c0671c9-d93e-4030-bf21-afab08009c94')" class="sk-toggleable__label sk-toggleable__label-arrow">StatsForecastAutoARIMA<a class="sk-estimator-doc-link" rel="noreferrer" target="_blank" href="https://www.sktime.net/en/v0.35.0/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html">?<span>Documentation for StatsForecastAutoARIMA</span></a></label><div class="sk-toggleable__content"><pre>StatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)</pre></div></div></div></div></div>
+</a></style><div id="sk-a892dbb7-138c-434a-8e92-28976f5be304" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>StatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)</pre><b>Please rerun this cell to show the HTML repr or trust the notebook.</b></div><div class="sk-container" hidden=""><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="UUID('4e8a08ef-2b64-4e6a-bfae-80d839782cc9')" type="checkbox" checked=""><label for="UUID('4e8a08ef-2b64-4e6a-bfae-80d839782cc9')" class="sk-toggleable__label sk-toggleable__label-arrow">StatsForecastAutoARIMA<a class="sk-estimator-doc-link" rel="noreferrer" target="_blank" href="https://www.sktime.net/en/v0.35.0/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html">?<span>Documentation for StatsForecastAutoARIMA</span></a></label><div class="sk-toggleable__content"><pre>StatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)</pre></div></div></div></div></div>
 </div>
 </div>
 <p>sp: Number of observations per unit of time.</p>
@@ -642,7 +642,7 @@ window.Quarto = {
 </section>
 <section id="obtain-predictions-for-the-training-period" class="level2">
 <h2 class="anchored" data-anchor-id="obtain-predictions-for-the-training-period">Obtain predictions for the training period</h2>
-<div id="653a7e9a" class="cell" data-execution_count="6">
+<div id="4ebddbe0" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> forecaster.predict(fh)</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>y_pred </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">

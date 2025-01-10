@@ -33,3 +33,11 @@ title: "DSA 554 3.0 Spatio-temporal Data Analysis"
 [Practical 4 - With R](/Week4p/index.R)
 
 [Practical 5 - With Python](/Week4p2/index.html)
+
+## Lecture 5: 11 Jan 2025
+
+[Practical 6](/Week5/index.html)
+
+[Data 1](/Week5/datasets/us-states.json)
+
+[Data 2](/Week5/datasets/world-happiness-report-2019.csv)
