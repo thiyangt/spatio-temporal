@@ -203,3 +203,25 @@ To address this, the variogram cloud is often binned into predefined distance in
 **The sill:** The maximum value of the semivariance, beyond which no further increase in variability is observed.
 
 The binned variogram helps in understanding the overall trend in the spatial dependence between locations.
+
+## Reading
+
+[https://scikit-gstat.readthedocs.io/en/latest/userguide/variogram.html](https://scikit-gstat.readthedocs.io/en/latest/userguide/variogram.html)
+
+## Interpretations of Variograms
+
+$$C(h) = Sill - \gamma(h)$$
+
+##
+
+![](dia1.png)
+
+## Relationship between a correlogram and a variogram
+
+In class explanations
+
+Further reading: https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts
+
+## Acknowledgement
+
+[https://r-spatial.org/book/12-Interpolation.html](https://r-spatial.org/book/12-Interpolation.html)

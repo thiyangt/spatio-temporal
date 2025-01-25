@@ -45,3 +45,13 @@ title: "DSA 554 3.0 Spatio-temporal Data Analysis"
 [Practical 7 - With R](http://lab.rady.ucsd.edu/sawtooth/RAnalytics/maps.html)
 
 [Slides 6](https://thiyangt.github.io/spatial-modelling/#/title-slide)
+
+## Lecture 6: 25 Jan 2025
+
+[Variogram Calculation - Excel File](https://github.com/GeostatsGuy/GeoDataSets/blob/master/1D_Porosity.xlsx)
+
+Acknowledgement for data: Prof Michael Pyrcz, Full Professor at The University of Texas at Austin working on Spatial Data Analytics, Geostatistics and Machine Learning. Link: https://github.com/GeostatsGuy
+
+[Slides 7](/Week6/index.html)
+
+[Reading](https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts)
