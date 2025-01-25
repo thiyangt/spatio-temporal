@@ -1,0 +1,205 @@
+---
+title: "DSA 554 3.0 Spatio-temporal Data Analysis"
+subtitle: "Kriging and Variograms "
+author: "Dr. Thiyanga S. Talagala <br/>  Department of Statistics, Faculty of Applied Sciences <br/> University of Sri Jayewardenepura, Sri Lanka"
+format:
+  revealjs:
+    css:
+        - "custom.css"
+    width: 1600
+    height: 900
+    margin: 0.1
+    theme: simple
+    transition: slide
+    background-transition: fade
+    slide-number: true
+    show-slide-number: all
+    title-slide-attributes: 
+      data-background-color: "#081d58"
+      data-background-image: none
+---
+
+## Kriging vs IDW
+
+- Inverse Distance Weighting (IDW) and Kriging are weighted methods for interpolation. The key difference lies in how they determine and apply weights.
+
+- In IDW, weights are determined solely based on distance between the point being estimated and the known sample points.
+
+    - Nearby points have greater influence (higher weights) than distant points.
+    
+    - The weights are purely geometric and ignore any statistical relationships or spatial trends in the data.
+
+- Kriging determines weights based on both the distance between points and the spatial autocorrelation of the data, which is modeled using a semivariogram. The semivariogram quantifies how similar data values are based on their separation distance.
+
+## Weight Determination in Kriging
+
+- Kriging solves a system of linear equations derived from the semivariogram, minimizing prediction variance while ensuring unbiasedness.
+
+- Weights are chosen such that they account for:
+
+    Distances: Between the interpolation point and sample points.
+    
+    Spatial relationships: Among the sample points themselves (accounting for clustering and redundancy).
+    
+
+- Weights depend on the semivariogram model (e.g., spherical, exponential).
+Points farther away can still have influence if the semivariogram indicates spatial continuity.
+
+## Comparison of Weight Selection in Kriging and IDW
+
+In-class explanation
+
+## Key points
+
+- IDW is straightforward, where weights depend only on how close a point is to the location being estimated. It assumes all variation is captured by distance.
+
+- Kriging uses a more sophisticated approach, accounting for both distance and how sample points are spatially correlated, providing more accurate and statistically sound estimates in many cases
+
+## Variograms
+
+## Data
+
+```{r, echo=TRUE}
+library(gstat)
+library(tidyverse)
+no2 <- read_csv(system.file("external/no2.csv", 
+    package = "gstat"), show_col_types = FALSE)
+no2
+```
+
+## Convert to Spatial Object: Method 1
+
+```{r, echo=TRUE}
+library(sf)
+library(sp)
+crs <- st_crs("EPSG:32632")
+no2.sf <- st_as_sf(no2, crs = "OGC:CRS84", coords = 
+    c("station_longitude_deg", "station_latitude_deg")) |>
+    st_transform(crs) 
+no2.sf
+```
+
+## Spatial Extent
+
+```{r}
+st_bbox(no2.sf)
+```
+
+## Lagged Scatterplot
+
+
+
+```{r, fig.height=9, fig.width=9}
+hscat(NO2 ~ 1, data = no2.sf, breaks = (0:30)*100000)
+```
+
+## Lagged Scatterplot
+
+In spatial analysis, a lagged scatterplot explores spatial autocorrelation by plotting the values of a variable at locations separated by a specific lag distance. It is used to assess how the similarity of values changes with distance, helping understand spatial patterns and dependencies.
+
+## Steps to Construct a Lagged Scatterplot for Spatial Analysis
+
+1. Define the Variable of Interest
+Choose the variable whose spatial relationship you want to analyze (e.g., air pollution levels, rainfall, temperature, etc.).
+
+2. Select a Lag Distance
+Decide the distance intervals (lags) at which you want to compare the values. For example:
+
+0–1000 meters
+
+1000–2000 meters
+
+2000–3000 meters
+
+3. Pair Locations Based on Lag
+Identify all pairs of points whose separation distance falls within each lag interval.
+
+4. Calculate Values
+
+For each pair of points:
+
+Plot the value at one location on the x-axis.
+
+Plot the value at the paired location on the y-axis.
+
+5. Visualize
+Create a scatterplot for each lag interval to observe spatial relationships.
+
+## Example of Selecting Lag Distance
+
+Let’s say you have a dataset of air quality measurements in a city, and you want to analyze the spatial relationship between stations. Here’s how you might proceed:
+
+Examine the study area: If your data spans an area of 10 km by 10 km, then a lag distance of 500 meters or 1 km might be reasonable.
+
+Check for spatial autocorrelation: Create a variogram to see how the data correlates over distances. You’ll likely see that values are highly correlated at short distances (e.g., 100–500 meters) but become less correlated as the distance grows.
+
+Set lag intervals: Based on your variogram and knowledge, you might decide on breaks such as:
+
+0–500 meters
+
+500–1000 meters
+
+1000–2000 meters
+
+2000–5000 meters
+
+Adjust based on the data: If you find that most of your points are clustered closely together, you may select smaller lags. If the points are spread out, you may select larger lags.
+
+##
+
+```{r, fig.height=9, fig.width=9}
+hscat(NO2 ~ 1, data = no2.sf, breaks = (0:30)*100000)
+```
+
+##
+
+```{r, fig.height=9, fig.width=9}
+hscat(NO2 ~ 1, data = no2.sf, breaks = (0:30)*50000)
+```
+
+##
+
+```{r, fig.height=9, fig.width=9}
+hscat(NO2 ~ 1, data = no2.sf, breaks = (0:30)*10000)
+```
+
+
+#
+
+[https://thiyangt.github.io/spatial-modelling/#/investigate-spatial-autocorrelation-using-empirical-variogram-variogram-cloud](https://thiyangt.github.io/spatial-modelling/#/investigate-spatial-autocorrelation-using-empirical-variogram-variogram-cloud)
+
+## The reason for The transition from an h-scatterplot to a variogram cloud
+
+h-Scatterplot: This plot shows the relationship between values of a variable at different distances (lags) in a scatterplot format. While it is useful to get a rough idea of the spatial relationship, it doesn’t provide a detailed understanding of how spatial dependence varies with distance.
+
+Variogram Cloud: The variogram cloud (or experimental variogram) provides a more refined and systematic view of spatial dependence. It plots the variance of the differences between values at pairs of locations (the semivariance) against the distance between those locations.
+
+## Variogram Cloud
+
+A variogram cloud shows the semivariance for every pair of spatial locations in the dataset, at different distances (lags). It provides valuable information, but it can be noisy, especially in large datasets. Each point in the cloud represents a pair of points at a specific distance, but there may be a lot of variability due to:
+
+Sampling errors,
+
+Data sparsity in certain ranges,
+
+Local irregularities.
+
+This noise can make it harder to interpret the spatial structure of the data clearly.
+
+## Binned Variogram
+
+To address this, the variogram cloud is often binned into predefined distance intervals (lags). This process groups the semivariance values for pairs of points that fall within certain distance ranges, effectively averaging them. This reduces the noise and results in a smoother, more stable variogram. The binned variogram provides a clearer representation of the overall trend in spatial autocorrelation, particularly for larger datasets.
+
+## Improving the Interpretation of Spatial Structure
+
+**Variogram Cloud:** The cloud may contain too many points to easily discern patterns or trends in the spatial structure. The relationship between distance and semivariance may be obscured by the sheer number of points and their variability.
+
+**Binned Variogram:** By binning the data, you get a smoothed representation of how semivariance increases with distance. This makes it easier to identify key features of the spatial structure, such as:
+
+**The range:** The distance at which spatial dependence effectively disappears.
+
+**The nugget effect:** The value of the semivariance at very short distances, indicating local variability or measurement error.
+
+**The sill:** The maximum value of the semivariance, beyond which no further increase in variability is observed.
+
+The binned variogram helps in understanding the overall trend in the spatial dependence between locations.
