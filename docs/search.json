@@ -991,7 +991,7 @@
     "href": "index.html#lecture-7-1-february-2025",
     "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
     "section": "Lecture 7: 1 February 2025",
-    "text": "Lecture 7: 1 February 2025\nKriging: Continue from Slides 6 and Slides 7\nSpatial interpolation with Python\nSciKit-GStat 1.0: a SciPy-flavored geostatistical variogram estimation toolbox written in Python\nReading - Modelling with trend"
+    "text": "Lecture 7: 1 February 2025\nKriging: Continue from Slides 6 and Slides 7\nTask: Find a suitable kriging model to interpolate zinc concentration in meuse dataset.\nSpatial interpolation with Python\nSciKit-GStat 1.0: a SciPy-flavored geostatistical variogram estimation toolbox written in Python\nReading - Modelling with trend"
   },
   {
     "objectID": "Week2/index.html#in-class-properties-of-ma1-process",
@@ -1040,7 +1040,7 @@
     "href": "Week5/index.html#centroid",
     "title": "Spatial Visualization with Python",
     "section": "Centroid",
-    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_41412\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_41412\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
+    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_26848\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_26848\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
   },
   {
     "objectID": "Week5/index.html#unary-union-operation",

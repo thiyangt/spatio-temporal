@@ -60,14 +60,20 @@ Acknowledgement for data: Prof Michael Pyrcz, Full Professor at The University o
 
 Kriging: Continue from Slides 6 and Slides 7
 
+Task: Find a suitable kriging model to interpolate zinc concentration in meuse dataset.
+
 [Spatial interpolation with Python](https://scikit-gstat.readthedocs.io/en/latest/userguide/kriging.html)
 
 [SciKit-GStat 1.0: a SciPy-flavored geostatistical variogram estimation toolbox written in Python](https://gmd.copernicus.org/articles/15/2505/2022/gmd-15-2505-2022.html)
 
 [Reading - Modelling with trend](https://geostatisticslessons.com/lessons/trendmodeling)
 
+# Additional reading
+
+[Introduction to Kriging with R](https://dickbrus.github.io/SpatialSamplingwithR/Introkriging.html)
+
 # Papers to read
 
 Feature-based learning
 
-- [Incorporating Spatial Autocorrelation in Machine Learning Models Using Spatial Lag and Eigenvector Spatial Filtering Features](https://www.mdpi.com/2220-9964/11/4/242)
+-   [Incorporating Spatial Autocorrelation in Machine Learning Models Using Spatial Lag and Eigenvector Spatial Filtering Features](https://www.mdpi.com/2220-9964/11/4/242)
