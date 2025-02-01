@@ -55,3 +55,17 @@ Acknowledgement for data: Prof Michael Pyrcz, Full Professor at The University o
 [Slides 7](/Week6/index.html)
 
 [Reading](https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts)
+
+## Lecture 7: 1 February 2025
+
+Kriging: Continue from Slides 6 and Slides 7
+
+[Spatial interpolation with Python](https://scikit-gstat.readthedocs.io/en/latest/userguide/kriging.html)
+
+[Reading - Modelling with trend](https://geostatisticslessons.com/lessons/trendmodeling)
+
+# Papers to read
+
+Feature-based learning
+
+- [Incorporating Spatial Autocorrelation in Machine Learning Models Using Spatial Lag and Eigenvector Spatial Filtering Features](https://www.mdpi.com/2220-9964/11/4/242)
