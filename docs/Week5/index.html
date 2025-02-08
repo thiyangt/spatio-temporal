@@ -188,7 +188,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="loading-packages" class="level1">
 <h1>Loading packages</h1>
-<div id="c345742c" class="cell" data-execution_count="1">
+<div id="2455ef61" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -196,7 +196,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="reading-spatial-data" class="level1">
 <h1>Reading spatial data</h1>
-<div id="e6b0d51b" class="cell" data-execution_count="2">
+<div id="86a9fa64" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>world <span class="op">=</span> gpd.read_file(gpd.datasets.get_path(<span class="st">"naturalearth_lowres"</span>))</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Geometry Column Name:"</span>, world.geometry.name)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Dataset Size:"</span>, world.shape)</span>
@@ -208,7 +208,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 Dataset Size: (177, 6)</code></pre>
 </div>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\DELL\AppData\Local\Temp\ipykernel_23628\541073294.py:1: FutureWarning:
+<pre><code>C:\Users\DELL\AppData\Local\Temp\ipykernel_35952\541073294.py:1: FutureWarning:
 
 The geopandas.dataset module is deprecated and will be removed in GeoPandas 1.0. You can get the original 'naturalearth_lowres' data from https://www.naturalearthdata.com/downloads/110m-cultural-vectors/.
 </code></pre>
@@ -229,7 +229,7 @@ Name: geometry, dtype: geometry</code></pre>
 </div>
 </div>
 </div>
-<div id="7d3cc360" class="cell" data-execution_count="3">
+<div id="05a143fc" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>world.crs.name</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="3">
 <pre><code>'WGS 84'</code></pre>
@@ -237,10 +237,10 @@ Name: geometry, dtype: geometry</code></pre>
 </div>
 <section id="centroid" class="level2">
 <h2 class="anchored" data-anchor-id="centroid">Centroid</h2>
-<div id="fadc4b7a" class="cell" data-execution_count="4">
+<div id="1244a483" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>world[<span class="st">"geometry"</span>].centroid.head() <span class="co"># method 1</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\DELL\AppData\Local\Temp\ipykernel_23628\3721365273.py:1: UserWarning:
+<pre><code>C:\Users\DELL\AppData\Local\Temp\ipykernel_35952\3721365273.py:1: UserWarning:
 
 Geometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.
 
@@ -255,10 +255,10 @@ Geometry is in a geographic CRS. Results from 'centroid' are likely incorrect. U
 dtype: geometry</code></pre>
 </div>
 </div>
-<div id="cda2a2b6" class="cell" data-execution_count="5">
+<div id="798f7700" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>world.centroid.plot(markersize<span class="op">=</span><span class="dv">1</span>) <span class="co"># method 2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\DELL\AppData\Local\Temp\ipykernel_23628\2075499188.py:1: UserWarning:
+<pre><code>C:\Users\DELL\AppData\Local\Temp\ipykernel_35952\2075499188.py:1: UserWarning:
 
 Geometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.
 
@@ -275,7 +275,7 @@ Geometry is in a geographic CRS. Results from 'centroid' are likely incorrect. U
 </section>
 <section id="unary-union-operation" class="level2">
 <h2 class="anchored" data-anchor-id="unary-union-operation">unary union operation</h2>
-<div id="713ecf8a" class="cell" data-execution_count="6">
+<div id="f33b900d" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>combined_geometry <span class="op">=</span> world.unary_union</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>combined_geometry</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="6">
@@ -289,7 +289,7 @@ Geometry is in a geographic CRS. Results from 'centroid' are likely incorrect. U
 </section>
 <section id="bounding-polygon" class="level2">
 <h2 class="anchored" data-anchor-id="bounding-polygon">Bounding polygon</h2>
-<div id="32a65da4" class="cell" data-execution_count="7">
+<div id="ff698dcf" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>world.envelope.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="7">
 <pre><code>0    POLYGON ((-180.00000 -18.28799, 180.00000 -18....
@@ -303,7 +303,7 @@ dtype: geometry</code></pre>
 </section>
 <section id="read-geojson-file" class="level2">
 <h2 class="anchored" data-anchor-id="read-geojson-file">Read GeoJson file</h2>
-<div id="7cddb268" class="cell" data-execution_count="8">
+<div id="2eded576" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>us_states_geo <span class="op">=</span> gpd.read_file(<span class="st">"datasets/us-states.json"</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>us_states_geo.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -359,7 +359,7 @@ dtype: geometry</code></pre>
 </section>
 <section id="read-.csv-file" class="level2">
 <h2 class="anchored" data-anchor-id="read-.csv-file">Read .csv file</h2>
-<div id="05f1dea0" class="cell" data-execution_count="9">
+<div id="16d53eb4" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>world_happiness <span class="op">=</span> pd.read_csv(<span class="st">"datasets/world-happiness-report-2019.csv"</span>)</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>world_happiness.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
@@ -463,7 +463,7 @@ dtype: geometry</code></pre>
 </section>
 <section id="merge-data-files" class="level2">
 <h2 class="anchored" data-anchor-id="merge-data-files">Merge data files</h2>
-<div id="e3033edd" class="cell" data-execution_count="10">
+<div id="d4f43dee" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>world_total_data <span class="op">=</span> world.merge(world_happiness, left_on <span class="op">=</span> <span class="st">"name"</span>, </span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>right_on <span class="op">=</span> <span class="st">"Country (region)"</span>)</span>
 <span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>world_total_data.head()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -604,7 +604,7 @@ dtype: geometry</code></pre>
 </section>
 <section id="choropleth-map" class="level2">
 <h2 class="anchored" data-anchor-id="choropleth-map">Choropleth Map</h2>
-<div id="2696489b" class="cell" data-execution_count="11">
+<div id="5a01cc7b" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> ggplot, geom_map, aes, scale_fill_cmap, theme, labs</span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>chart <span class="op">=</span> ggplot(world_total_data) <span class="op">+</span> <span class="op">\</span></span>
@@ -625,7 +625,7 @@ dtype: geometry</code></pre>
 <pre><code></code></pre>
 </div>
 </div>
-<div id="65cd2fea" class="cell" data-execution_count="12">
+<div id="dd61335a" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>chart <span class="op">=</span> ggplot(world_total_data) <span class="op">+</span> <span class="op">\</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>    geom_map(aes(fill<span class="op">=</span><span class="st">"Healthy life</span><span class="ch">\n</span><span class="st">expectancy"</span>, map_id<span class="op">=</span><span class="st">"name"</span>, geometry<span class="op">=</span><span class="st">"geometry"</span>)) <span class="op">+</span> <span class="op">\</span></span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>    scale_fill_cmap(cmap_name<span class="op">=</span><span class="st">"Blues"</span>) <span class="op">+</span> <span class="op">\</span></span>

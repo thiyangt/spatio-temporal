@@ -76,6 +76,9 @@ cross validation approaches in spatial data analysis - cont. slide 7
 
 Which variogram model to use: [read here](https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts)
 
+[Kriging with python](https://github.com/mmaelicke/scikit-gstat/tree/main/tutorials)
+
+
 # Additional reading
 
 [Introduction to Kriging with R](https://dickbrus.github.io/SpatialSamplingwithR/Introkriging.html)
