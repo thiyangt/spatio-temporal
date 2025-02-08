@@ -68,6 +68,14 @@ Task: Find a suitable kriging model to interpolate zinc concentration in meuse d
 
 [Reading - Modelling with trend](https://geostatisticslessons.com/lessons/trendmodeling)
 
+## Lecture 8: 8 February 2025
+
+Interpolation of meuse dataset and NO2 data sets.
+
+cross validation approaches in spatial data analysis - cont. slide 7
+
+Which variogram model to use: [read here](https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts)
+
 # Additional reading
 
 [Introduction to Kriging with R](https://dickbrus.github.io/SpatialSamplingwithR/Introkriging.html)
