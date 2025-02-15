@@ -82,7 +82,9 @@ Which variogram model to use: [read here](https://csegrecorder.com/articles/view
 
 [Time series clustering](https://thiyanga-spatiotemporal.netlify.app/posts/time_series/week8b.html#/title-slide)
 
-Feature-based time series forecasting
+[Feature-based time series forecasting](https://robjhyndman.com/papers/fforms.pdf)
+
+Feature calculation-[script](https://github.com/thiyangt/helloPython/blob/master/Time%20Series%20Features.ipynb)
 
 ## Lecture 10: 22 February 2025
 
