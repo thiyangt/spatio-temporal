@@ -1,0 +1,71 @@
+---
+title: "Mid-term Evaluation (40 marks)"
+---
+
+## Deadline: 21 Feb 2025
+
+## Presentations: 22 Feb 2025
+
+Note: Failing to complete the presentation will result in 0 marks for this portion of the mid-term evaluation.
+
+## Task:
+
+Select a research paper from a Q1 or Q2 journal that focuses on a spatial or spatio-temporal application. You will read, analyze, and present the paper, ensuring the following aspects are covered:
+
+### Introduction (5 Marks)
+
+Clearly summarize the research problem and objectives.
+
+Explain the significance of the study in the broader context of spatial or spatio-temporal analysis.
+
+### Methodology (10 Marks)
+
+Describe the techniques and models used in the study.
+
+Explain why these methods were chosen and their advantages.
+
+### Data (5 Marks)
+
+Provide details about the dataset used in the study.
+
+If the dataset is not publicly available, construct a simulated dataset to illustrate key concepts.
+
+### Replication of Results (10 Marks)
+
+Attempt to reproduce the key findings using the provided or simulated dataset.
+Present and interpret your results.
+
+### Suggestions for Improvement (3 Marks)
+
+Identify potential weaknesses or limitations in the study.
+Suggest alternative methods, additional analyses, or improvements in data collection.
+
+### Limitations (2 Marks)
+
+Discuss the challenges or constraints associated with the study’s approach.
+Reflect on the broader implications of these limitations.
+
+
+### Q and A (5 marks)
+
+### Recommendation:
+
+Choose a paper that includes a dataset to facilitate replication.
+
+If a dataset is unavailable, construct a simulated dataset to demonstrate key ideas.
+
+Your analysis should be concise, well-structured, and supported by visualizations or code where appropriate.
+
+
+## You should submit/present following documets
+
+1. Presentation document
+
+2. Time for presentation: 15 min.
+
+3. Q and A: 5 min.
+
+4. Codes and Results corresponds to reproducibility
+
+
+

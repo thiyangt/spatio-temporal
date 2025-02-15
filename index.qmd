@@ -86,9 +86,13 @@ Which variogram model to use: [read here](https://csegrecorder.com/articles/view
 
 Feature calculation-[script](https://github.com/thiyangt/helloPython/blob/master/Time%20Series%20Features.ipynb)
 
+[Periodogram - Using R](/Week9/index.html)
+
+[Periodogram - Using Python](/Week10/index.html)
+
 ## Lecture 10: 22 February 2025
 
-Presentations: 40%
+[Mid term evaluation: 40%](/Week11/index.html)
 
 # Additional reading
 

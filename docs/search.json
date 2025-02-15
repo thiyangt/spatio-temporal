@@ -1,486 +1,206 @@
 [
   {
-    "objectID": "Week6/index.html#kriging-vs-idw",
-    "href": "Week6/index.html#kriging-vs-idw",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Kriging vs IDW",
-    "text": "Kriging vs IDW\n\nInverse Distance Weighting (IDW) and Kriging are weighted methods for interpolation. The key difference lies in how they determine and apply weights.\nIn IDW, weights are determined solely based on distance between the point being estimated and the known sample points.\n\nNearby points have greater influence (higher weights) than distant points.\nThe weights are purely geometric and ignore any statistical relationships or spatial trends in the data.\n\nKriging determines weights based on both the distance between points and the spatial autocorrelation of the data, which is modeled using a semivariogram. The semivariogram quantifies how similar data values are based on their separation distance."
+    "objectID": "Week9/index.html",
+    "href": "Week9/index.html",
+    "title": "Understanding the Periodogram",
+    "section": "",
+    "text": "A periodogram is a fundamental tool in time series analysis used to identify dominant frequencies (cycles) in the data. It estimates the spectral density of a time series, helping to detect periodic patterns.\n##Simulated Example\nWe’ll generate a simulated time series with multiple frequency components and compute its periodogram.\nSteps:\nset.seed(123)\nlibrary(ggplot2)\n\n# Simulate time series with two sine waves + noise\nn &lt;- 200\nt &lt;- seq(0, 1, length.out = n)\nsignal &lt;- sin(2 * pi * 5 * t) + 0.5 * sin(2 * pi * 15 * t)  # 5Hz and 15Hz components\nnoise &lt;- rnorm(n, mean = 0, sd = 0.5)\ntime_series &lt;- signal + noise\ndft &lt;- data.frame(t, signal, noise, time_series)\nggplot(dft, aes(x = t, y = signal)) +\n  geom_line() \n\n\n\n\n\n\n\nggplot(dft, aes(x = t, y = noise)) +\n  geom_line() \n\n\n\n\n\n\n\nggplot(dft, aes(x = t, y = time_series)) +\n  geom_line()\n# Compute periodogram\nspectrum_data &lt;- spectrum(time_series, log = \"no\", plot = FALSE)\n\n# Convert frequency and power into a dataframe\ndf &lt;- data.frame(Frequency = spectrum_data$freq, Power = spectrum_data$spec)\n\n# Plot the periodogram\nggplot(df, aes(x = Frequency, y = Power)) +\n  geom_line(color = \"blue\") +\n  theme_minimal() +\n  labs(title = \"Periodogram of Simulated Time Series\",\n       x = \"Frequency (Hz)\",\n       y = \"Spectral Power\")"
   },
   {
-    "objectID": "Week6/index.html#weight-determination-in-kriging",
-    "href": "Week6/index.html#weight-determination-in-kriging",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Weight Determination in Kriging",
-    "text": "Weight Determination in Kriging\n\nKriging solves a system of linear equations derived from the semivariogram, minimizing prediction variance while ensuring unbiasedness.\nWeights are chosen such that they account for:\nDistances: Between the interpolation point and sample points.\nSpatial relationships: Among the sample points themselves (accounting for clustering and redundancy).\nWeights depend on the semivariogram model (e.g., spherical, exponential). Points farther away can still have influence if the semivariogram indicates spatial continuity."
+    "objectID": "Week9/index.html#why-do-peaks-appear-in-0-0.1",
+    "href": "Week9/index.html#why-do-peaks-appear-in-0-0.1",
+    "title": "Understanding the Periodogram",
+    "section": "Why Do Peaks Appear in [0, 0.1]?",
+    "text": "Why Do Peaks Appear in [0, 0.1]?\n\nThe frequencies in your signal are 5 Hz and 15 Hz.\nHowever, the frequency axis in the periodogram ranges from 0 to 0.5 (Nyquist frequency) when using normalized units.\nIf you are using spectrum() in R or periodogram() in Python, the frequencies are often expressed as proportions of the Nyquist frequency.\n\nNyquist Frequency = (Sampling Rate) / 2\nIf the sampling rate is 100 Hz, then:\n5 Hz appears at 5/100 = 0.05\n15 Hz appears at 15/100 = 0.15\nSo, you are seeing the 5 Hz peak in the range [0, 0.1]."
   },
   {
-    "objectID": "Week6/index.html#comparison-of-weight-selection-in-kriging-and-idw",
-    "href": "Week6/index.html#comparison-of-weight-selection-in-kriging-and-idw",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Comparison of Weight Selection in Kriging and IDW",
-    "text": "Comparison of Weight Selection in Kriging and IDW\nIn-class explanation"
-  },
-  {
-    "objectID": "Week6/index.html#key-points",
-    "href": "Week6/index.html#key-points",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Key points",
-    "text": "Key points\n\nIDW is straightforward, where weights depend only on how close a point is to the location being estimated. It assumes all variation is captured by distance.\nKriging uses a more sophisticated approach, accounting for both distance and how sample points are spatially correlated, providing more accurate and statistically sound estimates in many cases"
-  },
-  {
-    "objectID": "Week6/index.html#variograms",
-    "href": "Week6/index.html#variograms",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Variograms",
-    "text": "Variograms"
-  },
-  {
-    "objectID": "Week6/index.html#data",
-    "href": "Week6/index.html#data",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Data",
-    "text": "Data\n\nlibrary(gstat)\nlibrary(tidyverse)\nno2 &lt;- read_csv(system.file(\"external/no2.csv\", \n    package = \"gstat\"), show_col_types = FALSE)\nno2\n\n# A tibble: 74 × 21\n   station_european_code station_local_code country_iso_code country_name\n   &lt;chr&gt;                 &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;       \n 1 DENI063               DENI063            DE               Germany     \n 2 DEBY109               DEBY109            DE               Germany     \n 3 DEBE056               DEBE056            DE               Germany     \n 4 DEBE062               DEBE062            DE               Germany     \n 5 DEBE032               DEBE032            DE               Germany     \n 6 DEHE046               DEHE046            DE               Germany     \n 7 DEBY122               DEBY122            DE               Germany     \n 8 DESL019               DESL019            DE               Germany     \n 9 DENW081               DENW081            DE               Germany     \n10 DESH008               DESH008            DE               Germany     \n# ℹ 64 more rows\n# ℹ 17 more variables: station_name &lt;chr&gt;, station_start_date &lt;date&gt;,\n#   station_end_date &lt;lgl&gt;, type_of_station &lt;chr&gt;,\n#   station_ozone_classification &lt;chr&gt;, station_type_of_area &lt;chr&gt;,\n#   station_subcat_rural_back &lt;chr&gt;, street_type &lt;chr&gt;,\n#   station_longitude_deg &lt;dbl&gt;, station_latitude_deg &lt;dbl&gt;,\n#   station_altitude &lt;dbl&gt;, station_city &lt;chr&gt;, lau_level1_code &lt;dbl&gt;, …"
-  },
-  {
-    "objectID": "Week6/index.html#convert-to-spatial-object-method-1",
-    "href": "Week6/index.html#convert-to-spatial-object-method-1",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Convert to Spatial Object: Method 1",
-    "text": "Convert to Spatial Object: Method 1\n\nlibrary(sf)\nlibrary(sp)\ncrs &lt;- st_crs(\"EPSG:32632\")\nno2.sf &lt;- st_as_sf(no2, crs = \"OGC:CRS84\", coords = \n    c(\"station_longitude_deg\", \"station_latitude_deg\")) |&gt;\n    st_transform(crs) \nno2.sf\n\nSimple feature collection with 74 features and 19 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 304638.2 ymin: 5263687 xmax: 900829.7 ymax: 6086661\nProjected CRS: WGS 84 / UTM zone 32N\n# A tibble: 74 × 20\n   station_european_code station_local_code country_iso_code country_name\n * &lt;chr&gt;                 &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;       \n 1 DENI063               DENI063            DE               Germany     \n 2 DEBY109               DEBY109            DE               Germany     \n 3 DEBE056               DEBE056            DE               Germany     \n 4 DEBE062               DEBE062            DE               Germany     \n 5 DEBE032               DEBE032            DE               Germany     \n 6 DEHE046               DEHE046            DE               Germany     \n 7 DEBY122               DEBY122            DE               Germany     \n 8 DESL019               DESL019            DE               Germany     \n 9 DENW081               DENW081            DE               Germany     \n10 DESH008               DESH008            DE               Germany     \n# ℹ 64 more rows\n# ℹ 16 more variables: station_name &lt;chr&gt;, station_start_date &lt;date&gt;,\n#   station_end_date &lt;lgl&gt;, type_of_station &lt;chr&gt;,\n#   station_ozone_classification &lt;chr&gt;, station_type_of_area &lt;chr&gt;,\n#   station_subcat_rural_back &lt;chr&gt;, street_type &lt;chr&gt;, station_altitude &lt;dbl&gt;,\n#   station_city &lt;chr&gt;, lau_level1_code &lt;dbl&gt;, lau_level2_code &lt;dbl&gt;,\n#   lau_level2_name &lt;chr&gt;, EMEP_station &lt;chr&gt;, NO2 &lt;dbl&gt;, …"
-  },
-  {
-    "objectID": "Week6/index.html#spatial-extent",
-    "href": "Week6/index.html#spatial-extent",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Spatial Extent",
-    "text": "Spatial Extent\n\n\n     xmin      ymin      xmax      ymax \n 304638.2 5263687.2  900829.7 6086661.1"
-  },
-  {
-    "objectID": "Week6/index.html#lagged-scatterplot",
-    "href": "Week6/index.html#lagged-scatterplot",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lagged Scatterplot",
-    "text": "Lagged Scatterplot"
-  },
-  {
-    "objectID": "Week6/index.html#lagged-scatterplot-1",
-    "href": "Week6/index.html#lagged-scatterplot-1",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lagged Scatterplot",
-    "text": "Lagged Scatterplot\nIn spatial analysis, a lagged scatterplot explores spatial autocorrelation by plotting the values of a variable at locations separated by a specific lag distance. It is used to assess how the similarity of values changes with distance, helping understand spatial patterns and dependencies."
-  },
-  {
-    "objectID": "Week6/index.html#steps-to-construct-a-lagged-scatterplot-for-spatial-analysis",
-    "href": "Week6/index.html#steps-to-construct-a-lagged-scatterplot-for-spatial-analysis",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Steps to Construct a Lagged Scatterplot for Spatial Analysis",
-    "text": "Steps to Construct a Lagged Scatterplot for Spatial Analysis\n\nDefine the Variable of Interest Choose the variable whose spatial relationship you want to analyze (e.g., air pollution levels, rainfall, temperature, etc.).\nSelect a Lag Distance Decide the distance intervals (lags) at which you want to compare the values. For example:\n\n0–1000 meters\n1000–2000 meters\n2000–3000 meters\n\nPair Locations Based on Lag Identify all pairs of points whose separation distance falls within each lag interval.\nCalculate Values\n\nFor each pair of points:\nPlot the value at one location on the x-axis.\nPlot the value at the paired location on the y-axis.\n\nVisualize Create a scatterplot for each lag interval to observe spatial relationships."
-  },
-  {
-    "objectID": "Week6/index.html#example-of-selecting-lag-distance",
-    "href": "Week6/index.html#example-of-selecting-lag-distance",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Example of Selecting Lag Distance",
-    "text": "Example of Selecting Lag Distance\nLet’s say you have a dataset of air quality measurements in a city, and you want to analyze the spatial relationship between stations. Here’s how you might proceed:\nExamine the study area: If your data spans an area of 10 km by 10 km, then a lag distance of 500 meters or 1 km might be reasonable.\nCheck for spatial autocorrelation: Create a variogram to see how the data correlates over distances. You’ll likely see that values are highly correlated at short distances (e.g., 100–500 meters) but become less correlated as the distance grows.\nSet lag intervals: Based on your variogram and knowledge, you might decide on breaks such as:\n0–500 meters\n500–1000 meters\n1000–2000 meters\n2000–5000 meters\nAdjust based on the data: If you find that most of your points are clustered closely together, you may select smaller lags. If the points are spread out, you may select larger lags."
-  },
-  {
-    "objectID": "Week6/index.html#the-reason-for-the-transition-from-an-h-scatterplot-to-a-variogram-cloud",
-    "href": "Week6/index.html#the-reason-for-the-transition-from-an-h-scatterplot-to-a-variogram-cloud",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "The reason for The transition from an h-scatterplot to a variogram cloud",
-    "text": "The reason for The transition from an h-scatterplot to a variogram cloud\nh-Scatterplot: This plot shows the relationship between values of a variable at different distances (lags) in a scatterplot format. While it is useful to get a rough idea of the spatial relationship, it doesn’t provide a detailed understanding of how spatial dependence varies with distance.\nVariogram Cloud: The variogram cloud (or experimental variogram) provides a more refined and systematic view of spatial dependence. It plots the variance of the differences between values at pairs of locations (the semivariance) against the distance between those locations."
-  },
-  {
-    "objectID": "Week6/index.html#variogram-cloud",
-    "href": "Week6/index.html#variogram-cloud",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Variogram Cloud",
-    "text": "Variogram Cloud\nA variogram cloud shows the semivariance for every pair of spatial locations in the dataset, at different distances (lags). It provides valuable information, but it can be noisy, especially in large datasets. Each point in the cloud represents a pair of points at a specific distance, but there may be a lot of variability due to:\nSampling errors,\nData sparsity in certain ranges,\nLocal irregularities.\nThis noise can make it harder to interpret the spatial structure of the data clearly."
-  },
-  {
-    "objectID": "Week6/index.html#binned-variogram",
-    "href": "Week6/index.html#binned-variogram",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Binned Variogram",
-    "text": "Binned Variogram\nTo address this, the variogram cloud is often binned into predefined distance intervals (lags). This process groups the semivariance values for pairs of points that fall within certain distance ranges, effectively averaging them. This reduces the noise and results in a smoother, more stable variogram. The binned variogram provides a clearer representation of the overall trend in spatial autocorrelation, particularly for larger datasets."
-  },
-  {
-    "objectID": "Week6/index.html#improving-the-interpretation-of-spatial-structure",
-    "href": "Week6/index.html#improving-the-interpretation-of-spatial-structure",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Improving the Interpretation of Spatial Structure",
-    "text": "Improving the Interpretation of Spatial Structure\nVariogram Cloud: The cloud may contain too many points to easily discern patterns or trends in the spatial structure. The relationship between distance and semivariance may be obscured by the sheer number of points and their variability.\nBinned Variogram: By binning the data, you get a smoothed representation of how semivariance increases with distance. This makes it easier to identify key features of the spatial structure, such as:\nThe range: The distance at which spatial dependence effectively disappears.\nThe nugget effect: The value of the semivariance at very short distances, indicating local variability or measurement error.\nThe sill: The maximum value of the semivariance, beyond which no further increase in variability is observed.\nThe binned variogram helps in understanding the overall trend in the spatial dependence between locations."
-  },
-  {
-    "objectID": "Week6/index.html#reading",
-    "href": "Week6/index.html#reading",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Reading",
-    "text": "Reading\nhttps://scikit-gstat.readthedocs.io/en/latest/userguide/variogram.html"
-  },
-  {
-    "objectID": "Week6/index.html#interpretations-of-variograms",
-    "href": "Week6/index.html#interpretations-of-variograms",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Interpretations of Variograms",
-    "text": "Interpretations of Variograms\n\\[C(h) = Sill - \\gamma(h)\\]"
-  },
-  {
-    "objectID": "Week6/index.html#relationship-between-a-correlogram-and-a-variogram",
-    "href": "Week6/index.html#relationship-between-a-correlogram-and-a-variogram",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Relationship between a correlogram and a variogram",
-    "text": "Relationship between a correlogram and a variogram\nIn class explanations\nFurther reading: https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts"
-  },
-  {
-    "objectID": "Week6/index.html#acknowledgement",
-    "href": "Week6/index.html#acknowledgement",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Acknowledgement",
-    "text": "Acknowledgement\nhttps://r-spatial.org/book/12-Interpolation.html"
-  },
-  {
-    "objectID": "Week4p2/index.html",
-    "href": "Week4p2/index.html",
+    "objectID": "Week5/index.html",
+    "href": "Week5/index.html",
     "title": "Spatial Visualization with Python",
     "section": "",
-    "text": "Loading packages\n\nimport geopandas as gpd\nimport folium\n\n\n\nLoad and inspect meuse data\n\nmeuse = gpd.read_file(\"meuse.shp\")  # Adjust the file path as needed\n\n# Inspect the first few rows of the data\nprint(meuse.head())\n\n   cadmium  copper   lead    zinc   elev      dist    om ffreq soil lime  \\\n0     11.7    85.0  299.0  1022.0  7.909  0.001358  13.6     1    1    1   \n1      8.6    81.0  277.0  1141.0  6.983  0.012224  14.0     1    1    1   \n2      6.5    68.0  199.0   640.0  7.800  0.103029  13.0     1    1    1   \n3      2.6    81.0  116.0   257.0  7.655  0.190094   8.0     1    2    0   \n4      2.8    48.0  117.0   269.0  7.480  0.277090   8.7     1    2    0   \n\n  landuse  dist_m                       geometry  \n0      Ah    50.0  POINT (181072.000 333611.000)  \n1      Ah    30.0  POINT (181025.000 333558.000)  \n2      Ah   150.0  POINT (181165.000 333537.000)  \n3      Ga   270.0  POINT (181298.000 333484.000)  \n4      Ah   380.0  POINT (181307.000 333330.000)  \n\n\n\n\nVisualise the data\n\nimport matplotlib.pyplot as plt\n\n# Plot the meuse dataset (points in this case)\nmeuse.plot(marker='o', color='blue', markersize=5)\n\n# Show the plot\nplt.title('Meuse Spatial Data Visualization')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()\n\n\n\n\n\n\n\n\n\n\nCustomize plot\n\nmeuse.plot(column='zinc', cmap='viridis', legend=True, markersize=5)\n\n# Show the plot\nplt.title('Zinc Concentration in Meuse Data')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()\n\n\n\n\n\n\n\n\n\n# Ensure the GeoDataFrame has the correct CRS and reproject to WGS84 for folium\ngdf = meuse.to_crs(epsg=4326)\n\n# Create a folium map centered on the data\nmap_center = [gdf.geometry.y.mean(), gdf.geometry.x.mean()]\nm = folium.Map(location=map_center, zoom_start=12)\n\n# Add points to the map with a popup for one of the attributes\nfor _, row in gdf.iterrows():\n    folium.CircleMarker(\n        location=[row.geometry.y, row.geometry.x],\n        radius=5,\n        color='blue',\n        fill=True,\n        fill_opacity=0.6,\n        popup=f\"Zinc: {row['zinc']}\"  # Replace 'zinc' with a column from your shapefile\n    ).add_to(m)\n\n# Save or display the map\nm.save(\"meuse_map.html\")\nm\n\nMake this Notebook Trusted to load map: File -&gt; Trust Notebook"
+    "text": "import geopandas as gpd\nimport folium\nimport pandas as pd"
   },
   {
-    "objectID": "Week3p2/index.html",
-    "href": "Week3p2/index.html",
-    "title": "Time Series Forecasting with Python: Method 2",
+    "objectID": "Week5/index.html#centroid",
+    "href": "Week5/index.html#centroid",
+    "title": "Spatial Visualization with Python",
+    "section": "Centroid",
+    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_24832\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_24832\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
+  },
+  {
+    "objectID": "Week5/index.html#unary-union-operation",
+    "href": "Week5/index.html#unary-union-operation",
+    "title": "Spatial Visualization with Python",
+    "section": "unary union operation",
+    "text": "unary union operation\n\ncombined_geometry = world.unary_union\ncombined_geometry"
+  },
+  {
+    "objectID": "Week5/index.html#bounding-polygon",
+    "href": "Week5/index.html#bounding-polygon",
+    "title": "Spatial Visualization with Python",
+    "section": "Bounding polygon",
+    "text": "Bounding polygon\n\nworld.envelope.head()\n\n0    POLYGON ((-180.00000 -18.28799, 180.00000 -18....\n1    POLYGON ((29.34000 -11.72094, 40.31659 -11.720...\n2    POLYGON ((-17.06342 20.99975, -8.66512 20.9997...\n3    POLYGON ((-140.99778 41.67511, -52.64810 41.67...\n4    POLYGON ((-171.79111 18.91619, -66.96466 18.91...\ndtype: geometry"
+  },
+  {
+    "objectID": "Week5/index.html#read-geojson-file",
+    "href": "Week5/index.html#read-geojson-file",
+    "title": "Spatial Visualization with Python",
+    "section": "Read GeoJson file",
+    "text": "Read GeoJson file\n\nus_states_geo = gpd.read_file(\"datasets/us-states.json\")\nus_states_geo.head()\n\n\n\n\n\n\n\n\nid\nname\ngeometry\n\n\n\n\n0\n01\nAlabama\nPOLYGON ((-87.35930 35.00118, -85.60667 34.984...\n\n\n1\n02\nAlaska\nMULTIPOLYGON (((-131.60202 55.11798, -131.5691...\n\n\n2\n04\nArizona\nPOLYGON ((-109.04250 37.00026, -109.04798 31.3...\n\n\n3\n05\nArkansas\nPOLYGON ((-94.47384 36.50186, -90.15254 36.496...\n\n\n4\n06\nCalifornia\nPOLYGON ((-123.23326 42.00619, -122.37885 42.0..."
+  },
+  {
+    "objectID": "Week5/index.html#read-.csv-file",
+    "href": "Week5/index.html#read-.csv-file",
+    "title": "Spatial Visualization with Python",
+    "section": "Read .csv file",
+    "text": "Read .csv file\n\nworld_happiness = pd.read_csv(\"datasets/world-happiness-report-2019.csv\")\nworld_happiness.head()\n\n\n\n\n\n\n\n\nCountry (region)\nLadder\nSD of Ladder\nPositive affect\nNegative affect\nSocial support\nFreedom\nCorruption\nGenerosity\nLog of GDP\\nper capita\nHealthy life\\nexpectancy\n\n\n\n\n0\nFinland\n1\n4\n41.0\n10.0\n2.0\n5.0\n4.0\n47.0\n22.0\n27.0\n\n\n1\nDenmark\n2\n13\n24.0\n26.0\n4.0\n6.0\n3.0\n22.0\n14.0\n23.0\n\n\n2\nNorway\n3\n8\n16.0\n29.0\n3.0\n3.0\n8.0\n11.0\n7.0\n12.0\n\n\n3\nIceland\n4\n9\n3.0\n3.0\n1.0\n7.0\n45.0\n3.0\n15.0\n13.0\n\n\n4\nNetherlands\n5\n1\n12.0\n25.0\n15.0\n19.0\n12.0\n7.0\n12.0\n18.0"
+  },
+  {
+    "objectID": "Week5/index.html#merge-data-files",
+    "href": "Week5/index.html#merge-data-files",
+    "title": "Spatial Visualization with Python",
+    "section": "Merge data files",
+    "text": "Merge data files\n\nworld_total_data = world.merge(world_happiness, left_on = \"name\", \nright_on = \"Country (region)\")\nworld_total_data.head()\n\n\n\n\n\n\n\n\npop_est\ncontinent\nname\niso_a3\ngdp_md_est\ngeometry\nCountry (region)\nLadder\nSD of Ladder\nPositive affect\nNegative affect\nSocial support\nFreedom\nCorruption\nGenerosity\nLog of GDP\\nper capita\nHealthy life\\nexpectancy\n\n\n\n\n0\n58005463.0\nAfrica\nTanzania\nTZA\n63177\nPOLYGON ((33.90371 -0.95000, 34.07262 -1.05982...\nTanzania\n153\n122\n78.0\n50.0\n131.0\n78.0\n34.0\n49.0\n125.0\n118.0\n\n\n1\n37589262.0\nNorth America\nCanada\nCAN\n1736425\nMULTIPOLYGON (((-122.84000 49.00000, -122.9742...\nCanada\n9\n23\n18.0\n49.0\n20.0\n9.0\n11.0\n14.0\n19.0\n8.0\n\n\n2\n18513930.0\nAsia\nKazakhstan\nKAZ\n181665\nPOLYGON ((87.35997 49.21498, 86.59878 48.54918...\nKazakhstan\n60\n40\n81.0\n5.0\n19.0\n80.0\n57.0\n57.0\n47.0\n88.0\n\n\n3\n33580650.0\nAsia\nUzbekistan\nUZB\n57921\nPOLYGON ((55.96819 41.30864, 55.92892 44.99586...\nUzbekistan\n41\n99\n19.0\n15.0\n11.0\n1.0\n18.0\n29.0\n104.0\n83.0\n\n\n4\n270625568.0\nAsia\nIndonesia\nIDN\n1119190\nMULTIPOLYGON (((141.00021 -2.60015, 141.01706 ...\nIndonesia\n92\n108\n9.0\n104.0\n94.0\n48.0\n129.0\n2.0\n83.0\n98.0"
+  },
+  {
+    "objectID": "Week5/index.html#choropleth-map",
+    "href": "Week5/index.html#choropleth-map",
+    "title": "Spatial Visualization with Python",
+    "section": "Choropleth Map",
+    "text": "Choropleth Map\n\nfrom plotnine import ggplot, geom_map, aes, scale_fill_cmap, theme, labs\n\nchart = ggplot(world_total_data) + \\\n    geom_map(aes(fill=\"Freedom\", map_id=\"name\", geometry=\"geometry\")) + \\\n    scale_fill_cmap(cmap_name=\"Blues\") + \\\n    labs(title=\"Freedom\") + \\\n    theme(figure_size=(12, 6))\n\nprint(chart)\n\n\n\n\n\n\n\n\n\n\n\n\nchart = ggplot(world_total_data) + \\\n    geom_map(aes(fill=\"Healthy life\\nexpectancy\", map_id=\"name\", geometry=\"geometry\")) + \\\n    scale_fill_cmap(cmap_name=\"Blues\") + \\\n    labs(title=\"Healthy life and expectancy\") + \\\n    theme(figure_size=(12, 6))\n\nprint(chart)"
+  },
+  {
+    "objectID": "Week5/index.html#reading",
+    "href": "Week5/index.html#reading",
+    "title": "Spatial Visualization with Python",
+    "section": "Reading",
+    "text": "Reading\nhttps://pythongis.org/part2/chapter-06/nb/01-geodataframe.html"
+  },
+  {
+    "objectID": "Week3p/index.html",
+    "href": "Week3p/index.html",
+    "title": "Time Series Forecasting with Python: Method 1",
     "section": "",
-    "text": "import pandas as pd\nimport plotnine as p9 \nfrom plotnine import *\nfrom plotnine.data import *\nimport numpy as np\n\n\n\n\nPlot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\n\n3. If the data are non-stationary, take first differences of the data until the data are stationary.\n4. Examine the ACF/PACF to identify a suitable model.\n5. Try your chosen model(s), and use the AICc to search for a better model.\n\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts.\n\n\n\n\n\nPlot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nUse AutoARIMA to select a model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts.\n\n\n\n\n\nfrom sktime import *\nfrom sktime.datasets import load_airline\nfrom sktime.utils.plotting import plot_series\ny = load_airline()\nplot_series(y)\n\n(&lt;Figure size 1536x384 with 1 Axes&gt;,\n &lt;Axes: ylabel='Number of airline passengers'&gt;)\n\n\n\n\n\n\n\n\n\n\n\n\nTake other important visualizations\n\n\n\n\nimport numpy as np\nimport pandas as pd\nfrom sktime.forecasting.base import ForecastingHorizon\nfh = ForecastingHorizon(\n    pd.PeriodIndex(pd.date_range(\"1960-01\", periods=12, freq=\"M\")), is_relative=False\n)\nfh\n\nForecastingHorizon(['1960-01', '1960-02', '1960-03', '1960-04', '1960-05', '1960-06',\n             '1960-07', '1960-08', '1960-09', '1960-10', '1960-11', '1960-12'],\n            dtype='period[M]', is_relative=False)\n\n\n\n\n\n\nfrom sktime.forecasting.model_selection import temporal_train_test_split\ny_train, y_test = temporal_train_test_split(y, fh=fh)\n\n\n\n\n\nfrom sktime.forecasting.statsforecast import StatsForecastAutoARIMA\nimport numpy as np\nforecaster = StatsForecastAutoARIMA(  \n    sp=12,  max_p=2, max_q=2\n)\ny_train.naturallog = np.log(y_train)\nforecaster.fit(y_train.naturallog)\n\nStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)Please rerun this cell to show the HTML repr or trust the notebook.StatsForecastAutoARIMA?Documentation for StatsForecastAutoARIMAStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)\n\n\nsp: Number of observations per unit of time.\nHelp: https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html\n\n\n\nPreferm residual analysis\n\n\n\n\ny_pred = forecaster.predict(fh)\ny_pred \n\n1960-01    6.038882\n1960-02    5.989590\n1960-03    6.146032\n1960-04    6.119674\n1960-05    6.159455\n1960-06    6.304701\n1960-07    6.432675\n1960-08    6.444805\n1960-09    6.266803\n1960-10    6.136178\n1960-11    6.007715\n1960-12    6.114486\nFreq: M, Name: Number of airline passengers, dtype: float64\n\n\n\n\n\nWrite a code to obtain model parameter estimates.\n\n\n\nStep 1: Select the number of differences d and D via unit root tests and strength of seasonality measure.\nStep 2: Try four possible models to start with:\n\n\n\n\n\\(ARIMA(2, d, 2)\\) if \\(m = 1\\) and \\(ARIMA(2, d, 2)(1, D, 1)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 0)(0, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(1, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(1, d, 0)(1, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 1)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 1)(0, D, 1)_m\\) if \\(m &gt; 1\\).\n\n\n\n\nStep 3: Select the model with the smallest AICc from step 2. This becomes the current model.\nStep 4: Consider up to 13 variations on the current model:\n\nVary one of \\(p, q, P\\) and \\(Q\\) from the current model by \\(\\pm 1\\).\n\\(p, q\\) both vary from the current model by \\(\\pm 1\\).\n\\(P, Q\\) both vary from the current model by \\(\\pm 1\\).\nInclude or exclude the constant term from the current model. Repeat step 4 until no lower AICc can be found."
+    "text": "import pandas as pd\nimport plotnine as p9 \nfrom plotnine import *\nfrom plotnine.data import *\nimport numpy as np"
   },
   {
-    "objectID": "Week3p2/index.html#modelling-steps",
-    "href": "Week3p2/index.html#modelling-steps",
-    "title": "Time Series Forecasting with Python: Method 2",
+    "objectID": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
+    "href": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
+    "title": "Time Series Forecasting with Python: Method 1",
+    "section": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset.",
+    "text": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset."
+  },
+  {
+    "objectID": "Week2/index.html#in-class-properties-of-ma1-process",
+    "href": "Week2/index.html#in-class-properties-of-ma1-process",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "In-class: Properties of MA(1) process",
+    "text": "In-class: Properties of MA(1) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(1) process\nPartial autocorrelation function of MA(1)"
+  },
+  {
+    "objectID": "Week2/index.html#in-class-properties-of-ma2-process",
+    "href": "Week2/index.html#in-class-properties-of-ma2-process",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "In-class: Properties of MA(2) process",
+    "text": "In-class: Properties of MA(2) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(2) process\nPartial autocorrelation function of MA(2)"
+  },
+  {
+    "objectID": "Week2/index.html#in-class-properties-of-maq-process",
+    "href": "Week2/index.html#in-class-properties-of-maq-process",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "In-class: Properties of MA(q) process",
+    "text": "In-class: Properties of MA(q) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an AR(P) process"
+  },
+  {
+    "objectID": "Week10/index.html",
+    "href": "Week10/index.html",
+    "title": "web",
     "section": "",
-    "text": "Plot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\n\n3. If the data are non-stationary, take first differences of the data until the data are stationary.\n4. Examine the ACF/PACF to identify a suitable model.\n5. Try your chosen model(s), and use the AICc to search for a better model.\n\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+    "text": "import numpy as np\nimport matplotlib.pyplot as plt\nfrom scipy.signal import periodogram\n\n# Simulate time series\nnp.random.seed(123)\nn = 500  # More points for better frequency resolution\nt = np.linspace(0, 100, n)  # Longer duration for better frequency resolution\nsignal = np.sin(2 * np.pi * 0.03 * t) + 0.5 * np.sin(2 * np.pi * 0.07 * t)  # 0.03 and 0.07 Hz components\nnoise = np.random.normal(0, 0.2, n)\ntime_series = signal + noise\n\n# Compute periodogram\nfrequencies, power = periodogram(time_series)\n\nplt.figure(figsize=(8, 5))\nplt.plot(t, time_series, color='red', lw=1.5)\nplt.grid()\nplt.show()\n\n# Plot periodogram\nplt.figure(figsize=(8, 5))\nplt.plot(frequencies, power, color='blue', lw=1.5)\nplt.xlim(0, 0.1)  # Focus on frequencies between 0 and 0.1\nplt.title(\"Periodogram with Two Peaks (0.03 and 0.07 Hz)\")\nplt.xlabel(\"Frequency (Hz)\")\nplt.ylabel(\"Spectral Power\")\nplt.grid()\nplt.show()"
   },
   {
-    "objectID": "Week3p2/index.html#modelling-steps-autoarima",
-    "href": "Week3p2/index.html#modelling-steps-autoarima",
-    "title": "Time Series Forecasting with Python: Method 2",
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
     "section": "",
-    "text": "Plot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nUse AutoARIMA to select a model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+    "text": "Slides 1"
   },
   {
-    "objectID": "Week3p2/index.html#modeling-with-python",
-    "href": "Week3p2/index.html#modeling-with-python",
-    "title": "Time Series Forecasting with Python: Method 2",
+    "objectID": "index.html#lecture-1-november-30-2024",
+    "href": "index.html#lecture-1-november-30-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
     "section": "",
-    "text": "from sktime import *\nfrom sktime.datasets import load_airline\nfrom sktime.utils.plotting import plot_series\ny = load_airline()\nplot_series(y)\n\n(&lt;Figure size 1536x384 with 1 Axes&gt;,\n &lt;Axes: ylabel='Number of airline passengers'&gt;)"
+    "text": "Slides 1"
   },
   {
-    "objectID": "Week3p2/index.html#your-turn",
-    "href": "Week3p2/index.html#your-turn",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Take other important visualizations"
+    "objectID": "index.html#lecture-2-december-7-2024",
+    "href": "index.html#lecture-2-december-7-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 2: December 7, 2024",
+    "text": "Lecture 2: December 7, 2024\nSlides 2\nPractical 1"
   },
   {
-    "objectID": "Week3p2/index.html#define-forecast-horizon",
-    "href": "Week3p2/index.html#define-forecast-horizon",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "import numpy as np\nimport pandas as pd\nfrom sktime.forecasting.base import ForecastingHorizon\nfh = ForecastingHorizon(\n    pd.PeriodIndex(pd.date_range(\"1960-01\", periods=12, freq=\"M\")), is_relative=False\n)\nfh\n\nForecastingHorizon(['1960-01', '1960-02', '1960-03', '1960-04', '1960-05', '1960-06',\n             '1960-07', '1960-08', '1960-09', '1960-10', '1960-11', '1960-12'],\n            dtype='period[M]', is_relative=False)"
+    "objectID": "index.html#public-holiday-december-14-2024",
+    "href": "index.html#public-holiday-december-14-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Public Holiday: December 14, 2024",
+    "text": "Public Holiday: December 14, 2024"
   },
   {
-    "objectID": "Week3p2/index.html#split-data-into-training-and-test",
-    "href": "Week3p2/index.html#split-data-into-training-and-test",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "from sktime.forecasting.model_selection import temporal_train_test_split\ny_train, y_test = temporal_train_test_split(y, fh=fh)"
+    "objectID": "index.html#lecture-3-december-21-2024",
+    "href": "index.html#lecture-3-december-21-2024",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 3: December 21, 2024",
+    "text": "Lecture 3: December 21, 2024\nSlides 3\nPractical 2\nPractical 3\nSlides 4"
   },
   {
-    "objectID": "Week3p2/index.html#define-forecaster-with-sktime",
-    "href": "Week3p2/index.html#define-forecaster-with-sktime",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "from sktime.forecasting.statsforecast import StatsForecastAutoARIMA\nimport numpy as np\nforecaster = StatsForecastAutoARIMA(  \n    sp=12,  max_p=2, max_q=2\n)\ny_train.naturallog = np.log(y_train)\nforecaster.fit(y_train.naturallog)\n\nStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)Please rerun this cell to show the HTML repr or trust the notebook.StatsForecastAutoARIMA?Documentation for StatsForecastAutoARIMAStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)\n\n\nsp: Number of observations per unit of time.\nHelp: https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html"
+    "objectID": "index.html#lecture-4-4-january-2025",
+    "href": "index.html#lecture-4-4-january-2025",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 4: 4 January 2025",
+    "text": "Lecture 4: 4 January 2025\nSlides 5\n\nPractical 4 - With R\nPractical 5 - With Python"
   },
   {
-    "objectID": "Week3p2/index.html#your-turn-1",
-    "href": "Week3p2/index.html#your-turn-1",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Preferm residual analysis"
+    "objectID": "index.html#lecture-5-11-jan-2025",
+    "href": "index.html#lecture-5-11-jan-2025",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 5: 11 Jan 2025",
+    "text": "Lecture 5: 11 Jan 2025\nPractical 6 - With python\nData 1\nData 2\nPractical 7 - With R\nSlides 6"
   },
   {
-    "objectID": "Week3p2/index.html#obtain-predictions-for-the-training-period",
-    "href": "Week3p2/index.html#obtain-predictions-for-the-training-period",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "y_pred = forecaster.predict(fh)\ny_pred \n\n1960-01    6.038882\n1960-02    5.989590\n1960-03    6.146032\n1960-04    6.119674\n1960-05    6.159455\n1960-06    6.304701\n1960-07    6.432675\n1960-08    6.444805\n1960-09    6.266803\n1960-10    6.136178\n1960-11    6.007715\n1960-12    6.114486\nFreq: M, Name: Number of airline passengers, dtype: float64"
+    "objectID": "index.html#lecture-6-25-jan-2025",
+    "href": "index.html#lecture-6-25-jan-2025",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 6: 25 Jan 2025",
+    "text": "Lecture 6: 25 Jan 2025\nVariogram Calculation - Excel File\nAcknowledgement for data: Prof Michael Pyrcz, Full Professor at The University of Texas at Austin working on Spatial Data Analytics, Geostatistics and Machine Learning. Link: https://github.com/GeostatsGuy\nSlides 7\nReading"
   },
   {
-    "objectID": "Week3p2/index.html#model-parameter-estimates",
-    "href": "Week3p2/index.html#model-parameter-estimates",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Write a code to obtain model parameter estimates."
+    "objectID": "index.html#lecture-7-1-february-2025",
+    "href": "index.html#lecture-7-1-february-2025",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 7: 1 February 2025",
+    "text": "Lecture 7: 1 February 2025\nKriging: Continue from Slides 6 and Slides 7\nTask: Find a suitable kriging model to interpolate zinc concentration in meuse dataset.\nSpatial interpolation with Python\nSciKit-GStat 1.0: a SciPy-flavored geostatistical variogram estimation toolbox written in Python\nReading - Modelling with trend"
   },
   {
-    "objectID": "Week3p2/index.html#what-is-happening-under-the-hood-of-autoarima",
-    "href": "Week3p2/index.html#what-is-happening-under-the-hood-of-autoarima",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Step 1: Select the number of differences d and D via unit root tests and strength of seasonality measure.\nStep 2: Try four possible models to start with:"
+    "objectID": "index.html#lecture-8-8-february-2025",
+    "href": "index.html#lecture-8-8-february-2025",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 8: 8 February 2025",
+    "text": "Lecture 8: 8 February 2025\nInterpolation of meuse dataset and NO2 data sets.\ncross validation approaches in spatial data analysis - cont. slide 7\nWhich variogram model to use: read here\nKriging with python"
   },
   {
-    "objectID": "Week3p2/index.html#section",
-    "href": "Week3p2/index.html#section",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "\\(ARIMA(2, d, 2)\\) if \\(m = 1\\) and \\(ARIMA(2, d, 2)(1, D, 1)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 0)(0, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(1, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(1, d, 0)(1, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 1)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 1)(0, D, 1)_m\\) if \\(m &gt; 1\\)."
+    "objectID": "index.html#lecture-9-15-february-2025",
+    "href": "index.html#lecture-9-15-february-2025",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 9: 15 February 2025",
+    "text": "Lecture 9: 15 February 2025\nTime series clustering\nFeature-based time series forecasting\nFeature calculation-script\nPeriodogram - Using R\nPeriodogram - Using Python"
   },
   {
-    "objectID": "Week3p2/index.html#section-1",
-    "href": "Week3p2/index.html#section-1",
-    "title": "Time Series Forecasting with Python: Method 2",
-    "section": "",
-    "text": "Step 3: Select the model with the smallest AICc from step 2. This becomes the current model.\nStep 4: Consider up to 13 variations on the current model:\n\nVary one of \\(p, q, P\\) and \\(Q\\) from the current model by \\(\\pm 1\\).\n\\(p, q\\) both vary from the current model by \\(\\pm 1\\).\n\\(P, Q\\) both vary from the current model by \\(\\pm 1\\).\nInclude or exclude the constant term from the current model. Repeat step 4 until no lower AICc can be found."
-  },
-  {
-    "objectID": "Week3/index.html#identify-the-features-of-the-time-series",
-    "href": "Week3/index.html#identify-the-features-of-the-time-series",
-    "title": "Time Series Analysis",
-    "section": "Identify the features of the time series",
-    "text": "Identify the features of the time series"
-  },
-  {
-    "objectID": "Week3/index.html#acf-plot",
-    "href": "Week3/index.html#acf-plot",
-    "title": "Time Series Analysis",
-    "section": "ACF plot",
-    "text": "ACF plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhite noise implies stationarity."
-  },
-  {
-    "objectID": "Week3/index.html#series-with-trend",
-    "href": "Week3/index.html#series-with-trend",
-    "title": "Time Series Analysis",
-    "section": "Series with trend",
-    "text": "Series with trend"
-  },
-  {
-    "objectID": "Week3/index.html#common-trend-removal-de-trending-procedures",
-    "href": "Week3/index.html#common-trend-removal-de-trending-procedures",
-    "title": "Time Series Analysis",
-    "section": "Common trend removal (de-trending) procedures",
-    "text": "Common trend removal (de-trending) procedures\n\nDeterministic trend: Time-trend regression\nThe trend can be removed by fitting a deterministic polynomial time trend. The residual series after removing the trend will give us the de-trended series.\nStochastic trend: Differencing\nThe process is also known as a Difference-stationary process."
-  },
-  {
-    "objectID": "Week3/index.html#notation-id",
-    "href": "Week3/index.html#notation-id",
-    "title": "Time Series Analysis",
-    "section": "Notation: I(d)",
-    "text": "Notation: I(d)\nIntegrated to order \\(d\\): Series can be made stationary by differencing \\(d\\) times.\n\nKnown as \\(I(d)\\) process.\n\nQuestion: Show that random walk process is an \\(I(1)\\) process.\nThe random walk process is called a unit root process. (If one of the roots turns out to be one, then the process is called unit root process.)"
-  },
-  {
-    "objectID": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960",
-    "href": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960",
-    "title": "Time Series Analysis",
-    "section": "Monthly Airline Passenger Numbers 1949-1960",
-    "text": "Monthly Airline Passenger Numbers 1949-1960\nWithout transformations"
-  },
-  {
-    "objectID": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960-1",
-    "href": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960-1",
-    "title": "Time Series Analysis",
-    "section": "Monthly Airline Passenger Numbers 1949-1960",
-    "text": "Monthly Airline Passenger Numbers 1949-1960\nLogarithm transformation"
-  },
-  {
-    "objectID": "Week3/index.html#modelling-steps",
-    "href": "Week3/index.html#modelling-steps",
-    "title": "Time Series Analysis",
-    "section": "Modelling steps",
-    "text": "Modelling steps\n\nPlot the data.\nSplit time series into training, validation (optional), test.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nIf the data are non-stationary, take first differences of the data until the data are stationary.\nExamine the ACF/PACF to identify a suitable model.\nTry your chosen model(s), and to search for a better model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
-  },
-  {
-    "objectID": "Week3/index.html#step-4-take-difference-series",
-    "href": "Week3/index.html#step-4-take-difference-series",
-    "title": "Time Series Analysis",
-    "section": "Step 4: Take difference series",
-    "text": "Step 4: Take difference series\nIdentifying non-stationarity by looking at plots\n\nTime series plot\nThe ACF of stationary data drops to zero relatively quickly.\nThe ACF of non-stationary data decreases slowly.\nFor non-stationary data, the value of \\(r_1\\) is often large and positive."
-  },
-  {
-    "objectID": "Week3/index.html#non-seasonal-differencing-and-seasonal-differencing",
-    "href": "Week3/index.html#non-seasonal-differencing-and-seasonal-differencing",
-    "title": "Time Series Analysis",
-    "section": "Non-seasonal differencing and seasonal differencing",
-    "text": "Non-seasonal differencing and seasonal differencing\nNon seasonal first-order differencing: \\(Y'_t=Y_t - Y_{t-1}\\)\n\nNon seasonal second-order differencing: \\(Y''_t=Y'_t - Y'_{t-1}\\)\n\nSeasonal differencing: \\(Y_t - Y_{t-m}\\)\n\n\nFor monthly, \\(m=12\\), for quarterly, \\(m=4\\).\n\n\n\nSeasonally differenced series will have \\(T-m\\) observations. \n\n\nThere are times differencing once is not enough. However, in practice,it is almost never necessary to go beyond second-order differencing."
-  },
-  {
-    "objectID": "Week3/index.html#non-seasonal-differencing",
-    "href": "Week3/index.html#non-seasonal-differencing",
-    "title": "Time Series Analysis",
-    "section": "Non-Seasonal differencing",
-    "text": "Non-Seasonal differencing\nWithout differencing\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWith differencing"
-  },
-  {
-    "objectID": "Week3/index.html#seasonal-differencing",
-    "href": "Week3/index.html#seasonal-differencing",
-    "title": "Time Series Analysis",
-    "section": "Seasonal differencing",
-    "text": "Seasonal differencing"
-  },
-  {
-    "objectID": "Week3/index.html#seasonal-differencing-non-seasonal-differencing",
-    "href": "Week3/index.html#seasonal-differencing-non-seasonal-differencing",
-    "title": "Time Series Analysis",
-    "section": "Seasonal differencing + Non-seasonal differencing",
-    "text": "Seasonal differencing + Non-seasonal differencing"
-  },
-  {
-    "objectID": "Week3/index.html#kpss-test",
-    "href": "Week3/index.html#kpss-test",
-    "title": "Time Series Analysis",
-    "section": "KPSS test",
-    "text": "KPSS test\nH0: Series is level or trend stationary.\nH1: Series is not stationary.\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 3 lags. \n\nValue of test-statistic is: 0.0942 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739"
-  },
-  {
-    "objectID": "Week3/index.html#kpss-test-1",
-    "href": "Week3/index.html#kpss-test-1",
-    "title": "Time Series Analysis",
-    "section": "KPSS test",
-    "text": "KPSS test\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 4 lags. \n\nValue of test-statistic is: 2.113 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739\n\n\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 3 lags. \n\nValue of test-statistic is: 0.1264 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739"
-  },
-  {
-    "objectID": "Week3/index.html#arp",
-    "href": "Week3/index.html#arp",
-    "title": "Time Series Analysis",
-    "section": "AR(p)",
-    "text": "AR(p)\n\nACF dies out in an exponential or damped sine-wave manner.\nthere is a significant spike at lag \\(p\\) in PACF, but none beyond \\(p\\)."
-  },
-  {
-    "objectID": "Week3/index.html#maq",
-    "href": "Week3/index.html#maq",
-    "title": "Time Series Analysis",
-    "section": "MA(q)",
-    "text": "MA(q)\n\nACF has all zero spikes beyond the \\(q^{th}\\) spike.\nPACF dies out in an exponential or damped sine-wave manner."
-  },
-  {
-    "objectID": "Week3/index.html#seasonal-components",
-    "href": "Week3/index.html#seasonal-components",
-    "title": "Time Series Analysis",
-    "section": "Seasonal components",
-    "text": "Seasonal components\n\nThe seasonal part of an AR or MA model will be seen in the seasonal lags of the PACF and ACF.\n\n::::\n\nARIMA(0,0,0)(0,0,1)12 will show\n\na spike at lag 12 in the ACF but no other significant spikes.\nThe PACF will show exponential decay in the seasonal lags 12, 24, 36, . . . .\n\n\nARIMA(0,0,0)(1,0,0)12 will show\n\nexponential decay in the seasonal lags of the ACF.\na single significant spike at lag 12 in the PACF.\n\n::::"
-  },
-  {
-    "objectID": "Week3/index.html#acf",
-    "href": "Week3/index.html#acf",
-    "title": "Time Series Analysis",
-    "section": "ACF",
-    "text": "ACF"
-  },
-  {
-    "objectID": "Week3/index.html#pacf",
-    "href": "Week3/index.html#pacf",
-    "title": "Time Series Analysis",
-    "section": "PACF",
-    "text": "PACF"
-  },
-  {
-    "objectID": "Week3/index.html#step-5-examine-the-acfpacf-to-identify-a-suitable-model",
-    "href": "Week3/index.html#step-5-examine-the-acfpacf-to-identify-a-suitable-model",
-    "title": "Time Series Analysis",
-    "section": "Step 5: Examine the ACF/PACF to identify a suitable model",
-    "text": "Step 5: Examine the ACF/PACF to identify a suitable model\n\n\\(d=1\\) and \\(D=1\\) (from step 3)\nSignificant spike at lag 1 in ACF suggests non-seasonal MA(1) component.\nSignificant spike at lag 12 in ACF suggests seasonal MA(1) component.\nInitial candidate model: \\(ARIMA(0,1,1)(0,1,1)_{12}\\).\nBy analogous logic applied to the PACF, we could also have started with \\(ARIMA(1,1,0)(1,1,0)_{12}\\).\nLet’s try both"
-  },
-  {
-    "objectID": "Week3/index.html#section-2",
-    "href": "Week3/index.html#section-2",
-    "title": "Time Series Analysis",
-    "section": "",
-    "text": "Initial model:\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\\(ARIMA(1,1,0)(1,1,0)_{12}\\)\nTry some variations of the initial model:\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\\(ARIMA(1,1,1)(1,1,0)_{12}\\)\n\\(ARIMA(1,1,1)(1,1,1)_{12}\\)\nBoth the ACF and PACF show significant spikes at lag 3, and almost significant spikes at lag 3, indicating that some additional non-seasonal terms need to be included in the model.\n\\(ARIMA(3,1,1)(1,1,1)_{12}\\)\n\\(ARIMA(1,1,3)(1,1,1)_{12}\\)\n\\(ARIMA(3,1,3)(1,1,1)_{12}\\)"
-  },
-  {
-    "objectID": "Week3/index.html#aicc",
-    "href": "Week3/index.html#aicc",
-    "title": "Time Series Analysis",
-    "section": "AICc",
-    "text": "AICc\nInitial model: AICc\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\): -344.33 (the smallest AICc)\n\\(ARIMA(1,1,0)(1,1,0)_{12}\\): -336.32\nTry some variations of the initial model:\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\): -342.3 (second smallest AICc)\n\\(ARIMA(1,1,1)(1,1,0)_{12}\\): -336.08\n\\(ARIMA(1,1,1)(1,1,1)_{12}\\): -340.74\n\\(ARIMA(3,1,1)(1,1,1)_{12}\\): -338.89\n\\(ARIMA(1,1,3)(1,1,1)_{12}\\): -339.42\n\\(ARIMA(3,1,3)(1,1,1)_{12}\\): -335.65"
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics",
-    "href": "Week3/index.html#step-7-residual-diagnostics",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics",
-    "text": "Step 7: Residual diagnostics\nFitted values:\n\\(\\hat{Y}_{t|t-1}\\): Forecast of \\(Y_t\\) based on observations \\(Y_1,...Y_t\\).\nResiduals\n\\[e_t=Y_t - \\hat{Y}_{t|t-1}\\]\nAssumptions of residuals\n\n\\(\\{e_t\\}\\) uncorrelated. If they aren’t, then information left in residuals that should be used in computing forecasts.\n\n\n\n\\(\\{e_t\\}\\) have mean zero. If they don’t, then forecasts are biased."
-  },
-  {
-    "objectID": "Week3/index.html#useful-properties-for-prediction-intervals",
-    "href": "Week3/index.html#useful-properties-for-prediction-intervals",
-    "title": "Time Series Analysis",
-    "section": "Useful properties (for prediction intervals)",
-    "text": "Useful properties (for prediction intervals)\n\n\\(\\{e_t\\}\\) have constant variance.\n\\(\\{e_t\\}\\) are normally distributed."
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.",
-    "href": "Week3/index.html#step-7-residual-diagnostics-cont.",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics (cont.)",
-    "text": "Step 7: Residual diagnostics (cont.)\nH0: Data are not serially correlated.\nH1: Data are serially correlated.\n\n\n\n\n    Ljung-Box test\n\ndata:  Residuals from ARIMA(0,1,1)(0,1,1)[12]\nQ* = 14.495, df = 20, p-value = 0.8045\n\nModel df: 2.   Total lags used: 22"
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-1",
-    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-1",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics (cont.)",
-    "text": "Step 7: Residual diagnostics (cont.)"
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-2",
-    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-2",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics (cont.)",
-    "text": "Step 7: Residual diagnostics (cont.)\n\n\n\n\n    Ljung-Box test\n\ndata:  Residuals from ARIMA(0,1,1)(1,1,1)[12]\nQ* = 13.971, df = 19, p-value = 0.7854\n\nModel df: 3.   Total lags used: 22"
-  },
-  {
-    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-3",
-    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-3",
-    "title": "Time Series Analysis",
-    "section": "Step 7: Residual diagnostics (cont.)",
-    "text": "Step 7: Residual diagnostics (cont.)"
-  },
-  {
-    "objectID": "Week3/index.html#step-8-calculate-forecasts",
-    "href": "Week3/index.html#step-8-calculate-forecasts",
-    "title": "Time Series Analysis",
-    "section": "Step 8: Calculate forecasts",
-    "text": "Step 8: Calculate forecasts\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)"
-  },
-  {
-    "objectID": "Week3/index.html#section-3",
-    "href": "Week3/index.html#section-3",
-    "title": "Time Series Analysis",
-    "section": "",
-    "text": "\\(ARIMA(0,1,1)(1,1,1)_{12}\\)"
-  },
-  {
-    "objectID": "Week3/index.html#section-4",
-    "href": "Week3/index.html#section-4",
-    "title": "Time Series Analysis",
-    "section": "",
-    "text": "\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\n\n          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug\n1958 350.6592 339.1766 396.7654 389.3934 394.7295 460.6986 512.2818 507.5185\n1959 394.8025 381.8745 446.7129 438.4129 444.4207 518.6945 576.7713 571.4083\n1960 444.5029 429.9474 502.9482 493.6032 500.3674 583.9912 649.3792 643.3411\n          Sep      Oct      Nov      Dec\n1958 445.0042 386.2473 339.3564 381.5803\n1959 501.0243 434.8708 382.0769 429.6162\n1960 564.0966 489.6152 430.1753 483.6992\n\n\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\n\n          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug\n1958 351.0115 339.0589 396.3161 389.4484 395.0305 461.6590 513.6099 507.9900\n1959 395.2760 381.5215 446.3245 438.4261 444.8906 520.5608 578.7432 573.0358\n1960 444.7886 429.3347 502.2289 493.3544 500.6143 585.7116 651.2077 644.7354\n          Sep      Oct      Nov      Dec\n1958 445.3297 386.3269 339.4872 381.8812\n1959 501.8766 435.0725 382.3290 429.4328\n1960 564.7108 489.5677 430.2174 483.2724"
-  },
-  {
-    "objectID": "Week3/index.html#step-9-evaluate-forecast-accuracy",
-    "href": "Week3/index.html#step-9-evaluate-forecast-accuracy",
-    "title": "Time Series Analysis",
-    "section": "Step 9: Evaluate forecast accuracy",
-    "text": "Step 9: Evaluate forecast accuracy\nHow well our model is doing for out-of-sample?\n\n\nForecast error = True value - Observed value\n\\[e_{T+h}=Y_{T+h}-\\hat{Y}_{T+h|T}\\]\nWhere,\n\\(Y_{T+h}\\): \\((T+h)^{th}\\) observation, \\(h=1,..., H\\)\n\\(\\hat{Y}_{T+h|T}\\): Forecast based on data uo to time \\(T\\).\n\nTrue forecast error as the test data is not used in computing \\(\\hat{Y}_{T+h|T}\\).\nUnlike, residuals, forecast errors on the test set involve multi-step forecasts.\nUse forecast error measures to evaluate the models."
-  },
-  {
-    "objectID": "Week3/index.html#step-9-evaluate-forecast-accuracy-1",
-    "href": "Week3/index.html#step-9-evaluate-forecast-accuracy-1",
-    "title": "Time Series Analysis",
-    "section": "Step 9: Evaluate forecast accuracy",
-    "text": "Step 9: Evaluate forecast accuracy\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\n\n                ME   RMSE      MAE       MPE     MAPE       ACF1 Theil's U\nTest set -33.71566 36.559 33.71566 -8.112567 8.112567 0.08524612 0.7974916\n\n\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\n\n                ME     RMSE      MAE       MPE     MAPE       ACF1 Theil's U\nTest set -34.12174 36.87661 34.12174 -8.190874 8.190874 0.06782644 0.8019226\n\n\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\) MAE, MAPE is smaller than \\(ARIMA(0,1,1)(1,1,1)_{12}\\). Hence, we select \\(ARIMA(0,1,1)(0,1,1)_{12}\\) to forecast future values."
+    "objectID": "index.html#lecture-10-22-february-2025",
+    "href": "index.html#lecture-10-22-february-2025",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 10: 22 February 2025",
+    "text": "Lecture 10: 22 February 2025\nMid term evaluation: 40%"
   },
   {
     "objectID": "Week1/index.html#time-series",
@@ -931,185 +651,507 @@
     "text": "In-class: Properties of AR(P) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an AR(P) process"
   },
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "objectID": "Week11/index.html#presentations-22-feb-2025",
+    "href": "Week11/index.html#presentations-22-feb-2025",
+    "title": "Mid-term Evaluation (40 marks)",
+    "section": "Presentations: 22 Feb 2025",
+    "text": "Presentations: 22 Feb 2025\nNote: Failing to complete the presentation will result in 0 marks for this portion of the mid-term evaluation."
+  },
+  {
+    "objectID": "Week11/index.html#task",
+    "href": "Week11/index.html#task",
+    "title": "Mid-term Evaluation (40 marks)",
+    "section": "Task:",
+    "text": "Task:\nSelect a research paper from a Q1 or Q2 journal that focuses on a spatial or spatio-temporal application. You will read, analyze, and present the paper, ensuring the following aspects are covered:\n\nIntroduction (5 Marks)\nClearly summarize the research problem and objectives.\nExplain the significance of the study in the broader context of spatial or spatio-temporal analysis.\n\n\nMethodology (10 Marks)\nDescribe the techniques and models used in the study.\nExplain why these methods were chosen and their advantages.\n\n\nData (5 Marks)\nProvide details about the dataset used in the study.\nIf the dataset is not publicly available, construct a simulated dataset to illustrate key concepts.\n\n\nReplication of Results (10 Marks)\nAttempt to reproduce the key findings using the provided or simulated dataset. Present and interpret your results.\n\n\nSuggestions for Improvement (3 Marks)\nIdentify potential weaknesses or limitations in the study. Suggest alternative methods, additional analyses, or improvements in data collection.\n\n\nLimitations (2 Marks)\nDiscuss the challenges or constraints associated with the study’s approach. Reflect on the broader implications of these limitations.\n\n\nQ and A (5 marks)\n\n\nRecommendation:\nChoose a paper that includes a dataset to facilitate replication.\nIf a dataset is unavailable, construct a simulated dataset to demonstrate key ideas.\nYour analysis should be concise, well-structured, and supported by visualizations or code where appropriate."
+  },
+  {
+    "objectID": "Week11/index.html#you-should-submitpresent-following-documets",
+    "href": "Week11/index.html#you-should-submitpresent-following-documets",
+    "title": "Mid-term Evaluation (40 marks)",
+    "section": "You should submit/present following documets",
+    "text": "You should submit/present following documets\n\nPresentation document\nTime for presentation: 15 min.\nQ and A: 5 min.\nCodes and Results corresponds to reproducibility"
+  },
+  {
+    "objectID": "Week3/index.html#identify-the-features-of-the-time-series",
+    "href": "Week3/index.html#identify-the-features-of-the-time-series",
+    "title": "Time Series Analysis",
+    "section": "Identify the features of the time series",
+    "text": "Identify the features of the time series"
+  },
+  {
+    "objectID": "Week3/index.html#acf-plot",
+    "href": "Week3/index.html#acf-plot",
+    "title": "Time Series Analysis",
+    "section": "ACF plot",
+    "text": "ACF plot\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWhite noise implies stationarity."
+  },
+  {
+    "objectID": "Week3/index.html#series-with-trend",
+    "href": "Week3/index.html#series-with-trend",
+    "title": "Time Series Analysis",
+    "section": "Series with trend",
+    "text": "Series with trend"
+  },
+  {
+    "objectID": "Week3/index.html#common-trend-removal-de-trending-procedures",
+    "href": "Week3/index.html#common-trend-removal-de-trending-procedures",
+    "title": "Time Series Analysis",
+    "section": "Common trend removal (de-trending) procedures",
+    "text": "Common trend removal (de-trending) procedures\n\nDeterministic trend: Time-trend regression\nThe trend can be removed by fitting a deterministic polynomial time trend. The residual series after removing the trend will give us the de-trended series.\nStochastic trend: Differencing\nThe process is also known as a Difference-stationary process."
+  },
+  {
+    "objectID": "Week3/index.html#notation-id",
+    "href": "Week3/index.html#notation-id",
+    "title": "Time Series Analysis",
+    "section": "Notation: I(d)",
+    "text": "Notation: I(d)\nIntegrated to order \\(d\\): Series can be made stationary by differencing \\(d\\) times.\n\nKnown as \\(I(d)\\) process.\n\nQuestion: Show that random walk process is an \\(I(1)\\) process.\nThe random walk process is called a unit root process. (If one of the roots turns out to be one, then the process is called unit root process.)"
+  },
+  {
+    "objectID": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960",
+    "href": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960",
+    "title": "Time Series Analysis",
+    "section": "Monthly Airline Passenger Numbers 1949-1960",
+    "text": "Monthly Airline Passenger Numbers 1949-1960\nWithout transformations"
+  },
+  {
+    "objectID": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960-1",
+    "href": "Week3/index.html#monthly-airline-passenger-numbers-1949-1960-1",
+    "title": "Time Series Analysis",
+    "section": "Monthly Airline Passenger Numbers 1949-1960",
+    "text": "Monthly Airline Passenger Numbers 1949-1960\nLogarithm transformation"
+  },
+  {
+    "objectID": "Week3/index.html#modelling-steps",
+    "href": "Week3/index.html#modelling-steps",
+    "title": "Time Series Analysis",
+    "section": "Modelling steps",
+    "text": "Modelling steps\n\nPlot the data.\nSplit time series into training, validation (optional), test.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nIf the data are non-stationary, take first differences of the data until the data are stationary.\nExamine the ACF/PACF to identify a suitable model.\nTry your chosen model(s), and to search for a better model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+  },
+  {
+    "objectID": "Week3/index.html#step-4-take-difference-series",
+    "href": "Week3/index.html#step-4-take-difference-series",
+    "title": "Time Series Analysis",
+    "section": "Step 4: Take difference series",
+    "text": "Step 4: Take difference series\nIdentifying non-stationarity by looking at plots\n\nTime series plot\nThe ACF of stationary data drops to zero relatively quickly.\nThe ACF of non-stationary data decreases slowly.\nFor non-stationary data, the value of \\(r_1\\) is often large and positive."
+  },
+  {
+    "objectID": "Week3/index.html#non-seasonal-differencing-and-seasonal-differencing",
+    "href": "Week3/index.html#non-seasonal-differencing-and-seasonal-differencing",
+    "title": "Time Series Analysis",
+    "section": "Non-seasonal differencing and seasonal differencing",
+    "text": "Non-seasonal differencing and seasonal differencing\nNon seasonal first-order differencing: \\(Y'_t=Y_t - Y_{t-1}\\)\n\nNon seasonal second-order differencing: \\(Y''_t=Y'_t - Y'_{t-1}\\)\n\nSeasonal differencing: \\(Y_t - Y_{t-m}\\)\n\n\nFor monthly, \\(m=12\\), for quarterly, \\(m=4\\).\n\n\n\nSeasonally differenced series will have \\(T-m\\) observations. \n\n\nThere are times differencing once is not enough. However, in practice,it is almost never necessary to go beyond second-order differencing."
+  },
+  {
+    "objectID": "Week3/index.html#non-seasonal-differencing",
+    "href": "Week3/index.html#non-seasonal-differencing",
+    "title": "Time Series Analysis",
+    "section": "Non-Seasonal differencing",
+    "text": "Non-Seasonal differencing\nWithout differencing\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nWith differencing"
+  },
+  {
+    "objectID": "Week3/index.html#seasonal-differencing",
+    "href": "Week3/index.html#seasonal-differencing",
+    "title": "Time Series Analysis",
+    "section": "Seasonal differencing",
+    "text": "Seasonal differencing"
+  },
+  {
+    "objectID": "Week3/index.html#seasonal-differencing-non-seasonal-differencing",
+    "href": "Week3/index.html#seasonal-differencing-non-seasonal-differencing",
+    "title": "Time Series Analysis",
+    "section": "Seasonal differencing + Non-seasonal differencing",
+    "text": "Seasonal differencing + Non-seasonal differencing"
+  },
+  {
+    "objectID": "Week3/index.html#kpss-test",
+    "href": "Week3/index.html#kpss-test",
+    "title": "Time Series Analysis",
+    "section": "KPSS test",
+    "text": "KPSS test\nH0: Series is level or trend stationary.\nH1: Series is not stationary.\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 3 lags. \n\nValue of test-statistic is: 0.0942 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739"
+  },
+  {
+    "objectID": "Week3/index.html#kpss-test-1",
+    "href": "Week3/index.html#kpss-test-1",
+    "title": "Time Series Analysis",
+    "section": "KPSS test",
+    "text": "KPSS test\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 4 lags. \n\nValue of test-statistic is: 2.113 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739\n\n\n\n\n\n####################### \n# KPSS Unit Root Test # \n####################### \n\nTest is of type: mu with 3 lags. \n\nValue of test-statistic is: 0.1264 \n\nCritical value for a significance level of: \n                10pct  5pct 2.5pct  1pct\ncritical values 0.347 0.463  0.574 0.739"
+  },
+  {
+    "objectID": "Week3/index.html#arp",
+    "href": "Week3/index.html#arp",
+    "title": "Time Series Analysis",
+    "section": "AR(p)",
+    "text": "AR(p)\n\nACF dies out in an exponential or damped sine-wave manner.\nthere is a significant spike at lag \\(p\\) in PACF, but none beyond \\(p\\)."
+  },
+  {
+    "objectID": "Week3/index.html#maq",
+    "href": "Week3/index.html#maq",
+    "title": "Time Series Analysis",
+    "section": "MA(q)",
+    "text": "MA(q)\n\nACF has all zero spikes beyond the \\(q^{th}\\) spike.\nPACF dies out in an exponential or damped sine-wave manner."
+  },
+  {
+    "objectID": "Week3/index.html#seasonal-components",
+    "href": "Week3/index.html#seasonal-components",
+    "title": "Time Series Analysis",
+    "section": "Seasonal components",
+    "text": "Seasonal components\n\nThe seasonal part of an AR or MA model will be seen in the seasonal lags of the PACF and ACF.\n\n::::\n\nARIMA(0,0,0)(0,0,1)12 will show\n\na spike at lag 12 in the ACF but no other significant spikes.\nThe PACF will show exponential decay in the seasonal lags 12, 24, 36, . . . .\n\n\nARIMA(0,0,0)(1,0,0)12 will show\n\nexponential decay in the seasonal lags of the ACF.\na single significant spike at lag 12 in the PACF.\n\n::::"
+  },
+  {
+    "objectID": "Week3/index.html#acf",
+    "href": "Week3/index.html#acf",
+    "title": "Time Series Analysis",
+    "section": "ACF",
+    "text": "ACF"
+  },
+  {
+    "objectID": "Week3/index.html#pacf",
+    "href": "Week3/index.html#pacf",
+    "title": "Time Series Analysis",
+    "section": "PACF",
+    "text": "PACF"
+  },
+  {
+    "objectID": "Week3/index.html#step-5-examine-the-acfpacf-to-identify-a-suitable-model",
+    "href": "Week3/index.html#step-5-examine-the-acfpacf-to-identify-a-suitable-model",
+    "title": "Time Series Analysis",
+    "section": "Step 5: Examine the ACF/PACF to identify a suitable model",
+    "text": "Step 5: Examine the ACF/PACF to identify a suitable model\n\n\\(d=1\\) and \\(D=1\\) (from step 3)\nSignificant spike at lag 1 in ACF suggests non-seasonal MA(1) component.\nSignificant spike at lag 12 in ACF suggests seasonal MA(1) component.\nInitial candidate model: \\(ARIMA(0,1,1)(0,1,1)_{12}\\).\nBy analogous logic applied to the PACF, we could also have started with \\(ARIMA(1,1,0)(1,1,0)_{12}\\).\nLet’s try both"
+  },
+  {
+    "objectID": "Week3/index.html#section-2",
+    "href": "Week3/index.html#section-2",
+    "title": "Time Series Analysis",
     "section": "",
-    "text": "Slides 1"
+    "text": "Initial model:\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\\(ARIMA(1,1,0)(1,1,0)_{12}\\)\nTry some variations of the initial model:\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\\(ARIMA(1,1,1)(1,1,0)_{12}\\)\n\\(ARIMA(1,1,1)(1,1,1)_{12}\\)\nBoth the ACF and PACF show significant spikes at lag 3, and almost significant spikes at lag 3, indicating that some additional non-seasonal terms need to be included in the model.\n\\(ARIMA(3,1,1)(1,1,1)_{12}\\)\n\\(ARIMA(1,1,3)(1,1,1)_{12}\\)\n\\(ARIMA(3,1,3)(1,1,1)_{12}\\)"
   },
   {
-    "objectID": "index.html#lecture-1-november-30-2024",
-    "href": "index.html#lecture-1-november-30-2024",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "objectID": "Week3/index.html#aicc",
+    "href": "Week3/index.html#aicc",
+    "title": "Time Series Analysis",
+    "section": "AICc",
+    "text": "AICc\nInitial model: AICc\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\): -344.33 (the smallest AICc)\n\\(ARIMA(1,1,0)(1,1,0)_{12}\\): -336.32\nTry some variations of the initial model:\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\): -342.3 (second smallest AICc)\n\\(ARIMA(1,1,1)(1,1,0)_{12}\\): -336.08\n\\(ARIMA(1,1,1)(1,1,1)_{12}\\): -340.74\n\\(ARIMA(3,1,1)(1,1,1)_{12}\\): -338.89\n\\(ARIMA(1,1,3)(1,1,1)_{12}\\): -339.42\n\\(ARIMA(3,1,3)(1,1,1)_{12}\\): -335.65"
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics",
+    "href": "Week3/index.html#step-7-residual-diagnostics",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics",
+    "text": "Step 7: Residual diagnostics\nFitted values:\n\\(\\hat{Y}_{t|t-1}\\): Forecast of \\(Y_t\\) based on observations \\(Y_1,...Y_t\\).\nResiduals\n\\[e_t=Y_t - \\hat{Y}_{t|t-1}\\]\nAssumptions of residuals\n\n\\(\\{e_t\\}\\) uncorrelated. If they aren’t, then information left in residuals that should be used in computing forecasts.\n\n\n\n\\(\\{e_t\\}\\) have mean zero. If they don’t, then forecasts are biased."
+  },
+  {
+    "objectID": "Week3/index.html#useful-properties-for-prediction-intervals",
+    "href": "Week3/index.html#useful-properties-for-prediction-intervals",
+    "title": "Time Series Analysis",
+    "section": "Useful properties (for prediction intervals)",
+    "text": "Useful properties (for prediction intervals)\n\n\\(\\{e_t\\}\\) have constant variance.\n\\(\\{e_t\\}\\) are normally distributed."
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.",
+    "href": "Week3/index.html#step-7-residual-diagnostics-cont.",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics (cont.)",
+    "text": "Step 7: Residual diagnostics (cont.)\nH0: Data are not serially correlated.\nH1: Data are serially correlated.\n\n\n\n\n    Ljung-Box test\n\ndata:  Residuals from ARIMA(0,1,1)(0,1,1)[12]\nQ* = 14.495, df = 20, p-value = 0.8045\n\nModel df: 2.   Total lags used: 22"
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-1",
+    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-1",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics (cont.)",
+    "text": "Step 7: Residual diagnostics (cont.)"
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-2",
+    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-2",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics (cont.)",
+    "text": "Step 7: Residual diagnostics (cont.)\n\n\n\n\n    Ljung-Box test\n\ndata:  Residuals from ARIMA(0,1,1)(1,1,1)[12]\nQ* = 13.971, df = 19, p-value = 0.7854\n\nModel df: 3.   Total lags used: 22"
+  },
+  {
+    "objectID": "Week3/index.html#step-7-residual-diagnostics-cont.-3",
+    "href": "Week3/index.html#step-7-residual-diagnostics-cont.-3",
+    "title": "Time Series Analysis",
+    "section": "Step 7: Residual diagnostics (cont.)",
+    "text": "Step 7: Residual diagnostics (cont.)"
+  },
+  {
+    "objectID": "Week3/index.html#step-8-calculate-forecasts",
+    "href": "Week3/index.html#step-8-calculate-forecasts",
+    "title": "Time Series Analysis",
+    "section": "Step 8: Calculate forecasts",
+    "text": "Step 8: Calculate forecasts\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)"
+  },
+  {
+    "objectID": "Week3/index.html#section-3",
+    "href": "Week3/index.html#section-3",
+    "title": "Time Series Analysis",
     "section": "",
-    "text": "Slides 1"
+    "text": "\\(ARIMA(0,1,1)(1,1,1)_{12}\\)"
   },
   {
-    "objectID": "index.html#lecture-2-december-7-2024",
-    "href": "index.html#lecture-2-december-7-2024",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 2: December 7, 2024",
-    "text": "Lecture 2: December 7, 2024\nSlides 2\nPractical 1"
-  },
-  {
-    "objectID": "index.html#public-holiday-december-14-2024",
-    "href": "index.html#public-holiday-december-14-2024",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Public Holiday: December 14, 2024",
-    "text": "Public Holiday: December 14, 2024"
-  },
-  {
-    "objectID": "index.html#lecture-3-december-21-2024",
-    "href": "index.html#lecture-3-december-21-2024",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 3: December 21, 2024",
-    "text": "Lecture 3: December 21, 2024\nSlides 3\nPractical 2\nPractical 3\nSlides 4"
-  },
-  {
-    "objectID": "index.html#lecture-4-4-january-2025",
-    "href": "index.html#lecture-4-4-january-2025",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 4: 4 January 2025",
-    "text": "Lecture 4: 4 January 2025\nSlides 5\n\nPractical 4 - With R\nPractical 5 - With Python"
-  },
-  {
-    "objectID": "index.html#lecture-5-11-jan-2025",
-    "href": "index.html#lecture-5-11-jan-2025",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 5: 11 Jan 2025",
-    "text": "Lecture 5: 11 Jan 2025\nPractical 6 - With python\nData 1\nData 2\nPractical 7 - With R\nSlides 6"
-  },
-  {
-    "objectID": "index.html#lecture-6-25-jan-2025",
-    "href": "index.html#lecture-6-25-jan-2025",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 6: 25 Jan 2025",
-    "text": "Lecture 6: 25 Jan 2025\nVariogram Calculation - Excel File\nAcknowledgement for data: Prof Michael Pyrcz, Full Professor at The University of Texas at Austin working on Spatial Data Analytics, Geostatistics and Machine Learning. Link: https://github.com/GeostatsGuy\nSlides 7\nReading"
-  },
-  {
-    "objectID": "index.html#lecture-7-1-february-2025",
-    "href": "index.html#lecture-7-1-february-2025",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 7: 1 February 2025",
-    "text": "Lecture 7: 1 February 2025\nKriging: Continue from Slides 6 and Slides 7\nTask: Find a suitable kriging model to interpolate zinc concentration in meuse dataset.\nSpatial interpolation with Python\nSciKit-GStat 1.0: a SciPy-flavored geostatistical variogram estimation toolbox written in Python\nReading - Modelling with trend"
-  },
-  {
-    "objectID": "index.html#lecture-8-8-february-2025",
-    "href": "index.html#lecture-8-8-february-2025",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 8: 8 February 2025",
-    "text": "Lecture 8: 8 February 2025\nInterpolation of meuse dataset and NO2 data sets.\ncross validation approaches in spatial data analysis - cont. slide 7\nWhich variogram model to use: read here\nKriging with python"
-  },
-  {
-    "objectID": "index.html#lecture-9-15-february-2025",
-    "href": "index.html#lecture-9-15-february-2025",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 9: 15 February 2025",
-    "text": "Lecture 9: 15 February 2025\nTime series clustering\nFeature-based time series forecasting\nFeature calculation-script"
-  },
-  {
-    "objectID": "index.html#lecture-10-22-february-2025",
-    "href": "index.html#lecture-10-22-february-2025",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "Lecture 10: 22 February 2025",
-    "text": "Lecture 10: 22 February 2025\nPresentations: 40%"
-  },
-  {
-    "objectID": "Week2/index.html#in-class-properties-of-ma1-process",
-    "href": "Week2/index.html#in-class-properties-of-ma1-process",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "In-class: Properties of MA(1) process",
-    "text": "In-class: Properties of MA(1) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(1) process\nPartial autocorrelation function of MA(1)"
-  },
-  {
-    "objectID": "Week2/index.html#in-class-properties-of-ma2-process",
-    "href": "Week2/index.html#in-class-properties-of-ma2-process",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "In-class: Properties of MA(2) process",
-    "text": "In-class: Properties of MA(2) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an MA(2) process\nPartial autocorrelation function of MA(2)"
-  },
-  {
-    "objectID": "Week2/index.html#in-class-properties-of-maq-process",
-    "href": "Week2/index.html#in-class-properties-of-maq-process",
-    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
-    "section": "In-class: Properties of MA(q) process",
-    "text": "In-class: Properties of MA(q) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an AR(P) process"
-  },
-  {
-    "objectID": "Week3p/index.html",
-    "href": "Week3p/index.html",
-    "title": "Time Series Forecasting with Python: Method 1",
+    "objectID": "Week3/index.html#section-4",
+    "href": "Week3/index.html#section-4",
+    "title": "Time Series Analysis",
     "section": "",
-    "text": "import pandas as pd\nimport plotnine as p9 \nfrom plotnine import *\nfrom plotnine.data import *\nimport numpy as np"
+    "text": "\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\n\n          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug\n1958 350.6592 339.1766 396.7654 389.3934 394.7295 460.6986 512.2818 507.5185\n1959 394.8025 381.8745 446.7129 438.4129 444.4207 518.6945 576.7713 571.4083\n1960 444.5029 429.9474 502.9482 493.6032 500.3674 583.9912 649.3792 643.3411\n          Sep      Oct      Nov      Dec\n1958 445.0042 386.2473 339.3564 381.5803\n1959 501.0243 434.8708 382.0769 429.6162\n1960 564.0966 489.6152 430.1753 483.6992\n\n\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\n\n          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug\n1958 351.0115 339.0589 396.3161 389.4484 395.0305 461.6590 513.6099 507.9900\n1959 395.2760 381.5215 446.3245 438.4261 444.8906 520.5608 578.7432 573.0358\n1960 444.7886 429.3347 502.2289 493.3544 500.6143 585.7116 651.2077 644.7354\n          Sep      Oct      Nov      Dec\n1958 445.3297 386.3269 339.4872 381.8812\n1959 501.8766 435.0725 382.3290 429.4328\n1960 564.7108 489.5677 430.2174 483.2724"
   },
   {
-    "objectID": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
-    "href": "Week3p/index.html#your-turn-write-r-codes-to-identify-the-suitable-sarima-model-for-airpassengers-dataset.",
-    "title": "Time Series Forecasting with Python: Method 1",
-    "section": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset.",
-    "text": "Your turn: Write R codes to identify the suitable SARIMA model for AirPassengers dataset."
+    "objectID": "Week3/index.html#step-9-evaluate-forecast-accuracy",
+    "href": "Week3/index.html#step-9-evaluate-forecast-accuracy",
+    "title": "Time Series Analysis",
+    "section": "Step 9: Evaluate forecast accuracy",
+    "text": "Step 9: Evaluate forecast accuracy\nHow well our model is doing for out-of-sample?\n\n\nForecast error = True value - Observed value\n\\[e_{T+h}=Y_{T+h}-\\hat{Y}_{T+h|T}\\]\nWhere,\n\\(Y_{T+h}\\): \\((T+h)^{th}\\) observation, \\(h=1,..., H\\)\n\\(\\hat{Y}_{T+h|T}\\): Forecast based on data uo to time \\(T\\).\n\nTrue forecast error as the test data is not used in computing \\(\\hat{Y}_{T+h|T}\\).\nUnlike, residuals, forecast errors on the test set involve multi-step forecasts.\nUse forecast error measures to evaluate the models."
   },
   {
-    "objectID": "Week5/index.html",
-    "href": "Week5/index.html",
+    "objectID": "Week3/index.html#step-9-evaluate-forecast-accuracy-1",
+    "href": "Week3/index.html#step-9-evaluate-forecast-accuracy-1",
+    "title": "Time Series Analysis",
+    "section": "Step 9: Evaluate forecast accuracy",
+    "text": "Step 9: Evaluate forecast accuracy\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\)\n\n\n                ME   RMSE      MAE       MPE     MAPE       ACF1 Theil's U\nTest set -33.71566 36.559 33.71566 -8.112567 8.112567 0.08524612 0.7974916\n\n\n\\(ARIMA(0,1,1)(1,1,1)_{12}\\)\n\n\n                ME     RMSE      MAE       MPE     MAPE       ACF1 Theil's U\nTest set -34.12174 36.87661 34.12174 -8.190874 8.190874 0.06782644 0.8019226\n\n\n\\(ARIMA(0,1,1)(0,1,1)_{12}\\) MAE, MAPE is smaller than \\(ARIMA(0,1,1)(1,1,1)_{12}\\). Hence, we select \\(ARIMA(0,1,1)(0,1,1)_{12}\\) to forecast future values."
+  },
+  {
+    "objectID": "Week3p2/index.html",
+    "href": "Week3p2/index.html",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "import pandas as pd\nimport plotnine as p9 \nfrom plotnine import *\nfrom plotnine.data import *\nimport numpy as np\n\n\n\n\nPlot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\n\n3. If the data are non-stationary, take first differences of the data until the data are stationary.\n4. Examine the ACF/PACF to identify a suitable model.\n5. Try your chosen model(s), and use the AICc to search for a better model.\n\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts.\n\n\n\n\n\nPlot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nUse AutoARIMA to select a model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts.\n\n\n\n\n\nfrom sktime import *\nfrom sktime.datasets import load_airline\nfrom sktime.utils.plotting import plot_series\ny = load_airline()\nplot_series(y)\n\n(&lt;Figure size 1536x384 with 1 Axes&gt;,\n &lt;Axes: ylabel='Number of airline passengers'&gt;)\n\n\n\n\n\n\n\n\n\n\n\n\nTake other important visualizations\n\n\n\n\nimport numpy as np\nimport pandas as pd\nfrom sktime.forecasting.base import ForecastingHorizon\nfh = ForecastingHorizon(\n    pd.PeriodIndex(pd.date_range(\"1960-01\", periods=12, freq=\"M\")), is_relative=False\n)\nfh\n\nForecastingHorizon(['1960-01', '1960-02', '1960-03', '1960-04', '1960-05', '1960-06',\n             '1960-07', '1960-08', '1960-09', '1960-10', '1960-11', '1960-12'],\n            dtype='period[M]', is_relative=False)\n\n\n\n\n\n\nfrom sktime.forecasting.model_selection import temporal_train_test_split\ny_train, y_test = temporal_train_test_split(y, fh=fh)\n\n\n\n\n\nfrom sktime.forecasting.statsforecast import StatsForecastAutoARIMA\nimport numpy as np\nforecaster = StatsForecastAutoARIMA(  \n    sp=12,  max_p=2, max_q=2\n)\ny_train.naturallog = np.log(y_train)\nforecaster.fit(y_train.naturallog)\n\nStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)Please rerun this cell to show the HTML repr or trust the notebook.StatsForecastAutoARIMA?Documentation for StatsForecastAutoARIMAStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)\n\n\nsp: Number of observations per unit of time.\nHelp: https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html\n\n\n\nPreferm residual analysis\n\n\n\n\ny_pred = forecaster.predict(fh)\ny_pred \n\n1960-01    6.038882\n1960-02    5.989590\n1960-03    6.146032\n1960-04    6.119674\n1960-05    6.159455\n1960-06    6.304701\n1960-07    6.432675\n1960-08    6.444805\n1960-09    6.266803\n1960-10    6.136178\n1960-11    6.007715\n1960-12    6.114486\nFreq: M, Name: Number of airline passengers, dtype: float64\n\n\n\n\n\nWrite a code to obtain model parameter estimates.\n\n\n\nStep 1: Select the number of differences d and D via unit root tests and strength of seasonality measure.\nStep 2: Try four possible models to start with:\n\n\n\n\n\\(ARIMA(2, d, 2)\\) if \\(m = 1\\) and \\(ARIMA(2, d, 2)(1, D, 1)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 0)(0, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(1, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(1, d, 0)(1, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 1)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 1)(0, D, 1)_m\\) if \\(m &gt; 1\\).\n\n\n\n\nStep 3: Select the model with the smallest AICc from step 2. This becomes the current model.\nStep 4: Consider up to 13 variations on the current model:\n\nVary one of \\(p, q, P\\) and \\(Q\\) from the current model by \\(\\pm 1\\).\n\\(p, q\\) both vary from the current model by \\(\\pm 1\\).\n\\(P, Q\\) both vary from the current model by \\(\\pm 1\\).\nInclude or exclude the constant term from the current model. Repeat step 4 until no lower AICc can be found."
+  },
+  {
+    "objectID": "Week3p2/index.html#modelling-steps",
+    "href": "Week3p2/index.html#modelling-steps",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Plot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\n\n3. If the data are non-stationary, take first differences of the data until the data are stationary.\n4. Examine the ACF/PACF to identify a suitable model.\n5. Try your chosen model(s), and use the AICc to search for a better model.\n\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+  },
+  {
+    "objectID": "Week3p2/index.html#modelling-steps-autoarima",
+    "href": "Week3p2/index.html#modelling-steps-autoarima",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Plot the data.\nIf necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.\nUse AutoARIMA to select a model.\nCheck the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.\nOnce the residuals look like white noise, calculate forecasts."
+  },
+  {
+    "objectID": "Week3p2/index.html#modeling-with-python",
+    "href": "Week3p2/index.html#modeling-with-python",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "from sktime import *\nfrom sktime.datasets import load_airline\nfrom sktime.utils.plotting import plot_series\ny = load_airline()\nplot_series(y)\n\n(&lt;Figure size 1536x384 with 1 Axes&gt;,\n &lt;Axes: ylabel='Number of airline passengers'&gt;)"
+  },
+  {
+    "objectID": "Week3p2/index.html#your-turn",
+    "href": "Week3p2/index.html#your-turn",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Take other important visualizations"
+  },
+  {
+    "objectID": "Week3p2/index.html#define-forecast-horizon",
+    "href": "Week3p2/index.html#define-forecast-horizon",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "import numpy as np\nimport pandas as pd\nfrom sktime.forecasting.base import ForecastingHorizon\nfh = ForecastingHorizon(\n    pd.PeriodIndex(pd.date_range(\"1960-01\", periods=12, freq=\"M\")), is_relative=False\n)\nfh\n\nForecastingHorizon(['1960-01', '1960-02', '1960-03', '1960-04', '1960-05', '1960-06',\n             '1960-07', '1960-08', '1960-09', '1960-10', '1960-11', '1960-12'],\n            dtype='period[M]', is_relative=False)"
+  },
+  {
+    "objectID": "Week3p2/index.html#split-data-into-training-and-test",
+    "href": "Week3p2/index.html#split-data-into-training-and-test",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "from sktime.forecasting.model_selection import temporal_train_test_split\ny_train, y_test = temporal_train_test_split(y, fh=fh)"
+  },
+  {
+    "objectID": "Week3p2/index.html#define-forecaster-with-sktime",
+    "href": "Week3p2/index.html#define-forecaster-with-sktime",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "from sktime.forecasting.statsforecast import StatsForecastAutoARIMA\nimport numpy as np\nforecaster = StatsForecastAutoARIMA(  \n    sp=12,  max_p=2, max_q=2\n)\ny_train.naturallog = np.log(y_train)\nforecaster.fit(y_train.naturallog)\n\nStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)Please rerun this cell to show the HTML repr or trust the notebook.StatsForecastAutoARIMA?Documentation for StatsForecastAutoARIMAStatsForecastAutoARIMA(max_p=2, max_q=2, sp=12)\n\n\nsp: Number of observations per unit of time.\nHelp: https://www.sktime.org/en/stable/api_reference/auto_generated/sktime.forecasting.statsforecast.StatsForecastAutoARIMA.html"
+  },
+  {
+    "objectID": "Week3p2/index.html#your-turn-1",
+    "href": "Week3p2/index.html#your-turn-1",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Preferm residual analysis"
+  },
+  {
+    "objectID": "Week3p2/index.html#obtain-predictions-for-the-training-period",
+    "href": "Week3p2/index.html#obtain-predictions-for-the-training-period",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "y_pred = forecaster.predict(fh)\ny_pred \n\n1960-01    6.038882\n1960-02    5.989590\n1960-03    6.146032\n1960-04    6.119674\n1960-05    6.159455\n1960-06    6.304701\n1960-07    6.432675\n1960-08    6.444805\n1960-09    6.266803\n1960-10    6.136178\n1960-11    6.007715\n1960-12    6.114486\nFreq: M, Name: Number of airline passengers, dtype: float64"
+  },
+  {
+    "objectID": "Week3p2/index.html#model-parameter-estimates",
+    "href": "Week3p2/index.html#model-parameter-estimates",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Write a code to obtain model parameter estimates."
+  },
+  {
+    "objectID": "Week3p2/index.html#what-is-happening-under-the-hood-of-autoarima",
+    "href": "Week3p2/index.html#what-is-happening-under-the-hood-of-autoarima",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Step 1: Select the number of differences d and D via unit root tests and strength of seasonality measure.\nStep 2: Try four possible models to start with:"
+  },
+  {
+    "objectID": "Week3p2/index.html#section",
+    "href": "Week3p2/index.html#section",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "\\(ARIMA(2, d, 2)\\) if \\(m = 1\\) and \\(ARIMA(2, d, 2)(1, D, 1)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 0)(0, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(1, d, 0)\\) if \\(m = 1\\) and \\(ARIMA(1, d, 0)(1, D, 0)_m\\) if \\(m &gt; 1\\).\n\\(ARIMA(0, d, 1)\\) if \\(m = 1\\) and \\(ARIMA(0, d, 1)(0, D, 1)_m\\) if \\(m &gt; 1\\)."
+  },
+  {
+    "objectID": "Week3p2/index.html#section-1",
+    "href": "Week3p2/index.html#section-1",
+    "title": "Time Series Forecasting with Python: Method 2",
+    "section": "",
+    "text": "Step 3: Select the model with the smallest AICc from step 2. This becomes the current model.\nStep 4: Consider up to 13 variations on the current model:\n\nVary one of \\(p, q, P\\) and \\(Q\\) from the current model by \\(\\pm 1\\).\n\\(p, q\\) both vary from the current model by \\(\\pm 1\\).\n\\(P, Q\\) both vary from the current model by \\(\\pm 1\\).\nInclude or exclude the constant term from the current model. Repeat step 4 until no lower AICc can be found."
+  },
+  {
+    "objectID": "Week4p2/index.html",
+    "href": "Week4p2/index.html",
     "title": "Spatial Visualization with Python",
     "section": "",
-    "text": "import geopandas as gpd\nimport folium\nimport pandas as pd"
+    "text": "Loading packages\n\nimport geopandas as gpd\nimport folium\n\n\n\nLoad and inspect meuse data\n\nmeuse = gpd.read_file(\"meuse.shp\")  # Adjust the file path as needed\n\n# Inspect the first few rows of the data\nprint(meuse.head())\n\n   cadmium  copper   lead    zinc   elev      dist    om ffreq soil lime  \\\n0     11.7    85.0  299.0  1022.0  7.909  0.001358  13.6     1    1    1   \n1      8.6    81.0  277.0  1141.0  6.983  0.012224  14.0     1    1    1   \n2      6.5    68.0  199.0   640.0  7.800  0.103029  13.0     1    1    1   \n3      2.6    81.0  116.0   257.0  7.655  0.190094   8.0     1    2    0   \n4      2.8    48.0  117.0   269.0  7.480  0.277090   8.7     1    2    0   \n\n  landuse  dist_m                       geometry  \n0      Ah    50.0  POINT (181072.000 333611.000)  \n1      Ah    30.0  POINT (181025.000 333558.000)  \n2      Ah   150.0  POINT (181165.000 333537.000)  \n3      Ga   270.0  POINT (181298.000 333484.000)  \n4      Ah   380.0  POINT (181307.000 333330.000)  \n\n\n\n\nVisualise the data\n\nimport matplotlib.pyplot as plt\n\n# Plot the meuse dataset (points in this case)\nmeuse.plot(marker='o', color='blue', markersize=5)\n\n# Show the plot\nplt.title('Meuse Spatial Data Visualization')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()\n\n\n\n\n\n\n\n\n\n\nCustomize plot\n\nmeuse.plot(column='zinc', cmap='viridis', legend=True, markersize=5)\n\n# Show the plot\nplt.title('Zinc Concentration in Meuse Data')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()\n\n\n\n\n\n\n\n\n\n# Ensure the GeoDataFrame has the correct CRS and reproject to WGS84 for folium\ngdf = meuse.to_crs(epsg=4326)\n\n# Create a folium map centered on the data\nmap_center = [gdf.geometry.y.mean(), gdf.geometry.x.mean()]\nm = folium.Map(location=map_center, zoom_start=12)\n\n# Add points to the map with a popup for one of the attributes\nfor _, row in gdf.iterrows():\n    folium.CircleMarker(\n        location=[row.geometry.y, row.geometry.x],\n        radius=5,\n        color='blue',\n        fill=True,\n        fill_opacity=0.6,\n        popup=f\"Zinc: {row['zinc']}\"  # Replace 'zinc' with a column from your shapefile\n    ).add_to(m)\n\n# Save or display the map\nm.save(\"meuse_map.html\")\nm\n\nMake this Notebook Trusted to load map: File -&gt; Trust Notebook"
   },
   {
-    "objectID": "Week5/index.html#centroid",
-    "href": "Week5/index.html#centroid",
-    "title": "Spatial Visualization with Python",
-    "section": "Centroid",
-    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_33272\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_33272\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
+    "objectID": "Week6/index.html#kriging-vs-idw",
+    "href": "Week6/index.html#kriging-vs-idw",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Kriging vs IDW",
+    "text": "Kriging vs IDW\n\nInverse Distance Weighting (IDW) and Kriging are weighted methods for interpolation. The key difference lies in how they determine and apply weights.\nIn IDW, weights are determined solely based on distance between the point being estimated and the known sample points.\n\nNearby points have greater influence (higher weights) than distant points.\nThe weights are purely geometric and ignore any statistical relationships or spatial trends in the data.\n\nKriging determines weights based on both the distance between points and the spatial autocorrelation of the data, which is modeled using a semivariogram. The semivariogram quantifies how similar data values are based on their separation distance."
   },
   {
-    "objectID": "Week5/index.html#unary-union-operation",
-    "href": "Week5/index.html#unary-union-operation",
-    "title": "Spatial Visualization with Python",
-    "section": "unary union operation",
-    "text": "unary union operation\n\ncombined_geometry = world.unary_union\ncombined_geometry"
+    "objectID": "Week6/index.html#weight-determination-in-kriging",
+    "href": "Week6/index.html#weight-determination-in-kriging",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Weight Determination in Kriging",
+    "text": "Weight Determination in Kriging\n\nKriging solves a system of linear equations derived from the semivariogram, minimizing prediction variance while ensuring unbiasedness.\nWeights are chosen such that they account for:\nDistances: Between the interpolation point and sample points.\nSpatial relationships: Among the sample points themselves (accounting for clustering and redundancy).\nWeights depend on the semivariogram model (e.g., spherical, exponential). Points farther away can still have influence if the semivariogram indicates spatial continuity."
   },
   {
-    "objectID": "Week5/index.html#bounding-polygon",
-    "href": "Week5/index.html#bounding-polygon",
-    "title": "Spatial Visualization with Python",
-    "section": "Bounding polygon",
-    "text": "Bounding polygon\n\nworld.envelope.head()\n\n0    POLYGON ((-180.00000 -18.28799, 180.00000 -18....\n1    POLYGON ((29.34000 -11.72094, 40.31659 -11.720...\n2    POLYGON ((-17.06342 20.99975, -8.66512 20.9997...\n3    POLYGON ((-140.99778 41.67511, -52.64810 41.67...\n4    POLYGON ((-171.79111 18.91619, -66.96466 18.91...\ndtype: geometry"
+    "objectID": "Week6/index.html#comparison-of-weight-selection-in-kriging-and-idw",
+    "href": "Week6/index.html#comparison-of-weight-selection-in-kriging-and-idw",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Comparison of Weight Selection in Kriging and IDW",
+    "text": "Comparison of Weight Selection in Kriging and IDW\nIn-class explanation"
   },
   {
-    "objectID": "Week5/index.html#read-geojson-file",
-    "href": "Week5/index.html#read-geojson-file",
-    "title": "Spatial Visualization with Python",
-    "section": "Read GeoJson file",
-    "text": "Read GeoJson file\n\nus_states_geo = gpd.read_file(\"datasets/us-states.json\")\nus_states_geo.head()\n\n\n\n\n\n\n\n\nid\nname\ngeometry\n\n\n\n\n0\n01\nAlabama\nPOLYGON ((-87.35930 35.00118, -85.60667 34.984...\n\n\n1\n02\nAlaska\nMULTIPOLYGON (((-131.60202 55.11798, -131.5691...\n\n\n2\n04\nArizona\nPOLYGON ((-109.04250 37.00026, -109.04798 31.3...\n\n\n3\n05\nArkansas\nPOLYGON ((-94.47384 36.50186, -90.15254 36.496...\n\n\n4\n06\nCalifornia\nPOLYGON ((-123.23326 42.00619, -122.37885 42.0..."
+    "objectID": "Week6/index.html#key-points",
+    "href": "Week6/index.html#key-points",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Key points",
+    "text": "Key points\n\nIDW is straightforward, where weights depend only on how close a point is to the location being estimated. It assumes all variation is captured by distance.\nKriging uses a more sophisticated approach, accounting for both distance and how sample points are spatially correlated, providing more accurate and statistically sound estimates in many cases"
   },
   {
-    "objectID": "Week5/index.html#read-.csv-file",
-    "href": "Week5/index.html#read-.csv-file",
-    "title": "Spatial Visualization with Python",
-    "section": "Read .csv file",
-    "text": "Read .csv file\n\nworld_happiness = pd.read_csv(\"datasets/world-happiness-report-2019.csv\")\nworld_happiness.head()\n\n\n\n\n\n\n\n\nCountry (region)\nLadder\nSD of Ladder\nPositive affect\nNegative affect\nSocial support\nFreedom\nCorruption\nGenerosity\nLog of GDP\\nper capita\nHealthy life\\nexpectancy\n\n\n\n\n0\nFinland\n1\n4\n41.0\n10.0\n2.0\n5.0\n4.0\n47.0\n22.0\n27.0\n\n\n1\nDenmark\n2\n13\n24.0\n26.0\n4.0\n6.0\n3.0\n22.0\n14.0\n23.0\n\n\n2\nNorway\n3\n8\n16.0\n29.0\n3.0\n3.0\n8.0\n11.0\n7.0\n12.0\n\n\n3\nIceland\n4\n9\n3.0\n3.0\n1.0\n7.0\n45.0\n3.0\n15.0\n13.0\n\n\n4\nNetherlands\n5\n1\n12.0\n25.0\n15.0\n19.0\n12.0\n7.0\n12.0\n18.0"
+    "objectID": "Week6/index.html#variograms",
+    "href": "Week6/index.html#variograms",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Variograms",
+    "text": "Variograms"
   },
   {
-    "objectID": "Week5/index.html#merge-data-files",
-    "href": "Week5/index.html#merge-data-files",
-    "title": "Spatial Visualization with Python",
-    "section": "Merge data files",
-    "text": "Merge data files\n\nworld_total_data = world.merge(world_happiness, left_on = \"name\", \nright_on = \"Country (region)\")\nworld_total_data.head()\n\n\n\n\n\n\n\n\npop_est\ncontinent\nname\niso_a3\ngdp_md_est\ngeometry\nCountry (region)\nLadder\nSD of Ladder\nPositive affect\nNegative affect\nSocial support\nFreedom\nCorruption\nGenerosity\nLog of GDP\\nper capita\nHealthy life\\nexpectancy\n\n\n\n\n0\n58005463.0\nAfrica\nTanzania\nTZA\n63177\nPOLYGON ((33.90371 -0.95000, 34.07262 -1.05982...\nTanzania\n153\n122\n78.0\n50.0\n131.0\n78.0\n34.0\n49.0\n125.0\n118.0\n\n\n1\n37589262.0\nNorth America\nCanada\nCAN\n1736425\nMULTIPOLYGON (((-122.84000 49.00000, -122.9742...\nCanada\n9\n23\n18.0\n49.0\n20.0\n9.0\n11.0\n14.0\n19.0\n8.0\n\n\n2\n18513930.0\nAsia\nKazakhstan\nKAZ\n181665\nPOLYGON ((87.35997 49.21498, 86.59878 48.54918...\nKazakhstan\n60\n40\n81.0\n5.0\n19.0\n80.0\n57.0\n57.0\n47.0\n88.0\n\n\n3\n33580650.0\nAsia\nUzbekistan\nUZB\n57921\nPOLYGON ((55.96819 41.30864, 55.92892 44.99586...\nUzbekistan\n41\n99\n19.0\n15.0\n11.0\n1.0\n18.0\n29.0\n104.0\n83.0\n\n\n4\n270625568.0\nAsia\nIndonesia\nIDN\n1119190\nMULTIPOLYGON (((141.00021 -2.60015, 141.01706 ...\nIndonesia\n92\n108\n9.0\n104.0\n94.0\n48.0\n129.0\n2.0\n83.0\n98.0"
+    "objectID": "Week6/index.html#data",
+    "href": "Week6/index.html#data",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Data",
+    "text": "Data\n\nlibrary(gstat)\nlibrary(tidyverse)\nno2 &lt;- read_csv(system.file(\"external/no2.csv\", \n    package = \"gstat\"), show_col_types = FALSE)\nno2\n\n# A tibble: 74 × 21\n   station_european_code station_local_code country_iso_code country_name\n   &lt;chr&gt;                 &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;       \n 1 DENI063               DENI063            DE               Germany     \n 2 DEBY109               DEBY109            DE               Germany     \n 3 DEBE056               DEBE056            DE               Germany     \n 4 DEBE062               DEBE062            DE               Germany     \n 5 DEBE032               DEBE032            DE               Germany     \n 6 DEHE046               DEHE046            DE               Germany     \n 7 DEBY122               DEBY122            DE               Germany     \n 8 DESL019               DESL019            DE               Germany     \n 9 DENW081               DENW081            DE               Germany     \n10 DESH008               DESH008            DE               Germany     \n# ℹ 64 more rows\n# ℹ 17 more variables: station_name &lt;chr&gt;, station_start_date &lt;date&gt;,\n#   station_end_date &lt;lgl&gt;, type_of_station &lt;chr&gt;,\n#   station_ozone_classification &lt;chr&gt;, station_type_of_area &lt;chr&gt;,\n#   station_subcat_rural_back &lt;chr&gt;, street_type &lt;chr&gt;,\n#   station_longitude_deg &lt;dbl&gt;, station_latitude_deg &lt;dbl&gt;,\n#   station_altitude &lt;dbl&gt;, station_city &lt;chr&gt;, lau_level1_code &lt;dbl&gt;, …"
   },
   {
-    "objectID": "Week5/index.html#choropleth-map",
-    "href": "Week5/index.html#choropleth-map",
-    "title": "Spatial Visualization with Python",
-    "section": "Choropleth Map",
-    "text": "Choropleth Map\n\nfrom plotnine import ggplot, geom_map, aes, scale_fill_cmap, theme, labs\n\nchart = ggplot(world_total_data) + \\\n    geom_map(aes(fill=\"Freedom\", map_id=\"name\", geometry=\"geometry\")) + \\\n    scale_fill_cmap(cmap_name=\"Blues\") + \\\n    labs(title=\"Freedom\") + \\\n    theme(figure_size=(12, 6))\n\nprint(chart)\n\n\n\n\n\n\n\n\n\n\n\n\nchart = ggplot(world_total_data) + \\\n    geom_map(aes(fill=\"Healthy life\\nexpectancy\", map_id=\"name\", geometry=\"geometry\")) + \\\n    scale_fill_cmap(cmap_name=\"Blues\") + \\\n    labs(title=\"Healthy life and expectancy\") + \\\n    theme(figure_size=(12, 6))\n\nprint(chart)"
+    "objectID": "Week6/index.html#convert-to-spatial-object-method-1",
+    "href": "Week6/index.html#convert-to-spatial-object-method-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Convert to Spatial Object: Method 1",
+    "text": "Convert to Spatial Object: Method 1\n\nlibrary(sf)\nlibrary(sp)\ncrs &lt;- st_crs(\"EPSG:32632\")\nno2.sf &lt;- st_as_sf(no2, crs = \"OGC:CRS84\", coords = \n    c(\"station_longitude_deg\", \"station_latitude_deg\")) |&gt;\n    st_transform(crs) \nno2.sf\n\nSimple feature collection with 74 features and 19 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 304638.2 ymin: 5263687 xmax: 900829.7 ymax: 6086661\nProjected CRS: WGS 84 / UTM zone 32N\n# A tibble: 74 × 20\n   station_european_code station_local_code country_iso_code country_name\n * &lt;chr&gt;                 &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;       \n 1 DENI063               DENI063            DE               Germany     \n 2 DEBY109               DEBY109            DE               Germany     \n 3 DEBE056               DEBE056            DE               Germany     \n 4 DEBE062               DEBE062            DE               Germany     \n 5 DEBE032               DEBE032            DE               Germany     \n 6 DEHE046               DEHE046            DE               Germany     \n 7 DEBY122               DEBY122            DE               Germany     \n 8 DESL019               DESL019            DE               Germany     \n 9 DENW081               DENW081            DE               Germany     \n10 DESH008               DESH008            DE               Germany     \n# ℹ 64 more rows\n# ℹ 16 more variables: station_name &lt;chr&gt;, station_start_date &lt;date&gt;,\n#   station_end_date &lt;lgl&gt;, type_of_station &lt;chr&gt;,\n#   station_ozone_classification &lt;chr&gt;, station_type_of_area &lt;chr&gt;,\n#   station_subcat_rural_back &lt;chr&gt;, street_type &lt;chr&gt;, station_altitude &lt;dbl&gt;,\n#   station_city &lt;chr&gt;, lau_level1_code &lt;dbl&gt;, lau_level2_code &lt;dbl&gt;,\n#   lau_level2_name &lt;chr&gt;, EMEP_station &lt;chr&gt;, NO2 &lt;dbl&gt;, …"
   },
   {
-    "objectID": "Week5/index.html#reading",
-    "href": "Week5/index.html#reading",
-    "title": "Spatial Visualization with Python",
+    "objectID": "Week6/index.html#spatial-extent",
+    "href": "Week6/index.html#spatial-extent",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Spatial Extent",
+    "text": "Spatial Extent\n\n\n     xmin      ymin      xmax      ymax \n 304638.2 5263687.2  900829.7 6086661.1"
+  },
+  {
+    "objectID": "Week6/index.html#lagged-scatterplot",
+    "href": "Week6/index.html#lagged-scatterplot",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lagged Scatterplot",
+    "text": "Lagged Scatterplot"
+  },
+  {
+    "objectID": "Week6/index.html#lagged-scatterplot-1",
+    "href": "Week6/index.html#lagged-scatterplot-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lagged Scatterplot",
+    "text": "Lagged Scatterplot\nIn spatial analysis, a lagged scatterplot explores spatial autocorrelation by plotting the values of a variable at locations separated by a specific lag distance. It is used to assess how the similarity of values changes with distance, helping understand spatial patterns and dependencies."
+  },
+  {
+    "objectID": "Week6/index.html#steps-to-construct-a-lagged-scatterplot-for-spatial-analysis",
+    "href": "Week6/index.html#steps-to-construct-a-lagged-scatterplot-for-spatial-analysis",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Steps to Construct a Lagged Scatterplot for Spatial Analysis",
+    "text": "Steps to Construct a Lagged Scatterplot for Spatial Analysis\n\nDefine the Variable of Interest Choose the variable whose spatial relationship you want to analyze (e.g., air pollution levels, rainfall, temperature, etc.).\nSelect a Lag Distance Decide the distance intervals (lags) at which you want to compare the values. For example:\n\n0–1000 meters\n1000–2000 meters\n2000–3000 meters\n\nPair Locations Based on Lag Identify all pairs of points whose separation distance falls within each lag interval.\nCalculate Values\n\nFor each pair of points:\nPlot the value at one location on the x-axis.\nPlot the value at the paired location on the y-axis.\n\nVisualize Create a scatterplot for each lag interval to observe spatial relationships."
+  },
+  {
+    "objectID": "Week6/index.html#example-of-selecting-lag-distance",
+    "href": "Week6/index.html#example-of-selecting-lag-distance",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example of Selecting Lag Distance",
+    "text": "Example of Selecting Lag Distance\nLet’s say you have a dataset of air quality measurements in a city, and you want to analyze the spatial relationship between stations. Here’s how you might proceed:\nExamine the study area: If your data spans an area of 10 km by 10 km, then a lag distance of 500 meters or 1 km might be reasonable.\nCheck for spatial autocorrelation: Create a variogram to see how the data correlates over distances. You’ll likely see that values are highly correlated at short distances (e.g., 100–500 meters) but become less correlated as the distance grows.\nSet lag intervals: Based on your variogram and knowledge, you might decide on breaks such as:\n0–500 meters\n500–1000 meters\n1000–2000 meters\n2000–5000 meters\nAdjust based on the data: If you find that most of your points are clustered closely together, you may select smaller lags. If the points are spread out, you may select larger lags."
+  },
+  {
+    "objectID": "Week6/index.html#the-reason-for-the-transition-from-an-h-scatterplot-to-a-variogram-cloud",
+    "href": "Week6/index.html#the-reason-for-the-transition-from-an-h-scatterplot-to-a-variogram-cloud",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "The reason for The transition from an h-scatterplot to a variogram cloud",
+    "text": "The reason for The transition from an h-scatterplot to a variogram cloud\nh-Scatterplot: This plot shows the relationship between values of a variable at different distances (lags) in a scatterplot format. While it is useful to get a rough idea of the spatial relationship, it doesn’t provide a detailed understanding of how spatial dependence varies with distance.\nVariogram Cloud: The variogram cloud (or experimental variogram) provides a more refined and systematic view of spatial dependence. It plots the variance of the differences between values at pairs of locations (the semivariance) against the distance between those locations."
+  },
+  {
+    "objectID": "Week6/index.html#variogram-cloud",
+    "href": "Week6/index.html#variogram-cloud",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Variogram Cloud",
+    "text": "Variogram Cloud\nA variogram cloud shows the semivariance for every pair of spatial locations in the dataset, at different distances (lags). It provides valuable information, but it can be noisy, especially in large datasets. Each point in the cloud represents a pair of points at a specific distance, but there may be a lot of variability due to:\nSampling errors,\nData sparsity in certain ranges,\nLocal irregularities.\nThis noise can make it harder to interpret the spatial structure of the data clearly."
+  },
+  {
+    "objectID": "Week6/index.html#binned-variogram",
+    "href": "Week6/index.html#binned-variogram",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Binned Variogram",
+    "text": "Binned Variogram\nTo address this, the variogram cloud is often binned into predefined distance intervals (lags). This process groups the semivariance values for pairs of points that fall within certain distance ranges, effectively averaging them. This reduces the noise and results in a smoother, more stable variogram. The binned variogram provides a clearer representation of the overall trend in spatial autocorrelation, particularly for larger datasets."
+  },
+  {
+    "objectID": "Week6/index.html#improving-the-interpretation-of-spatial-structure",
+    "href": "Week6/index.html#improving-the-interpretation-of-spatial-structure",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Improving the Interpretation of Spatial Structure",
+    "text": "Improving the Interpretation of Spatial Structure\nVariogram Cloud: The cloud may contain too many points to easily discern patterns or trends in the spatial structure. The relationship between distance and semivariance may be obscured by the sheer number of points and their variability.\nBinned Variogram: By binning the data, you get a smoothed representation of how semivariance increases with distance. This makes it easier to identify key features of the spatial structure, such as:\nThe range: The distance at which spatial dependence effectively disappears.\nThe nugget effect: The value of the semivariance at very short distances, indicating local variability or measurement error.\nThe sill: The maximum value of the semivariance, beyond which no further increase in variability is observed.\nThe binned variogram helps in understanding the overall trend in the spatial dependence between locations."
+  },
+  {
+    "objectID": "Week6/index.html#reading",
+    "href": "Week6/index.html#reading",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
     "section": "Reading",
-    "text": "Reading\nhttps://pythongis.org/part2/chapter-06/nb/01-geodataframe.html"
+    "text": "Reading\nhttps://scikit-gstat.readthedocs.io/en/latest/userguide/variogram.html"
+  },
+  {
+    "objectID": "Week6/index.html#interpretations-of-variograms",
+    "href": "Week6/index.html#interpretations-of-variograms",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Interpretations of Variograms",
+    "text": "Interpretations of Variograms\n\\[C(h) = Sill - \\gamma(h)\\]"
+  },
+  {
+    "objectID": "Week6/index.html#relationship-between-a-correlogram-and-a-variogram",
+    "href": "Week6/index.html#relationship-between-a-correlogram-and-a-variogram",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Relationship between a correlogram and a variogram",
+    "text": "Relationship between a correlogram and a variogram\nIn class explanations\nFurther reading: https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts"
+  },
+  {
+    "objectID": "Week6/index.html#acknowledgement",
+    "href": "Week6/index.html#acknowledgement",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Acknowledgement",
+    "text": "Acknowledgement\nhttps://r-spatial.org/book/12-Interpolation.html"
   }
 ]
