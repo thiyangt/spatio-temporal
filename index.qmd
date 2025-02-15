@@ -78,6 +78,15 @@ Which variogram model to use: [read here](https://csegrecorder.com/articles/view
 
 [Kriging with python](https://github.com/mmaelicke/scikit-gstat/tree/main/tutorials)
 
+## Lecture 9: 15 February 2025
+
+[Time series clustering](https://thiyanga-spatiotemporal.netlify.app/posts/time_series/week8b.html#/title-slide)
+
+Feature-based time series forecasting
+
+## Lecture 10: 22 February 2025
+
+Presentations: 40%
 
 # Additional reading
 
