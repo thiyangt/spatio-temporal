@@ -194,7 +194,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="loading-packages" class="level1">
 <h1>Loading packages</h1>
-<div id="5e8c6df3" class="cell" data-execution_count="1">
+<div id="959ba744" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> plotnine <span class="im">as</span> p9 </span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> plotnine <span class="im">import</span> <span class="op">*</span></span>
@@ -204,14 +204,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="read-data" class="level1">
 <h1>Read data</h1>
-<div id="79c0cb83" class="cell" data-execution_count="2">
+<div id="559c63ec" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>airpassenger <span class="op">=</span> pd.read_csv(<span class="st">'AirPassengers.csv'</span>)</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>airpassenger[<span class="st">'Month'</span>]<span class="op">=</span> pd.to_datetime(airpassenger[<span class="st">'Month'</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="visualise-data" class="level1">
 <h1>Visualise data</h1>
-<div id="68bf8c30" class="cell" data-execution_count="3">
+<div id="d32e8314" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>ggplot(airpassenger, aes(x<span class="op">=</span><span class="st">'Month'</span>, y<span class="op">=</span><span class="st">'#Passengers'</span>))<span class="op">+</span>geom_line()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
@@ -224,7 +224,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="training-set-vs-test-set" class="level1">
 <h1>Training set vs Test set</h1>
-<div id="84077710" class="cell" data-execution_count="4">
+<div id="4ac2e12a" class="cell" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Define training and test separation point</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>split_date <span class="op">=</span> <span class="st">'1960-01'</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -257,7 +257,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="apply-log-transformation" class="level1">
 <h1>Apply log transformation</h1>
-<div id="bbf4b08d" class="cell" data-execution_count="5">
+<div id="f3e8f73e" class="cell" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>airpassenger[<span class="st">'Log_Passengers'</span>] <span class="op">=</span> np.log(airpassenger[<span class="st">'#Passengers'</span>])</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Define training and test separation point</span></span>
@@ -292,14 +292,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="set-training-data-set-and-test-dataset" class="level1">
 <h1>Set training data set and test dataset</h1>
-<div id="b8aa0216" class="cell" data-execution_count="6">
+<div id="4520d353" class="cell" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>training_data <span class="op">=</span> airpassenger[airpassenger[<span class="st">'Month'</span>] <span class="op">&lt;</span> pd.to_datetime(split_date)]</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>test_data <span class="op">=</span> airpassenger[airpassenger[<span class="st">'Month'</span>] <span class="op">&gt;=</span> pd.to_datetime(split_date)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="plot-acf-and-pacf-for-training-data" class="level1">
 <h1>Plot ACF and PACF for training data</h1>
-<div id="5d29459b" class="cell" data-execution_count="7">
+<div id="b423954a" class="cell" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.graphics.tsaplots <span class="im">import</span> plot_acf, plot_pacf</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>plt.figure(figsize<span class="op">=</span>(<span class="dv">12</span>, <span class="dv">6</span>))</span>
@@ -324,7 +324,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="apply-first-order-seasonal-difference-and-obtain-acf-and-pacf" class="level1">
 <h1>Apply First-Order Seasonal Difference and Obtain ACF and PACF</h1>
-<div id="605ebed2" class="cell" data-execution_count="8">
+<div id="fde49bec" class="cell" data-execution_count="8">
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>airpassenger[<span class="st">'LogSeasonal_Diff'</span>] <span class="op">=</span> airpassenger[<span class="st">'Log_Passengers'</span>] <span class="op">-</span> airpassenger[<span class="st">'Log_Passengers'</span>].shift(<span class="dv">12</span>)</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>airpassenger.head(<span class="dv">14</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="8">
@@ -446,7 +446,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<div id="3c318f09" class="cell" data-execution_count="9">
+<div id="fe8f5605" class="cell" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>airpassenger.tail(<span class="dv">12</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="9">
 <div>
@@ -556,7 +556,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="remove-rows-with-nan-values-from-the-airpassenger-dataframe" class="level1">
 <h1>Remove rows with NaN values from the airpassenger DataFrame</h1>
-<div id="5d7712a6" class="cell" data-execution_count="10">
+<div id="f13e7967" class="cell" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>airpassenger.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Display the cleaned DataFrame</span></span>
@@ -581,7 +581,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="plot-acf-and-pacf-of-the-log-seasonally-differenced-series" class="level1">
 <h1>Plot ACF and PACF of the log-seasonally differenced series</h1>
-<div id="4d1611e3" class="cell" data-execution_count="11">
+<div id="65c1e0c9" class="cell" data-execution_count="11">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ACF plot</span></span>
@@ -605,12 +605,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="apply-first-order-differencing" class="level1">
 <h1>Apply First-Order Differencing</h1>
-<div id="b9c23114" class="cell" data-execution_count="12">
+<div id="7d68952c" class="cell" data-execution_count="12">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>airpassenger[<span class="st">'LogSeasonal_Diff.NonSeaDiff'</span>] <span class="op">=</span> airpassenger[<span class="st">'LogSeasonal_Diff'</span>] <span class="op">-</span> airpassenger[<span class="st">'LogSeasonal_Diff'</span>].shift(<span class="dv">1</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>airpassenger.head(<span class="dv">14</span>)</span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>airpassenger.dropna(inplace<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="c2c33c6e" class="cell" data-execution_count="13">
+<div id="9c11c2e5" class="cell" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>fig, axes <span class="op">=</span> plt.subplots(<span class="dv">1</span>, <span class="dv">2</span>, figsize<span class="op">=</span>(<span class="dv">16</span>, <span class="dv">6</span>))</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="co"># ACF plot</span></span>
@@ -634,7 +634,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="fit-arima01101112-model" class="level1">
 <h1>Fit ARIMA(0,1,1)(0,1,1)[12] model</h1>
-<div id="83396739" class="cell" data-execution_count="14">
+<div id="deeb4719" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> statsmodels.tsa.arima.model <span class="im">import</span> ARIMA</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> ARIMA(airpassenger[<span class="st">'Log_Passengers'</span>], order<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>), seasonal_order<span class="op">=</span>(<span class="dv">0</span>, <span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">12</span>))</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>fitted_model <span class="op">=</span> model.fit()</span>
@@ -667,7 +667,7 @@ Name: predicted_mean, dtype: float64</code></pre>
 </section>
 <section id="residual-analysis" class="level1">
 <h1>Residual Analysis</h1>
-<div id="2f0e8924" class="cell" data-execution_count="15">
+<div id="7a574b64" class="cell" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute residuals</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>train_forecast <span class="op">=</span> fitted_model.fittedvalues</span>
@@ -730,18 +730,18 @@ Name: predicted_mean, dtype: float64</code></pre>
 </section>
 <section id="back-transform-forecasted-log-values-to-original-scale" class="level1">
 <h1>Back-transform forecasted log values to original scale</h1>
-<div id="a1253f5c" class="cell" data-execution_count="16">
+<div id="4040fc84" class="cell" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>forecast_original <span class="op">=</span> np.exp(forecast)</span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>test_data[<span class="st">'forecast_log'</span>] <span class="op">=</span> forecast</span>
 <span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>test_data[<span class="st">'forecast_passengers'</span>] <span class="op">=</span> forecast_original</span>
 <span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>test_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>C:\Users\DELL\AppData\Local\Temp\ipykernel_28084\3410330437.py:2: SettingWithCopyWarning: 
+<pre><code>C:\Users\DELL\AppData\Local\Temp\ipykernel_2780\3410330437.py:2: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
 See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-C:\Users\DELL\AppData\Local\Temp\ipykernel_28084\3410330437.py:3: SettingWithCopyWarning: 
+C:\Users\DELL\AppData\Local\Temp\ipykernel_2780\3410330437.py:3: SettingWithCopyWarning: 
 A value is trying to be set on a copy of a slice from a DataFrame.
 Try using .loc[row_indexer,col_indexer] = value instead
 
@@ -868,7 +868,7 @@ See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stab
 </section>
 <section id="compute-mse" class="level1">
 <h1>Compute MSE</h1>
-<div id="40a396b1" class="cell" data-execution_count="17">
+<div id="251c385b" class="cell" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.metrics <span class="im">import</span> mean_squared_error</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>mse <span class="op">=</span> mean_squared_error(test_data[<span class="st">'#Passengers'</span>], test_data[<span class="st">'forecast_passengers'</span>])</span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>

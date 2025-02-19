@@ -90,6 +90,10 @@ Feature calculation-[script](https://github.com/thiyangt/helloPython/blob/master
 
 [Periodogram - Using Python](/Week10/index.html)
 
+[Meta-learning](https://thiyangt.github.io/whyR2021keynote/#1)
+
+Time Series/ Spatio-Temporal Forecasting with machine Learning Algorithms - In class (completed)
+
 ## Lecture 10: 1 March 2025
 
 [Mid term evaluation: 40%](/Week11/index.html)
@@ -97,6 +101,8 @@ Feature calculation-[script](https://github.com/thiyangt/helloPython/blob/master
 # Additional reading
 
 [Introduction to Kriging with R](https://dickbrus.github.io/SpatialSamplingwithR/Introkriging.html)
+
+[Variogram Calculation](https://geostatsguy.github.io/GeostatsPyDemos_Book/GeostatsPy_variogram_calculation.html)
 
 # Papers to read
 
