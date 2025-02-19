@@ -2,19 +2,19 @@
 title: "Mid-term Evaluation (40 marks)"
 ---
 
-## Deadline: <span style="color:red">28 Feb 2025</span>
+## Deadline: [28 Feb 2025]{style="color:red"}
 
-## Presentations: <span style="color:red">1 March 2025</span>
+## Presentations: [1 March 2025]{style="color:red"}
 
 Note: Failing to complete the presentation will result in 0 marks for this portion of the mid-term evaluation.
 
-<span style="color:red">Failure to submit within the deadline will result in a deduction of 5 marks.</span>
+[Failure to submit within the deadline will result in a deduction of 5 marks.]{style="color:red"}
 
 ## Task:
 
 Select a research paper from a Q1 or Q2 journal that focuses on a spatial or spatio-temporal application. You will read, analyze, and present the paper, ensuring the following aspects are covered:
 
-### Introduction <span style="color:red">(2 Marks)</span>
+### Introduction [(2 Marks)]{style="color:red"}
 
 Clearly summarize the research problem and objectives.
 
@@ -44,7 +44,7 @@ Identify potential weaknesses or limitations in the study. Suggest alternative m
 
 Discuss the challenges or constraints associated with the study’s approach. Reflect on the broader implications of these limitations.
 
-### Q and A <span style="color:red">(8 marks)</span>
+### Q and A [(8 marks)]{style="color:red"}
 
 ### Recommendation:
 

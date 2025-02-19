@@ -90,7 +90,7 @@ Feature calculation-[script](https://github.com/thiyangt/helloPython/blob/master
 
 [Periodogram - Using Python](/Week10/index.html)
 
-## Lecture 10: 22 February 2025
+## Lecture 10: 1 March 2025
 
 [Mid term evaluation: 40%](/Week11/index.html)
 
