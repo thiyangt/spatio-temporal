@@ -58,7 +58,7 @@ Your analysis should be concise, well-structured, and supported by visualization
 
 1.  Presentation document
 
-2.  Time for presentation: 15 min.
+2.  Time for presentation: ~15~ [10]{style="color:red"} min.
 
 3.  Q and A: 5 min.
 
