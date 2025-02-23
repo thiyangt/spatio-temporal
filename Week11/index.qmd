@@ -58,8 +58,10 @@ Your analysis should be concise, well-structured, and supported by visualization
 
 1.  Presentation document
 
-2.  Time for presentation: 10 min.
+2.  Time for presentation: 10 min. (The total presentation time is strictly limited to 10 minutes. Only the points presented within this timeframe will be considered for grading.)
 
 3.  Q and A: 5 min.
 
-4.  Codes and Results corresponds to reproducibility
+4.  Data, Codes and Results corresponds to reproducibility
+
+5. A copy of your research paper.
