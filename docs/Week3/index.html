@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.5.57">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Thiyanga S. Talagala   Department of Statistics, Faculty of Applied Sciences   University of Sri Jayewardenepura, Sri Lanka">
+
+<title>Time Series Analysis – web</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">web</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">About</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#identify-the-features-of-the-time-series" id="toc-identify-the-features-of-the-time-series" class="nav-link active" data-scroll-target="#identify-the-features-of-the-time-series">Identify the features of the time series</a></li>
+  <li><a href="#acf-plot" id="toc-acf-plot" class="nav-link" data-scroll-target="#acf-plot">ACF plot</a></li>
+  <li><a href="#series-with-trend" id="toc-series-with-trend" class="nav-link" data-scroll-target="#series-with-trend">Series with trend</a></li>
+  <li><a href="#common-trend-removal-de-trending-procedures" id="toc-common-trend-removal-de-trending-procedures" class="nav-link" data-scroll-target="#common-trend-removal-de-trending-procedures">Common trend removal (de-trending) procedures</a></li>
+  <li><a href="#notation-id" id="toc-notation-id" class="nav-link" data-scroll-target="#notation-id">Notation: I(d)</a></li>
+  <li><a href="#variance-stabilization" id="toc-variance-stabilization" class="nav-link" data-scroll-target="#variance-stabilization">Variance stabilization</a>
+  <ul class="collapse">
+  <li><a href="#monthly-airline-passenger-numbers-1949-1960" id="toc-monthly-airline-passenger-numbers-1949-1960" class="nav-link" data-scroll-target="#monthly-airline-passenger-numbers-1949-1960">Monthly Airline Passenger Numbers 1949-1960</a></li>
+  <li><a href="#monthly-airline-passenger-numbers-1949-1960-1" id="toc-monthly-airline-passenger-numbers-1949-1960-1" class="nav-link" data-scroll-target="#monthly-airline-passenger-numbers-1949-1960-1">Monthly Airline Passenger Numbers 1949-1960</a></li>
+  </ul></li>
+  <li><a href="#box-cox-transformation" id="toc-box-cox-transformation" class="nav-link" data-scroll-target="#box-cox-transformation">Box-Cox transformation</a></li>
+  <li><a href="#transformation-often-makes-little-difference-to-forecasts-but-has-large-effects-on-pi." id="toc-transformation-often-makes-little-difference-to-forecasts-but-has-large-effects-on-pi." class="nav-link" data-scroll-target="#transformation-often-makes-little-difference-to-forecasts-but-has-large-effects-on-pi.">Transformation often makes little difference to forecasts but has large effects on PI.</a></li>
+  <li><a href="#application" id="toc-application" class="nav-link" data-scroll-target="#application">Application</a></li>
+  <li><a href="#is-the-snaive-method-suitable-for-forecasting-the-airpassengers-time-series" id="toc-is-the-snaive-method-suitable-for-forecasting-the-airpassengers-time-series" class="nav-link" data-scroll-target="#is-the-snaive-method-suitable-for-forecasting-the-airpassengers-time-series">Is the snaive method suitable for forecasting the AirPassengers time series?</a></li>
+  <li><a href="#steps" id="toc-steps" class="nav-link" data-scroll-target="#steps">Steps:</a></li>
+  <li><a href="#what-differences-do-you-notice" id="toc-what-differences-do-you-notice" class="nav-link" data-scroll-target="#what-differences-do-you-notice">What differences do you notice?</a></li>
+  <li><a href="#armap-q-model" id="toc-armap-q-model" class="nav-link" data-scroll-target="#armap-q-model">ARMA(p, q) model</a></li>
+  <li><a href="#arimap-d-q-model" id="toc-arimap-d-q-model" class="nav-link" data-scroll-target="#arimap-d-q-model">ARIMA(p, d, q) model</a>
+  <ul class="collapse">
+  <li><a href="#modelling-steps" id="toc-modelling-steps" class="nav-link" data-scroll-target="#modelling-steps">Modelling steps</a></li>
+  </ul></li>
+  <li><a href="#step-1-plot-data" id="toc-step-1-plot-data" class="nav-link" data-scroll-target="#step-1-plot-data">Step 1: Plot data</a></li>
+  <li><a href="#section" id="toc-section" class="nav-link" data-scroll-target="#section"></a></li>
+  <li><a href="#step-2-split-time-series-into-training-and-test-sets" id="toc-step-2-split-time-series-into-training-and-test-sets" class="nav-link" data-scroll-target="#step-2-split-time-series-into-training-and-test-sets">Step 2: Split time series into training and test sets</a></li>
+  <li><a href="#section-1" id="toc-section-1" class="nav-link" data-scroll-target="#section-1"></a></li>
+  <li><a href="#training-part" id="toc-training-part" class="nav-link" data-scroll-target="#training-part">Training part</a></li>
+  <li><a href="#step-3-apply-transformations" id="toc-step-3-apply-transformations" class="nav-link" data-scroll-target="#step-3-apply-transformations">Step 3: Apply transformations</a>
+  <ul class="collapse">
+  <li><a href="#step-4-take-difference-series" id="toc-step-4-take-difference-series" class="nav-link" data-scroll-target="#step-4-take-difference-series">Step 4: Take difference series</a>
+  <ul class="collapse">
+  <li><a href="#identifying-non-stationarity-by-looking-at-plots" id="toc-identifying-non-stationarity-by-looking-at-plots" class="nav-link" data-scroll-target="#identifying-non-stationarity-by-looking-at-plots">Identifying non-stationarity by looking at plots</a></li>
+  </ul></li>
+  <li><a href="#non-seasonal-differencing-and-seasonal-differencing" id="toc-non-seasonal-differencing-and-seasonal-differencing" class="nav-link" data-scroll-target="#non-seasonal-differencing-and-seasonal-differencing">Non-seasonal differencing and seasonal differencing</a></li>
+  <li><a href="#non-seasonal-differencing" id="toc-non-seasonal-differencing" class="nav-link" data-scroll-target="#non-seasonal-differencing">Non-Seasonal differencing</a>
+  <ul class="collapse">
+  <li><a href="#without-differencing" id="toc-without-differencing" class="nav-link" data-scroll-target="#without-differencing">Without differencing</a></li>
+  <li><a href="#with-differencing" id="toc-with-differencing" class="nav-link" data-scroll-target="#with-differencing">With differencing</a></li>
+  </ul></li>
+  <li><a href="#seasonal-differencing" id="toc-seasonal-differencing" class="nav-link" data-scroll-target="#seasonal-differencing">Seasonal differencing</a></li>
+  <li><a href="#seasonal-differencing-non-seasonal-differencing" id="toc-seasonal-differencing-non-seasonal-differencing" class="nav-link" data-scroll-target="#seasonal-differencing-non-seasonal-differencing">Seasonal differencing + Non-seasonal differencing</a></li>
+  </ul></li>
+  <li><a href="#testing-for-nonstationarity-for-the-presence-of-unit-roots" id="toc-testing-for-nonstationarity-for-the-presence-of-unit-roots" class="nav-link" data-scroll-target="#testing-for-nonstationarity-for-the-presence-of-unit-roots">Testing for nonstationarity for the presence of unit roots</a>
+  <ul class="collapse">
+  <li><a href="#kpss-test" id="toc-kpss-test" class="nav-link" data-scroll-target="#kpss-test">KPSS test</a></li>
+  <li><a href="#kpss-test-1" id="toc-kpss-test-1" class="nav-link" data-scroll-target="#kpss-test-1">KPSS test</a></li>
+  <li><a href="#arp" id="toc-arp" class="nav-link" data-scroll-target="#arp">AR(p)</a></li>
+  <li><a href="#maq" id="toc-maq" class="nav-link" data-scroll-target="#maq">MA(q)</a></li>
+  <li><a href="#seasonal-components" id="toc-seasonal-components" class="nav-link" data-scroll-target="#seasonal-components">Seasonal components</a></li>
+  <li><a href="#acf" id="toc-acf" class="nav-link" data-scroll-target="#acf">ACF</a></li>
+  <li><a href="#pacf" id="toc-pacf" class="nav-link" data-scroll-target="#pacf">PACF</a></li>
+  <li><a href="#step-5-examine-the-acfpacf-to-identify-a-suitable-model" id="toc-step-5-examine-the-acfpacf-to-identify-a-suitable-model" class="nav-link" data-scroll-target="#step-5-examine-the-acfpacf-to-identify-a-suitable-model">Step 5: Examine the ACF/PACF to identify a suitable model</a></li>
+  <li><a href="#section-2" id="toc-section-2" class="nav-link" data-scroll-target="#section-2"></a></li>
+  <li><a href="#aicc" id="toc-aicc" class="nav-link" data-scroll-target="#aicc">AICc</a></li>
+  <li><a href="#step-7-residual-diagnostics" id="toc-step-7-residual-diagnostics" class="nav-link" data-scroll-target="#step-7-residual-diagnostics">Step 7: Residual diagnostics</a>
+  <ul class="collapse">
+  <li><a href="#fitted-values" id="toc-fitted-values" class="nav-link" data-scroll-target="#fitted-values">Fitted values:</a></li>
+  <li><a href="#residuals" id="toc-residuals" class="nav-link" data-scroll-target="#residuals">Residuals</a></li>
+  <li><a href="#assumptions-of-residuals" id="toc-assumptions-of-residuals" class="nav-link" data-scroll-target="#assumptions-of-residuals">Assumptions of residuals</a></li>
+  </ul></li>
+  <li><a href="#useful-properties-for-prediction-intervals" id="toc-useful-properties-for-prediction-intervals" class="nav-link" data-scroll-target="#useful-properties-for-prediction-intervals">Useful properties (for prediction intervals)</a></li>
+  <li><a href="#step-7-residual-diagnostics-cont." id="toc-step-7-residual-diagnostics-cont." class="nav-link" data-scroll-target="#step-7-residual-diagnostics-cont.">Step 7: Residual diagnostics (cont.)</a></li>
+  <li><a href="#step-7-residual-diagnostics-cont.-1" id="toc-step-7-residual-diagnostics-cont.-1" class="nav-link" data-scroll-target="#step-7-residual-diagnostics-cont.-1">Step 7: Residual diagnostics (cont.)</a></li>
+  <li><a href="#step-7-residual-diagnostics-cont.-2" id="toc-step-7-residual-diagnostics-cont.-2" class="nav-link" data-scroll-target="#step-7-residual-diagnostics-cont.-2">Step 7: Residual diagnostics (cont.)</a></li>
+  <li><a href="#step-7-residual-diagnostics-cont.-3" id="toc-step-7-residual-diagnostics-cont.-3" class="nav-link" data-scroll-target="#step-7-residual-diagnostics-cont.-3">Step 7: Residual diagnostics (cont.)</a></li>
+  <li><a href="#step-8-calculate-forecasts" id="toc-step-8-calculate-forecasts" class="nav-link" data-scroll-target="#step-8-calculate-forecasts">Step 8: Calculate forecasts</a></li>
+  <li><a href="#section-3" id="toc-section-3" class="nav-link" data-scroll-target="#section-3"></a></li>
+  <li><a href="#section-4" id="toc-section-4" class="nav-link" data-scroll-target="#section-4"></a></li>
+  <li><a href="#step-9-evaluate-forecast-accuracy" id="toc-step-9-evaluate-forecast-accuracy" class="nav-link" data-scroll-target="#step-9-evaluate-forecast-accuracy">Step 9: Evaluate forecast accuracy</a>
+  <ul class="collapse">
+  <li><a href="#how-well-our-model-is-doing-for-out-of-sample" id="toc-how-well-our-model-is-doing-for-out-of-sample" class="nav-link" data-scroll-target="#how-well-our-model-is-doing-for-out-of-sample">How well our model is doing for out-of-sample?</a></li>
+  </ul></li>
+  <li><a href="#step-9-evaluate-forecast-accuracy-1" id="toc-step-9-evaluate-forecast-accuracy-1" class="nav-link" data-scroll-target="#step-9-evaluate-forecast-accuracy-1">Step 9: Evaluate forecast accuracy</a></li>
+  </ul></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Other Formats</h2><ul><li><a href="index.html"><i class="bi bi-file-slides"></i>RevealJS</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Time Series Analysis</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Thiyanga S. Talagala <br> Department of Statistics, Faculty of Applied Sciences <br> University of Sri Jayewardenepura, Sri Lanka </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="identify-the-features-of-the-time-series" class="level2">
+<h2 class="anchored" data-anchor-id="identify-the-features-of-the-time-series">Identify the features of the time series</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-3-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="acf-plot" class="level2">
+<h2 class="anchored" data-anchor-id="acf-plot">ACF plot</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>White noise implies stationarity.</p>
+</section>
+<section id="series-with-trend" class="level2">
+<h2 class="anchored" data-anchor-id="series-with-trend">Series with trend</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="common-trend-removal-de-trending-procedures" class="level2">
+<h2 class="anchored" data-anchor-id="common-trend-removal-de-trending-procedures">Common trend removal (de-trending) procedures</h2>
+<ol type="1">
+<li><p>Deterministic trend: Time-trend regression</p>
+<p>The trend can be removed by fitting a deterministic polynomial time trend. The residual series after removing the trend will give us the de-trended series.</p></li>
+<li><p>Stochastic trend: Differencing</p>
+<p>The process is also known as a <strong>Difference-stationary process</strong>.</p></li>
+</ol>
+<hr>
+</section>
+<section id="notation-id" class="level2">
+<h2 class="anchored" data-anchor-id="notation-id">Notation: I(d)</h2>
+<p>Integrated to order <span class="math inline">\(d\)</span>: Series can be made stationary by differencing <span class="math inline">\(d\)</span> times.</p>
+<ul>
+<li>Known as <span class="math inline">\(I(d)\)</span> process.</li>
+</ul>
+<p><strong>Question:</strong> Show that random walk process is an <span class="math inline">\(I(1)\)</span> process.</p>
+<p>The random walk process is called a unit root process. (If one of the roots turns out to be one, then the process is called unit root process.)</p>
+</section>
+<section id="variance-stabilization" class="level1">
+<h1>Variance stabilization</h1>
+<p>Eg:</p>
+<ul>
+<li><p>Square root: <span class="math inline">\(W_t = \sqrt{Y_t}\)</span></p></li>
+<li><p>Logarithm: <span class="math inline">\(W_t = log({Y_t})\)</span></p>
+<ul>
+<li><p>This very useful.</p></li>
+<li><p>Interpretable: Changes in a log value are <strong>relative (percent) changes on the original sclae</strong>.</p></li>
+</ul></li>
+</ul>
+<section id="monthly-airline-passenger-numbers-1949-1960" class="level2">
+<h2 class="anchored" data-anchor-id="monthly-airline-passenger-numbers-1949-1960">Monthly Airline Passenger Numbers 1949-1960</h2>
+<p><strong>Without transformations</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="monthly-airline-passenger-numbers-1949-1960-1" class="level2">
+<h2 class="anchored" data-anchor-id="monthly-airline-passenger-numbers-1949-1960-1">Monthly Airline Passenger Numbers 1949-1960</h2>
+<p><strong>Logarithm transformation</strong></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="box-cox-transformation" class="level1">
+<h1>Box-Cox transformation</h1>
+<p><span class="math display">\[
+  w_t=\begin{cases}
+    log(y_t), &amp; \text{if $\lambda=0$} \newline
+    (Y_t^\lambda - 1)/ \lambda, &amp; \text{otherwise}.
+  \end{cases}
+\]</span></p>
+<p>Different values of <span class="math inline">\(\lambda\)</span> gives you different transformations.</p>
+<ul>
+<li><p><span class="math inline">\(\lambda=1\)</span>: No <strong>substantive</strong> transformation</p></li>
+<li><p><span class="math inline">\(\lambda = \frac{1}{2}\)</span>: Square root plus linear transformation</p></li>
+<li><p><span class="math inline">\(\lambda=0\)</span>: Natural logarithm</p></li>
+<li><p><span class="math inline">\(\lambda = -1\)</span>: Inverse plus 1</p></li>
+</ul>
+<p>Balance the seasonal fluctuations and random variation across the series.</p>
+</section>
+<section id="transformation-often-makes-little-difference-to-forecasts-but-has-large-effects-on-pi." class="level1">
+<h1>Transformation often makes little difference to forecasts but has large effects on PI.</h1>
+</section>
+<section id="application" class="level1">
+<h1>Application</h1>
+<p><code>snaive</code> + applying BoxCox transformation</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-10-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="is-the-snaive-method-suitable-for-forecasting-the-airpassengers-time-series" class="level1">
+<h1>Is the snaive method suitable for forecasting the AirPassengers time series?</h1>
+</section>
+<section id="steps" class="level1">
+<h1>Steps:</h1>
+<p>✅ apply Box-Cox transformation.</p>
+<p>✅ fit a model.</p>
+<p>✅ reverse transformation.</p>
+</section>
+<section id="what-differences-do-you-notice" class="level1">
+<h1>What differences do you notice?</h1>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-11-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-12-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--Monotonically increasing variance vs Non-monotonically increasing variance. Any monotonic transformation wouldn't work here. When you apply boxcox transformation it will transform one part and do the opposite for the other part. There are different ways to handle this. What transformation would work for cangas data set. Video:sd1-4 (48) -->
+</section>
+<section id="armap-q-model" class="level1">
+<h1>ARMA(p, q) model</h1>
+<p><span class="math display">\[Y_t=c+\phi_1Y_{t-1}+...+\phi_p Y_{t-p}+ \theta_1\epsilon_{t-1}+...+\theta_q\epsilon_{t-q}+\epsilon_t\]</span></p>
+<ul>
+<li><p>These are stationary models.</p></li>
+<li><p>They are only suitable for <strong>stationary series</strong>.</p></li>
+</ul>
+</section>
+<section id="arimap-d-q-model" class="level1">
+<h1>ARIMA(p, d, q) model</h1>
+<p>Differencing –&gt; ARMA</p>
+<p><strong>Step 1: Differencing</strong></p>
+<p><span class="math display">\[Y'_t = (1-B)^dY_t\]</span></p>
+<p><strong>Step 2: ARMA</strong></p>
+<p><span class="math display">\[Y'_t=c+\phi_1Y'_{t-1}+...+\phi_p Y'_{t-p}+ \theta_1\epsilon_{t-1}+...+\theta_q\epsilon_{t-q}+\epsilon_t\]</span></p>
+<section id="modelling-steps" class="level2">
+<h2 class="anchored" data-anchor-id="modelling-steps">Modelling steps</h2>
+<ol type="1">
+<li><p>Plot the data.</p></li>
+<li><p>Split time series into training, validation (optional), test.</p></li>
+<li><p>If necessary, transform the data (using a Box-Cox transformation) to stabilise the variance.</p></li>
+<li><p>If the data are non-stationary, take first differences of the data until the data are stationary.</p></li>
+<li><p>Examine the ACF/PACF to identify a suitable model.</p></li>
+<li><p>Try your chosen model(s), and to search for a better model.</p></li>
+<li><p>Check the residuals from your chosen model by plotting the ACF of the residuals, and doing a portmanteau test of the residuals. If they do not look like white noise, try a modified model.</p></li>
+<li><p>Once the residuals look like white noise, calculate forecasts.</p></li>
+</ol>
+</section>
+</section>
+<section id="step-1-plot-data" class="level1">
+<h1>Step 1: Plot data</h1>
+</section>
+<section id="section" class="level1">
+<h1></h1>
+<ol type="1">
+<li><p>Detect unusual observations in the data</p></li>
+<li><p>Detect non-stationarity by visual inspections of plots</p></li>
+</ol>
+<p>Stationary series:</p>
+<ul>
+<li><p>has a constant mean value and fluctuates around the mean.</p></li>
+<li><p>constant variance.</p></li>
+<li><p>no pattern predictable in the long-term.</p></li>
+</ul>
+</section>
+<section id="step-2-split-time-series-into-training-and-test-sets" class="level1">
+<h1>Step 2: Split time series into training and test sets</h1>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>     Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+1949 112 118 132 129 121 135 148 148 136 119 104 118
+1950 115 126 141 135 125 149 170 170 158 133 114 140
+1951 145 150 178 163 172 178 199 199 184 162 146 166
+1952 171 180 193 181 183 218 230 242 209 191 172 194
+1953 196 196 236 235 229 243 264 272 237 211 180 201
+1954 204 188 235 227 234 264 302 293 259 229 203 229
+1955 242 233 267 269 270 315 364 347 312 274 237 278
+1956 284 277 317 313 318 374 413 405 355 306 271 306
+1957 315 301 356 348 355 422 465 467 404 347 305 336</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec
+1958 340 318 362 348 363 435 491 505 404 359 310 337
+1959 360 342 406 396 420 472 548 559 463 407 362 405
+1960 417 391 419 461 472 535 622 606 508 461 390 432</code></pre>
+</div>
+</div>
+</section>
+<section id="section-1" class="level1">
+<h1></h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="training-part" class="level1">
+<h1>Training part</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-15-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-apply-transformations" class="level1">
+<h1>Step 3: Apply transformations</h1>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="step-4-take-difference-series" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-take-difference-series">Step 4: Take difference series</h2>
+<section id="identifying-non-stationarity-by-looking-at-plots" class="level3">
+<h3 class="anchored" data-anchor-id="identifying-non-stationarity-by-looking-at-plots">Identifying non-stationarity by looking at plots</h3>
+<ul>
+<li><p>Time series plot</p></li>
+<li><p>The ACF of stationary data drops to zero relatively quickly.</p></li>
+<li><p>The ACF of non-stationary data decreases slowly.</p></li>
+<li><p>For non-stationary data, the value of <span class="math inline">\(r_1\)</span> is often large and positive.</p></li>
+</ul>
+</section>
+</section>
+<section id="non-seasonal-differencing-and-seasonal-differencing" class="level2">
+<h2 class="anchored" data-anchor-id="non-seasonal-differencing-and-seasonal-differencing">Non-seasonal differencing and seasonal differencing</h2>
+<p><strong>Non seasonal first-order differencing:</strong> <span class="math inline">\(Y'_t=Y_t - Y_{t-1}\)</span></p>
+<!--Miss one observation-->
+<p><strong>Non seasonal second-order differencing:</strong> <span class="math inline">\(Y''_t=Y'_t - Y'_{t-1}\)</span></p>
+<!--Miss two observations-->
+<p><strong>Seasonal differencing:</strong> <span class="math inline">\(Y_t - Y_{t-m}\)</span></p>
+<!--To get rid from prominent seasonal components. -->
+<ul>
+<li>For monthly, <span class="math inline">\(m=12\)</span>, for quarterly, <span class="math inline">\(m=4\)</span>.</li>
+</ul>
+<!--We will loosefirst 12 observations-->
+<ul>
+<li>Seasonally differenced series will have <span class="math inline">\(T-m\)</span> observations. <!--Usually we do not consider differencing more than twice. --></li>
+</ul>
+<blockquote class="blockquote">
+<p>There are times differencing once is not enough. However, in practice,it is almost never necessary to go beyond second-order differencing.</p>
+</blockquote>
+<!--Even the second-order differencing is very rare.-->
+</section>
+<section id="non-seasonal-differencing" class="level2">
+<h2 class="anchored" data-anchor-id="non-seasonal-differencing">Non-Seasonal differencing</h2>
+<section id="without-differencing" class="level3">
+<h3 class="anchored" data-anchor-id="without-differencing">Without differencing</h3>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="with-differencing" class="level3">
+<h3 class="anchored" data-anchor-id="with-differencing">With differencing</h3>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-19-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-20-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="seasonal-differencing" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-differencing">Seasonal differencing</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-21-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-22-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="seasonal-differencing-non-seasonal-differencing" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-differencing-non-seasonal-differencing">Seasonal differencing + Non-seasonal differencing</h2>
+<div class="columns">
+<div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-23-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div><div class="column" style="width:50%;">
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="testing-for-nonstationarity-for-the-presence-of-unit-roots" class="level1">
+<h1>Testing for nonstationarity for the presence of unit roots</h1>
+<ul>
+<li><p>Dickey and Fuller (DF) test</p></li>
+<li><p>Augmented DF test</p></li>
+<li><p>Phillips and Perron (PP) nonparametric test</p></li>
+<li><p>Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test</p></li>
+</ul>
+<section id="kpss-test" class="level2">
+<h2 class="anchored" data-anchor-id="kpss-test">KPSS test</h2>
+<p><strong>H0:</strong> Series is level or trend stationary.</p>
+<p><strong>H1:</strong> Series is not stationary.</p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+####################### 
+# KPSS Unit Root Test # 
+####################### 
+
+Test is of type: mu with 3 lags. 
+
+Value of test-statistic is: 0.0942 
+
+Critical value for a significance level of: 
+                10pct  5pct 2.5pct  1pct
+critical values 0.347 0.463  0.574 0.739</code></pre>
+</div>
+</div>
+</section>
+<section id="kpss-test-1" class="level2">
+<h2 class="anchored" data-anchor-id="kpss-test-1">KPSS test</h2>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+####################### 
+# KPSS Unit Root Test # 
+####################### 
+
+Test is of type: mu with 4 lags. 
+
+Value of test-statistic is: 2.113 
+
+Critical value for a significance level of: 
+                10pct  5pct 2.5pct  1pct
+critical values 0.347 0.463  0.574 0.739</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>
+####################### 
+# KPSS Unit Root Test # 
+####################### 
+
+Test is of type: mu with 3 lags. 
+
+Value of test-statistic is: 0.1264 
+
+Critical value for a significance level of: 
+                10pct  5pct 2.5pct  1pct
+critical values 0.347 0.463  0.574 0.739</code></pre>
+</div>
+</div>
+</section>
+<section id="arp" class="level2">
+<h2 class="anchored" data-anchor-id="arp">AR(p)</h2>
+<ul>
+<li><p>ACF dies out in an exponential or damped sine-wave manner.</p></li>
+<li><p>there is a significant spike at lag <span class="math inline">\(p\)</span> in PACF, but none beyond <span class="math inline">\(p\)</span>.</p></li>
+</ul>
+</section>
+<section id="maq" class="level2">
+<h2 class="anchored" data-anchor-id="maq">MA(q)</h2>
+<ul>
+<li><p>ACF has all zero spikes beyond the <span class="math inline">\(q^{th}\)</span> spike.</p></li>
+<li><p>PACF dies out in an exponential or damped sine-wave manner.</p></li>
+</ul>
+</section>
+<section id="seasonal-components" class="level2">
+<h2 class="anchored" data-anchor-id="seasonal-components">Seasonal components</h2>
+<ul>
+<li>The seasonal part of an AR or MA model will be seen in the seasonal lags of the PACF and ACF.</li>
+</ul>
+<p>::::</p>
+<div class="column" style="width:50%;">
+<p><strong>ARIMA(0,0,0)(0,0,1)12 will show</strong></p>
+<ul>
+<li><p>a spike at lag 12 in the ACF but no other significant spikes.</p></li>
+<li><p>The PACF will show exponential decay in the seasonal lags 12, 24, 36, . . . .</p></li>
+</ul>
+</div>
+<div class="column" style="width:50%;">
+<p><strong>ARIMA(0,0,0)(1,0,0)12 will show</strong></p>
+<ul>
+<li><p>exponential decay in the seasonal lags of the ACF.</p></li>
+<li><p>a single significant spike at lag 12 in the PACF.</p></li>
+</ul>
+</div>
+<p>::::</p>
+</section>
+<section id="acf" class="level2">
+<h2 class="anchored" data-anchor-id="acf">ACF</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-28-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="pacf" class="level2">
+<h2 class="anchored" data-anchor-id="pacf">PACF</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="step-5-examine-the-acfpacf-to-identify-a-suitable-model" class="level2">
+<h2 class="anchored" data-anchor-id="step-5-examine-the-acfpacf-to-identify-a-suitable-model">Step 5: Examine the ACF/PACF to identify a suitable model</h2>
+<ul>
+<li><p><span class="math inline">\(d=1\)</span> and <span class="math inline">\(D=1\)</span> (from step 3)</p></li>
+<li><p>Significant spike at lag 1 in ACF suggests non-seasonal MA(1) component.</p></li>
+<li><p>Significant spike at lag 12 in ACF suggests seasonal MA(1) component.</p></li>
+<li><p>Initial candidate model: <span class="math inline">\(ARIMA(0,1,1)(0,1,1)_{12}\)</span>.</p></li>
+<li><p>By analogous logic applied to the PACF, we could also have started with <span class="math inline">\(ARIMA(1,1,0)(1,1,0)_{12}\)</span>.</p></li>
+<li><p>Let’s try both</p></li>
+</ul>
+</section>
+<section id="section-2" class="level2">
+<h2 class="anchored" data-anchor-id="section-2"></h2>
+<p><strong>Initial model:</strong></p>
+<p><span class="math inline">\(ARIMA(0,1,1)(0,1,1)_{12}\)</span></p>
+<p><span class="math inline">\(ARIMA(1,1,0)(1,1,0)_{12}\)</span></p>
+<p><strong>Try some variations of the initial model:</strong></p>
+<p><span class="math inline">\(ARIMA(0,1,1)(1,1,1)_{12}\)</span></p>
+<p><span class="math inline">\(ARIMA(1,1,1)(1,1,0)_{12}\)</span></p>
+<p><span class="math inline">\(ARIMA(1,1,1)(1,1,1)_{12}\)</span></p>
+<p>Both the ACF and PACF show significant spikes at lag 3, and almost significant spikes at lag 3, indicating that some additional non-seasonal terms need to be included in the model.</p>
+<p><span class="math inline">\(ARIMA(3,1,1)(1,1,1)_{12}\)</span></p>
+<p><span class="math inline">\(ARIMA(1,1,3)(1,1,1)_{12}\)</span></p>
+<p><span class="math inline">\(ARIMA(3,1,3)(1,1,1)_{12}\)</span></p>
+</section>
+<section id="aicc" class="level2">
+<h2 class="anchored" data-anchor-id="aicc">AICc</h2>
+<p><strong>Initial model: AICc</strong></p>
+<p><span class="math inline">\(ARIMA(0,1,1)(0,1,1)_{12}\)</span>: -344.33 (the smallest AICc)</p>
+<p><span class="math inline">\(ARIMA(1,1,0)(1,1,0)_{12}\)</span>: -336.32</p>
+<p><strong>Try some variations of the initial model:</strong></p>
+<p><span class="math inline">\(ARIMA(0,1,1)(1,1,1)_{12}\)</span>: -342.3 (second smallest AICc)</p>
+<p><span class="math inline">\(ARIMA(1,1,1)(1,1,0)_{12}\)</span>: -336.08</p>
+<p><span class="math inline">\(ARIMA(1,1,1)(1,1,1)_{12}\)</span>: -340.74</p>
+<p><span class="math inline">\(ARIMA(3,1,1)(1,1,1)_{12}\)</span>: -338.89</p>
+<p><span class="math inline">\(ARIMA(1,1,3)(1,1,1)_{12}\)</span>: -339.42</p>
+<p><span class="math inline">\(ARIMA(3,1,3)(1,1,1)_{12}\)</span>: -335.65</p>
+</section>
+<section id="step-7-residual-diagnostics" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-residual-diagnostics">Step 7: Residual diagnostics</h2>
+<section id="fitted-values" class="level3">
+<h3 class="anchored" data-anchor-id="fitted-values">Fitted values:</h3>
+<p><span class="math inline">\(\hat{Y}_{t|t-1}\)</span>: Forecast of <span class="math inline">\(Y_t\)</span> based on observations <span class="math inline">\(Y_1,...Y_t\)</span>.</p>
+</section>
+<section id="residuals" class="level3">
+<h3 class="anchored" data-anchor-id="residuals">Residuals</h3>
+<p><span class="math display">\[e_t=Y_t - \hat{Y}_{t|t-1}\]</span></p>
+</section>
+<section id="assumptions-of-residuals" class="level3">
+<h3 class="anchored" data-anchor-id="assumptions-of-residuals">Assumptions of residuals</h3>
+<ul>
+<li><span class="math inline">\(\{e_t\}\)</span> uncorrelated. If they aren’t, then information left in residuals that should be used in computing forecasts.</li>
+</ul>
+<!--If you see autocorrelations, then you should go back and adjust residuals. In theoretically, If there is information leftover and we can do something better. But it is not the case you will also be able to do with. If can't you can't. Then stop. If you check you know you have done the best as you can.-->
+<ul>
+<li><span class="math inline">\(\{e_t\}\)</span> have mean zero. If they don’t, then forecasts are biased.</li>
+</ul>
+<!--If you see autocorrelations, then you should go back and adjust residuals. We want our residuals to be unbiased. If the mean is not zero. Go and adjust the model. Add an intercept. Whatever you want to do.-->
+</section>
+</section>
+<section id="useful-properties-for-prediction-intervals" class="level2">
+<h2 class="anchored" data-anchor-id="useful-properties-for-prediction-intervals">Useful properties (for prediction intervals)</h2>
+<ul>
+<li><p><span class="math inline">\(\{e_t\}\)</span> have constant variance.</p></li>
+<li><p><span class="math inline">\(\{e_t\}\)</span> are normally distributed.</p></li>
+</ul>
+<!--If the following assumptions are wrong that doesn't mean your forecasts are incorrect. -->
+</section>
+<section id="step-7-residual-diagnostics-cont." class="level2">
+<h2 class="anchored" data-anchor-id="step-7-residual-diagnostics-cont.">Step 7: Residual diagnostics (cont.)</h2>
+<p>H0: Data are not serially correlated.</p>
+<p>H1: Data are serially correlated.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-30-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(0,1,1)(0,1,1)[12]
+Q* = 14.495, df = 20, p-value = 0.8045
+
+Model df: 2.   Total lags used: 22</code></pre>
+</div>
+</div>
+</section>
+<section id="step-7-residual-diagnostics-cont.-1" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-residual-diagnostics-cont.-1">Step 7: Residual diagnostics (cont.)</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-31-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="step-7-residual-diagnostics-cont.-2" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-residual-diagnostics-cont.-2">Step 7: Residual diagnostics (cont.)</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-32-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Ljung-Box test
+
+data:  Residuals from ARIMA(0,1,1)(1,1,1)[12]
+Q* = 13.971, df = 19, p-value = 0.7854
+
+Model df: 3.   Total lags used: 22</code></pre>
+</div>
+</div>
+</section>
+<section id="step-7-residual-diagnostics-cont.-3" class="level2">
+<h2 class="anchored" data-anchor-id="step-7-residual-diagnostics-cont.-3">Step 7: Residual diagnostics (cont.)</h2>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-33-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="step-8-calculate-forecasts" class="level2">
+<h2 class="anchored" data-anchor-id="step-8-calculate-forecasts">Step 8: Calculate forecasts</h2>
+<p><span class="math inline">\(ARIMA(0,1,1)(0,1,1)_{12}\)</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-34-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section-3" class="level2">
+<h2 class="anchored" data-anchor-id="section-3"></h2>
+<p><span class="math inline">\(ARIMA(0,1,1)(1,1,1)_{12}\)</span></p>
+<div class="cell">
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="index_files/figure-revealjs/unnamed-chunk-35-1.png" class="img-fluid figure-img" width="960"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="section-4" class="level2">
+<h2 class="anchored" data-anchor-id="section-4"></h2>
+<p><span class="math inline">\(ARIMA(0,1,1)(0,1,1)_{12}\)</span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug
+1958 350.6592 339.1766 396.7654 389.3934 394.7295 460.6986 512.2818 507.5185
+1959 394.8025 381.8745 446.7129 438.4129 444.4207 518.6945 576.7713 571.4083
+1960 444.5029 429.9474 502.9482 493.6032 500.3674 583.9912 649.3792 643.3411
+          Sep      Oct      Nov      Dec
+1958 445.0042 386.2473 339.3564 381.5803
+1959 501.0243 434.8708 382.0769 429.6162
+1960 564.0966 489.6152 430.1753 483.6992</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(ARIMA(0,1,1)(1,1,1)_{12}\)</span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>          Jan      Feb      Mar      Apr      May      Jun      Jul      Aug
+1958 351.0115 339.0589 396.3161 389.4484 395.0305 461.6590 513.6099 507.9900
+1959 395.2760 381.5215 446.3245 438.4261 444.8906 520.5608 578.7432 573.0358
+1960 444.7886 429.3347 502.2289 493.3544 500.6143 585.7116 651.2077 644.7354
+          Sep      Oct      Nov      Dec
+1958 445.3297 386.3269 339.4872 381.8812
+1959 501.8766 435.0725 382.3290 429.4328
+1960 564.7108 489.5677 430.2174 483.2724</code></pre>
+</div>
+</div>
+</section>
+<section id="step-9-evaluate-forecast-accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="step-9-evaluate-forecast-accuracy">Step 9: Evaluate forecast accuracy</h2>
+<section id="how-well-our-model-is-doing-for-out-of-sample" class="level3">
+<h3 class="anchored" data-anchor-id="how-well-our-model-is-doing-for-out-of-sample">How well our model is doing for out-of-sample?</h3>
+<!--So far we have talked about fitted values and residuals.-->
+<!--Train data and Test data. We want to know if forecasts doing well for out-of-sample.-->
+<p>Forecast error = True value - Observed value</p>
+<p><span class="math display">\[e_{T+h}=Y_{T+h}-\hat{Y}_{T+h|T}\]</span></p>
+<p>Where,</p>
+<p><span class="math inline">\(Y_{T+h}\)</span>: <span class="math inline">\((T+h)^{th}\)</span> observation, <span class="math inline">\(h=1,..., H\)</span></p>
+<p><span class="math inline">\(\hat{Y}_{T+h|T}\)</span>: Forecast based on data uo to time <span class="math inline">\(T\)</span>.</p>
+<ul>
+<li><p><strong>True</strong> forecast error as the test data is not used in computing <span class="math inline">\(\hat{Y}_{T+h|T}\)</span>.</p></li>
+<li><p>Unlike, residuals, forecast errors on the test set involve multi-step forecasts.</p></li>
+<li><p>Use forecast error measures to evaluate the models.</p></li>
+</ul>
+<!--Since, true forecast error, no hat involved.-->
+</section>
+</section>
+<section id="step-9-evaluate-forecast-accuracy-1" class="level2">
+<h2 class="anchored" data-anchor-id="step-9-evaluate-forecast-accuracy-1">Step 9: Evaluate forecast accuracy</h2>
+<p><span class="math inline">\(ARIMA(0,1,1)(0,1,1)_{12}\)</span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                ME   RMSE      MAE       MPE     MAPE       ACF1 Theil's U
+Test set -33.71566 36.559 33.71566 -8.112567 8.112567 0.08524612 0.7974916</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(ARIMA(0,1,1)(1,1,1)_{12}\)</span></p>
+<div class="cell">
+<div class="cell-output cell-output-stdout">
+<pre><code>                ME     RMSE      MAE       MPE     MAPE       ACF1 Theil's U
+Test set -34.12174 36.87661 34.12174 -8.190874 8.190874 0.06782644 0.8019226</code></pre>
+</div>
+</div>
+<p><span class="math inline">\(ARIMA(0,1,1)(0,1,1)_{12}\)</span> MAE, MAPE is smaller than <span class="math inline">\(ARIMA(0,1,1)(1,1,1)_{12}\)</span>. Hence, we select <span class="math inline">\(ARIMA(0,1,1)(0,1,1)_{12}\)</span> to forecast future values.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+
+
+<script>
+
+  // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+
+  // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+
+  // slide changes (different for each slide format).
+
+  (function () {
+
+    // dispatch for htmlwidgets
+
+    function fireSlideEnter() {
+
+      const event = window.document.createEvent("Event");
+
+      event.initEvent("slideenter", true, true);
+
+      window.document.dispatchEvent(event);
+
+    }
+
+
+
+    function fireSlideChanged(previousSlide, currentSlide) {
+
+      fireSlideEnter();
+
+
+
+      // dispatch for shiny
+
+      if (window.jQuery) {
+
+        if (previousSlide) {
+
+          window.jQuery(previousSlide).trigger("hidden");
+
+        }
+
+        if (currentSlide) {
+
+          window.jQuery(currentSlide).trigger("shown");
+
+        }
+
+      }
+
+    }
+
+
+
+    // hookup for slidy
+
+    if (window.w3c_slidy) {
+
+      window.w3c_slidy.add_observer(function (slide_num) {
+
+        // slide_num starts at position 1
+
+        fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+
+      });
+
+    }
+
+
+
+  })();
+
+</script>
+
+
+
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

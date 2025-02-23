@@ -1,0 +1,254 @@
+[
+  {
+    "objectID": "Week11/index.html#presentations-1-march-2025",
+    "href": "Week11/index.html#presentations-1-march-2025",
+    "title": "Mid-term Evaluation (40 marks)",
+    "section": "Presentations: 1 March 2025",
+    "text": "Presentations: 1 March 2025\nNote: Failing to complete the presentation will result in 0 marks for this portion of the mid-term evaluation.\nFailure to submit within the deadline will result in a deduction of 5 marks."
+  },
+  {
+    "objectID": "Week11/index.html#task",
+    "href": "Week11/index.html#task",
+    "title": "Mid-term Evaluation (40 marks)",
+    "section": "Task:",
+    "text": "Task:\nSelect a research paper from a Q1 or Q2 journal that focuses on a spatial or spatio-temporal application. You will read, analyze, and present the paper, ensuring the following aspects are covered:\n\nIntroduction (2 Marks)\nClearly summarize the research problem and objectives.\nExplain the significance of the study in the broader context of spatial or spatio-temporal analysis.\n\n\nMethodology (10 Marks)\nDescribe the techniques and models used in the study.\nExplain why these methods were chosen and their advantages.\n\n\nData (5 Marks)\nProvide details about the dataset used in the study.\nIf the dataset is not publicly available, construct a simulated dataset to illustrate key concepts.\n\n\nReplication of Results (10 Marks)\nAttempt to reproduce the key findings using the provided or simulated dataset. Present and interpret your results.\n\n\nSuggestions for Improvement (3 Marks)\nIdentify potential weaknesses or limitations in the study. Suggest alternative methods, additional analyses, or improvements in data collection.\n\n\nLimitations (2 Marks)\nDiscuss the challenges or constraints associated with the study’s approach. Reflect on the broader implications of these limitations.\n\n\nQ and A (8 marks)\n\n\nRecommendation:\nChoose a paper that includes a dataset to facilitate replication.\nIf a dataset is unavailable, construct a simulated dataset to demonstrate key ideas.\nYour analysis should be concise, well-structured, and supported by visualizations or code where appropriate."
+  },
+  {
+    "objectID": "Week11/index.html#you-should-submitpresent-following-documets",
+    "href": "Week11/index.html#you-should-submitpresent-following-documets",
+    "title": "Mid-term Evaluation (40 marks)",
+    "section": "You should submit/present following documets",
+    "text": "You should submit/present following documets\n\nPresentation document\nTime for presentation: 10 min.\nQ and A: 5 min.\nCodes and Results corresponds to reproducibility"
+  },
+  {
+    "objectID": "Week9/index.html",
+    "href": "Week9/index.html",
+    "title": "Understanding the Periodogram",
+    "section": "",
+    "text": "A periodogram is a fundamental tool in time series analysis used to identify dominant frequencies (cycles) in the data. It estimates the spectral density of a time series, helping to detect periodic patterns.\n##Simulated Example\nWe’ll generate a simulated time series with multiple frequency components and compute its periodogram.\nSteps:\nset.seed(123)\nlibrary(ggplot2)\n\n# Simulate time series with two sine waves + noise\nn &lt;- 200\nt &lt;- seq(0, 1, length.out = n)\nsignal &lt;- sin(2 * pi * 5 * t) + 0.5 * sin(2 * pi * 15 * t)  # 5Hz and 15Hz components\nnoise &lt;- rnorm(n, mean = 0, sd = 0.5)\ntime_series &lt;- signal + noise\ndft &lt;- data.frame(t, signal, noise, time_series)\nggplot(dft, aes(x = t, y = signal)) +\n  geom_line() \n\n\n\n\n\n\n\nggplot(dft, aes(x = t, y = noise)) +\n  geom_line() \n\n\n\n\n\n\n\nggplot(dft, aes(x = t, y = time_series)) +\n  geom_line()\n# Compute periodogram\nspectrum_data &lt;- spectrum(time_series, log = \"no\", plot = FALSE)\n\n# Convert frequency and power into a dataframe\ndf &lt;- data.frame(Frequency = spectrum_data$freq, Power = spectrum_data$spec)\n\n# Plot the periodogram\nggplot(df, aes(x = Frequency, y = Power)) +\n  geom_line(color = \"blue\") +\n  theme_minimal() +\n  labs(title = \"Periodogram of Simulated Time Series\",\n       x = \"Frequency (Hz)\",\n       y = \"Spectral Power\")"
+  },
+  {
+    "objectID": "Week9/index.html#why-do-peaks-appear-in-0-0.1",
+    "href": "Week9/index.html#why-do-peaks-appear-in-0-0.1",
+    "title": "Understanding the Periodogram",
+    "section": "Why Do Peaks Appear in [0, 0.1]?",
+    "text": "Why Do Peaks Appear in [0, 0.1]?\n\nThe frequencies in your signal are 5 Hz and 15 Hz.\nHowever, the frequency axis in the periodogram ranges from 0 to 0.5 (Nyquist frequency) when using normalized units.\nIf you are using spectrum() in R or periodogram() in Python, the frequencies are often expressed as proportions of the Nyquist frequency.\n\nNyquist Frequency = (Sampling Rate) / 2\nIf the sampling rate is 100 Hz, then:\n5 Hz appears at 5/100 = 0.05\n15 Hz appears at 15/100 = 0.15\nSo, you are seeing the 5 Hz peak in the range [0, 0.1]."
+  },
+  {
+    "objectID": "Week5/index.html",
+    "href": "Week5/index.html",
+    "title": "Spatial Visualization with Python",
+    "section": "",
+    "text": "import geopandas as gpd\nimport folium\nimport pandas as pd"
+  },
+  {
+    "objectID": "Week5/index.html#centroid",
+    "href": "Week5/index.html#centroid",
+    "title": "Spatial Visualization with Python",
+    "section": "Centroid",
+    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_6908\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_6908\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
+  },
+  {
+    "objectID": "Week5/index.html#unary-union-operation",
+    "href": "Week5/index.html#unary-union-operation",
+    "title": "Spatial Visualization with Python",
+    "section": "unary union operation",
+    "text": "unary union operation\n\ncombined_geometry = world.unary_union\ncombined_geometry"
+  },
+  {
+    "objectID": "Week5/index.html#bounding-polygon",
+    "href": "Week5/index.html#bounding-polygon",
+    "title": "Spatial Visualization with Python",
+    "section": "Bounding polygon",
+    "text": "Bounding polygon\n\nworld.envelope.head()\n\n0    POLYGON ((-180.00000 -18.28799, 180.00000 -18....\n1    POLYGON ((29.34000 -11.72094, 40.31659 -11.720...\n2    POLYGON ((-17.06342 20.99975, -8.66512 20.9997...\n3    POLYGON ((-140.99778 41.67511, -52.64810 41.67...\n4    POLYGON ((-171.79111 18.91619, -66.96466 18.91...\ndtype: geometry"
+  },
+  {
+    "objectID": "Week5/index.html#read-geojson-file",
+    "href": "Week5/index.html#read-geojson-file",
+    "title": "Spatial Visualization with Python",
+    "section": "Read GeoJson file",
+    "text": "Read GeoJson file\n\nus_states_geo = gpd.read_file(\"datasets/us-states.json\")\nus_states_geo.head()\n\n\n\n\n\n\n\n\nid\nname\ngeometry\n\n\n\n\n0\n01\nAlabama\nPOLYGON ((-87.35930 35.00118, -85.60667 34.984...\n\n\n1\n02\nAlaska\nMULTIPOLYGON (((-131.60202 55.11798, -131.5691...\n\n\n2\n04\nArizona\nPOLYGON ((-109.04250 37.00026, -109.04798 31.3...\n\n\n3\n05\nArkansas\nPOLYGON ((-94.47384 36.50186, -90.15254 36.496...\n\n\n4\n06\nCalifornia\nPOLYGON ((-123.23326 42.00619, -122.37885 42.0..."
+  },
+  {
+    "objectID": "Week5/index.html#read-.csv-file",
+    "href": "Week5/index.html#read-.csv-file",
+    "title": "Spatial Visualization with Python",
+    "section": "Read .csv file",
+    "text": "Read .csv file\n\nworld_happiness = pd.read_csv(\"datasets/world-happiness-report-2019.csv\")\nworld_happiness.head()\n\n\n\n\n\n\n\n\nCountry (region)\nLadder\nSD of Ladder\nPositive affect\nNegative affect\nSocial support\nFreedom\nCorruption\nGenerosity\nLog of GDP\\nper capita\nHealthy life\\nexpectancy\n\n\n\n\n0\nFinland\n1\n4\n41.0\n10.0\n2.0\n5.0\n4.0\n47.0\n22.0\n27.0\n\n\n1\nDenmark\n2\n13\n24.0\n26.0\n4.0\n6.0\n3.0\n22.0\n14.0\n23.0\n\n\n2\nNorway\n3\n8\n16.0\n29.0\n3.0\n3.0\n8.0\n11.0\n7.0\n12.0\n\n\n3\nIceland\n4\n9\n3.0\n3.0\n1.0\n7.0\n45.0\n3.0\n15.0\n13.0\n\n\n4\nNetherlands\n5\n1\n12.0\n25.0\n15.0\n19.0\n12.0\n7.0\n12.0\n18.0"
+  },
+  {
+    "objectID": "Week5/index.html#merge-data-files",
+    "href": "Week5/index.html#merge-data-files",
+    "title": "Spatial Visualization with Python",
+    "section": "Merge data files",
+    "text": "Merge data files\n\nworld_total_data = world.merge(world_happiness, left_on = \"name\", \nright_on = \"Country (region)\")\nworld_total_data.head()\n\n\n\n\n\n\n\n\npop_est\ncontinent\nname\niso_a3\ngdp_md_est\ngeometry\nCountry (region)\nLadder\nSD of Ladder\nPositive affect\nNegative affect\nSocial support\nFreedom\nCorruption\nGenerosity\nLog of GDP\\nper capita\nHealthy life\\nexpectancy\n\n\n\n\n0\n58005463.0\nAfrica\nTanzania\nTZA\n63177\nPOLYGON ((33.90371 -0.95000, 34.07262 -1.05982...\nTanzania\n153\n122\n78.0\n50.0\n131.0\n78.0\n34.0\n49.0\n125.0\n118.0\n\n\n1\n37589262.0\nNorth America\nCanada\nCAN\n1736425\nMULTIPOLYGON (((-122.84000 49.00000, -122.9742...\nCanada\n9\n23\n18.0\n49.0\n20.0\n9.0\n11.0\n14.0\n19.0\n8.0\n\n\n2\n18513930.0\nAsia\nKazakhstan\nKAZ\n181665\nPOLYGON ((87.35997 49.21498, 86.59878 48.54918...\nKazakhstan\n60\n40\n81.0\n5.0\n19.0\n80.0\n57.0\n57.0\n47.0\n88.0\n\n\n3\n33580650.0\nAsia\nUzbekistan\nUZB\n57921\nPOLYGON ((55.96819 41.30864, 55.92892 44.99586...\nUzbekistan\n41\n99\n19.0\n15.0\n11.0\n1.0\n18.0\n29.0\n104.0\n83.0\n\n\n4\n270625568.0\nAsia\nIndonesia\nIDN\n1119190\nMULTIPOLYGON (((141.00021 -2.60015, 141.01706 ...\nIndonesia\n92\n108\n9.0\n104.0\n94.0\n48.0\n129.0\n2.0\n83.0\n98.0"
+  },
+  {
+    "objectID": "Week5/index.html#choropleth-map",
+    "href": "Week5/index.html#choropleth-map",
+    "title": "Spatial Visualization with Python",
+    "section": "Choropleth Map",
+    "text": "Choropleth Map\n\nfrom plotnine import ggplot, geom_map, aes, scale_fill_cmap, theme, labs\n\nchart = ggplot(world_total_data) + \\\n    geom_map(aes(fill=\"Freedom\", map_id=\"name\", geometry=\"geometry\")) + \\\n    scale_fill_cmap(cmap_name=\"Blues\") + \\\n    labs(title=\"Freedom\") + \\\n    theme(figure_size=(12, 6))\n\nprint(chart)\n\n\n\n\n\n\n\n\n\n\n\n\nchart = ggplot(world_total_data) + \\\n    geom_map(aes(fill=\"Healthy life\\nexpectancy\", map_id=\"name\", geometry=\"geometry\")) + \\\n    scale_fill_cmap(cmap_name=\"Blues\") + \\\n    labs(title=\"Healthy life and expectancy\") + \\\n    theme(figure_size=(12, 6))\n\nprint(chart)"
+  },
+  {
+    "objectID": "Week5/index.html#reading",
+    "href": "Week5/index.html#reading",
+    "title": "Spatial Visualization with Python",
+    "section": "Reading",
+    "text": "Reading\nhttps://pythongis.org/part2/chapter-06/nb/01-geodataframe.html"
+  },
+  {
+    "objectID": "Week4p2/index.html",
+    "href": "Week4p2/index.html",
+    "title": "Spatial Visualization with Python",
+    "section": "",
+    "text": "Loading packages\n\nimport geopandas as gpd\nimport folium\n\n\n\nLoad and inspect meuse data\n\nmeuse = gpd.read_file(\"meuse.shp\")  # Adjust the file path as needed\n\n# Inspect the first few rows of the data\nprint(meuse.head())\n\n   cadmium  copper   lead    zinc   elev      dist    om ffreq soil lime  \\\n0     11.7    85.0  299.0  1022.0  7.909  0.001358  13.6     1    1    1   \n1      8.6    81.0  277.0  1141.0  6.983  0.012224  14.0     1    1    1   \n2      6.5    68.0  199.0   640.0  7.800  0.103029  13.0     1    1    1   \n3      2.6    81.0  116.0   257.0  7.655  0.190094   8.0     1    2    0   \n4      2.8    48.0  117.0   269.0  7.480  0.277090   8.7     1    2    0   \n\n  landuse  dist_m                       geometry  \n0      Ah    50.0  POINT (181072.000 333611.000)  \n1      Ah    30.0  POINT (181025.000 333558.000)  \n2      Ah   150.0  POINT (181165.000 333537.000)  \n3      Ga   270.0  POINT (181298.000 333484.000)  \n4      Ah   380.0  POINT (181307.000 333330.000)  \n\n\n\n\nVisualise the data\n\nimport matplotlib.pyplot as plt\n\n# Plot the meuse dataset (points in this case)\nmeuse.plot(marker='o', color='blue', markersize=5)\n\n# Show the plot\nplt.title('Meuse Spatial Data Visualization')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()\n\n\n\n\n\n\n\n\n\n\nCustomize plot\n\nmeuse.plot(column='zinc', cmap='viridis', legend=True, markersize=5)\n\n# Show the plot\nplt.title('Zinc Concentration in Meuse Data')\nplt.xlabel('Longitude')\nplt.ylabel('Latitude')\nplt.show()\n\n\n\n\n\n\n\n\n\n# Ensure the GeoDataFrame has the correct CRS and reproject to WGS84 for folium\ngdf = meuse.to_crs(epsg=4326)\n\n# Create a folium map centered on the data\nmap_center = [gdf.geometry.y.mean(), gdf.geometry.x.mean()]\nm = folium.Map(location=map_center, zoom_start=12)\n\n# Add points to the map with a popup for one of the attributes\nfor _, row in gdf.iterrows():\n    folium.CircleMarker(\n        location=[row.geometry.y, row.geometry.x],\n        radius=5,\n        color='blue',\n        fill=True,\n        fill_opacity=0.6,\n        popup=f\"Zinc: {row['zinc']}\"  # Replace 'zinc' with a column from your shapefile\n    ).add_to(m)\n\n# Save or display the map\nm.save(\"meuse_map.html\")\nm\n\nMake this Notebook Trusted to load map: File -&gt; Trust Notebook"
+  },
+  {
+    "objectID": "Week6/index.html",
+    "href": "Week6/index.html",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "",
+    "text": "Inverse Distance Weighting (IDW) and Kriging are weighted methods for interpolation. The key difference lies in how they determine and apply weights.\nIn IDW, weights are determined solely based on distance between the point being estimated and the known sample points.\n\nNearby points have greater influence (higher weights) than distant points.\nThe weights are purely geometric and ignore any statistical relationships or spatial trends in the data.\n\nKriging determines weights based on both the distance between points and the spatial autocorrelation of the data, which is modeled using a semivariogram. The semivariogram quantifies how similar data values are based on their separation distance."
+  },
+  {
+    "objectID": "Week6/index.html#kriging-vs-idw",
+    "href": "Week6/index.html#kriging-vs-idw",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "",
+    "text": "Inverse Distance Weighting (IDW) and Kriging are weighted methods for interpolation. The key difference lies in how they determine and apply weights.\nIn IDW, weights are determined solely based on distance between the point being estimated and the known sample points.\n\nNearby points have greater influence (higher weights) than distant points.\nThe weights are purely geometric and ignore any statistical relationships or spatial trends in the data.\n\nKriging determines weights based on both the distance between points and the spatial autocorrelation of the data, which is modeled using a semivariogram. The semivariogram quantifies how similar data values are based on their separation distance."
+  },
+  {
+    "objectID": "Week6/index.html#weight-determination-in-kriging",
+    "href": "Week6/index.html#weight-determination-in-kriging",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Weight Determination in Kriging",
+    "text": "Weight Determination in Kriging\n\nKriging solves a system of linear equations derived from the semivariogram, minimizing prediction variance while ensuring unbiasedness.\nWeights are chosen such that they account for:\nDistances: Between the interpolation point and sample points.\nSpatial relationships: Among the sample points themselves (accounting for clustering and redundancy).\nWeights depend on the semivariogram model (e.g., spherical, exponential). Points farther away can still have influence if the semivariogram indicates spatial continuity."
+  },
+  {
+    "objectID": "Week6/index.html#comparison-of-weight-selection-in-kriging-and-idw",
+    "href": "Week6/index.html#comparison-of-weight-selection-in-kriging-and-idw",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Comparison of Weight Selection in Kriging and IDW",
+    "text": "Comparison of Weight Selection in Kriging and IDW\nIn-class explanation"
+  },
+  {
+    "objectID": "Week6/index.html#key-points",
+    "href": "Week6/index.html#key-points",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Key points",
+    "text": "Key points\n\nIDW is straightforward, where weights depend only on how close a point is to the location being estimated. It assumes all variation is captured by distance.\nKriging uses a more sophisticated approach, accounting for both distance and how sample points are spatially correlated, providing more accurate and statistically sound estimates in many cases"
+  },
+  {
+    "objectID": "Week6/index.html#variograms",
+    "href": "Week6/index.html#variograms",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Variograms",
+    "text": "Variograms"
+  },
+  {
+    "objectID": "Week6/index.html#data",
+    "href": "Week6/index.html#data",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Data",
+    "text": "Data\n\nlibrary(gstat)\nlibrary(tidyverse)\nno2 &lt;- read_csv(system.file(\"external/no2.csv\", \n    package = \"gstat\"), show_col_types = FALSE)\nno2\n\n# A tibble: 74 × 21\n   station_european_code station_local_code country_iso_code country_name\n   &lt;chr&gt;                 &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;       \n 1 DENI063               DENI063            DE               Germany     \n 2 DEBY109               DEBY109            DE               Germany     \n 3 DEBE056               DEBE056            DE               Germany     \n 4 DEBE062               DEBE062            DE               Germany     \n 5 DEBE032               DEBE032            DE               Germany     \n 6 DEHE046               DEHE046            DE               Germany     \n 7 DEBY122               DEBY122            DE               Germany     \n 8 DESL019               DESL019            DE               Germany     \n 9 DENW081               DENW081            DE               Germany     \n10 DESH008               DESH008            DE               Germany     \n# ℹ 64 more rows\n# ℹ 17 more variables: station_name &lt;chr&gt;, station_start_date &lt;date&gt;,\n#   station_end_date &lt;lgl&gt;, type_of_station &lt;chr&gt;,\n#   station_ozone_classification &lt;chr&gt;, station_type_of_area &lt;chr&gt;,\n#   station_subcat_rural_back &lt;chr&gt;, street_type &lt;chr&gt;,\n#   station_longitude_deg &lt;dbl&gt;, station_latitude_deg &lt;dbl&gt;,\n#   station_altitude &lt;dbl&gt;, station_city &lt;chr&gt;, lau_level1_code &lt;dbl&gt;, …"
+  },
+  {
+    "objectID": "Week6/index.html#convert-to-spatial-object-method-1",
+    "href": "Week6/index.html#convert-to-spatial-object-method-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Convert to Spatial Object: Method 1",
+    "text": "Convert to Spatial Object: Method 1\n\nlibrary(sf)\nlibrary(sp)\ncrs &lt;- st_crs(\"EPSG:32632\")\nno2.sf &lt;- st_as_sf(no2, crs = \"OGC:CRS84\", coords = \n    c(\"station_longitude_deg\", \"station_latitude_deg\")) |&gt;\n    st_transform(crs) \nno2.sf\n\nSimple feature collection with 74 features and 19 fields\nGeometry type: POINT\nDimension:     XY\nBounding box:  xmin: 304638.2 ymin: 5263687 xmax: 900829.7 ymax: 6086661\nProjected CRS: WGS 84 / UTM zone 32N\n# A tibble: 74 × 20\n   station_european_code station_local_code country_iso_code country_name\n * &lt;chr&gt;                 &lt;chr&gt;              &lt;chr&gt;            &lt;chr&gt;       \n 1 DENI063               DENI063            DE               Germany     \n 2 DEBY109               DEBY109            DE               Germany     \n 3 DEBE056               DEBE056            DE               Germany     \n 4 DEBE062               DEBE062            DE               Germany     \n 5 DEBE032               DEBE032            DE               Germany     \n 6 DEHE046               DEHE046            DE               Germany     \n 7 DEBY122               DEBY122            DE               Germany     \n 8 DESL019               DESL019            DE               Germany     \n 9 DENW081               DENW081            DE               Germany     \n10 DESH008               DESH008            DE               Germany     \n# ℹ 64 more rows\n# ℹ 16 more variables: station_name &lt;chr&gt;, station_start_date &lt;date&gt;,\n#   station_end_date &lt;lgl&gt;, type_of_station &lt;chr&gt;,\n#   station_ozone_classification &lt;chr&gt;, station_type_of_area &lt;chr&gt;,\n#   station_subcat_rural_back &lt;chr&gt;, street_type &lt;chr&gt;, station_altitude &lt;dbl&gt;,\n#   station_city &lt;chr&gt;, lau_level1_code &lt;dbl&gt;, lau_level2_code &lt;dbl&gt;,\n#   lau_level2_name &lt;chr&gt;, EMEP_station &lt;chr&gt;, NO2 &lt;dbl&gt;, …"
+  },
+  {
+    "objectID": "Week6/index.html#spatial-extent",
+    "href": "Week6/index.html#spatial-extent",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Spatial Extent",
+    "text": "Spatial Extent\n\n\n     xmin      ymin      xmax      ymax \n 304638.2 5263687.2  900829.7 6086661.1"
+  },
+  {
+    "objectID": "Week6/index.html#lagged-scatterplot",
+    "href": "Week6/index.html#lagged-scatterplot",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lagged Scatterplot",
+    "text": "Lagged Scatterplot"
+  },
+  {
+    "objectID": "Week6/index.html#lagged-scatterplot-1",
+    "href": "Week6/index.html#lagged-scatterplot-1",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lagged Scatterplot",
+    "text": "Lagged Scatterplot\nIn spatial analysis, a lagged scatterplot explores spatial autocorrelation by plotting the values of a variable at locations separated by a specific lag distance. It is used to assess how the similarity of values changes with distance, helping understand spatial patterns and dependencies."
+  },
+  {
+    "objectID": "Week6/index.html#steps-to-construct-a-lagged-scatterplot-for-spatial-analysis",
+    "href": "Week6/index.html#steps-to-construct-a-lagged-scatterplot-for-spatial-analysis",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Steps to Construct a Lagged Scatterplot for Spatial Analysis",
+    "text": "Steps to Construct a Lagged Scatterplot for Spatial Analysis\n\nDefine the Variable of Interest Choose the variable whose spatial relationship you want to analyze (e.g., air pollution levels, rainfall, temperature, etc.).\nSelect a Lag Distance Decide the distance intervals (lags) at which you want to compare the values. For example:\n\n0–1000 meters\n1000–2000 meters\n2000–3000 meters\n\nPair Locations Based on Lag Identify all pairs of points whose separation distance falls within each lag interval.\nCalculate Values\n\nFor each pair of points:\nPlot the value at one location on the x-axis.\nPlot the value at the paired location on the y-axis.\n\nVisualize Create a scatterplot for each lag interval to observe spatial relationships."
+  },
+  {
+    "objectID": "Week6/index.html#example-of-selecting-lag-distance",
+    "href": "Week6/index.html#example-of-selecting-lag-distance",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Example of Selecting Lag Distance",
+    "text": "Example of Selecting Lag Distance\nLet’s say you have a dataset of air quality measurements in a city, and you want to analyze the spatial relationship between stations. Here’s how you might proceed:\nExamine the study area: If your data spans an area of 10 km by 10 km, then a lag distance of 500 meters or 1 km might be reasonable.\nCheck for spatial autocorrelation: Create a variogram to see how the data correlates over distances. You’ll likely see that values are highly correlated at short distances (e.g., 100–500 meters) but become less correlated as the distance grows.\nSet lag intervals: Based on your variogram and knowledge, you might decide on breaks such as:\n0–500 meters\n500–1000 meters\n1000–2000 meters\n2000–5000 meters\nAdjust based on the data: If you find that most of your points are clustered closely together, you may select smaller lags. If the points are spread out, you may select larger lags."
+  },
+  {
+    "objectID": "Week6/index.html#the-reason-for-the-transition-from-an-h-scatterplot-to-a-variogram-cloud",
+    "href": "Week6/index.html#the-reason-for-the-transition-from-an-h-scatterplot-to-a-variogram-cloud",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "The reason for The transition from an h-scatterplot to a variogram cloud",
+    "text": "The reason for The transition from an h-scatterplot to a variogram cloud\nh-Scatterplot: This plot shows the relationship between values of a variable at different distances (lags) in a scatterplot format. While it is useful to get a rough idea of the spatial relationship, it doesn’t provide a detailed understanding of how spatial dependence varies with distance.\nVariogram Cloud: The variogram cloud (or experimental variogram) provides a more refined and systematic view of spatial dependence. It plots the variance of the differences between values at pairs of locations (the semivariance) against the distance between those locations."
+  },
+  {
+    "objectID": "Week6/index.html#variogram-cloud",
+    "href": "Week6/index.html#variogram-cloud",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Variogram Cloud",
+    "text": "Variogram Cloud\nA variogram cloud shows the semivariance for every pair of spatial locations in the dataset, at different distances (lags). It provides valuable information, but it can be noisy, especially in large datasets. Each point in the cloud represents a pair of points at a specific distance, but there may be a lot of variability due to:\nSampling errors,\nData sparsity in certain ranges,\nLocal irregularities.\nThis noise can make it harder to interpret the spatial structure of the data clearly."
+  },
+  {
+    "objectID": "Week6/index.html#binned-variogram",
+    "href": "Week6/index.html#binned-variogram",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Binned Variogram",
+    "text": "Binned Variogram\nTo address this, the variogram cloud is often binned into predefined distance intervals (lags). This process groups the semivariance values for pairs of points that fall within certain distance ranges, effectively averaging them. This reduces the noise and results in a smoother, more stable variogram. The binned variogram provides a clearer representation of the overall trend in spatial autocorrelation, particularly for larger datasets."
+  },
+  {
+    "objectID": "Week6/index.html#improving-the-interpretation-of-spatial-structure",
+    "href": "Week6/index.html#improving-the-interpretation-of-spatial-structure",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Improving the Interpretation of Spatial Structure",
+    "text": "Improving the Interpretation of Spatial Structure\nVariogram Cloud: The cloud may contain too many points to easily discern patterns or trends in the spatial structure. The relationship between distance and semivariance may be obscured by the sheer number of points and their variability.\nBinned Variogram: By binning the data, you get a smoothed representation of how semivariance increases with distance. This makes it easier to identify key features of the spatial structure, such as:\nThe range: The distance at which spatial dependence effectively disappears.\nThe nugget effect: The value of the semivariance at very short distances, indicating local variability or measurement error.\nThe sill: The maximum value of the semivariance, beyond which no further increase in variability is observed.\nThe binned variogram helps in understanding the overall trend in the spatial dependence between locations."
+  },
+  {
+    "objectID": "Week6/index.html#reading",
+    "href": "Week6/index.html#reading",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Reading",
+    "text": "Reading\nhttps://scikit-gstat.readthedocs.io/en/latest/userguide/variogram.html"
+  },
+  {
+    "objectID": "Week6/index.html#interpretations-of-variograms",
+    "href": "Week6/index.html#interpretations-of-variograms",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Interpretations of Variograms",
+    "text": "Interpretations of Variograms\n\\[C(h) = Sill - \\gamma(h)\\]"
+  },
+  {
+    "objectID": "Week6/index.html#relationship-between-a-correlogram-and-a-variogram",
+    "href": "Week6/index.html#relationship-between-a-correlogram-and-a-variogram",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Relationship between a correlogram and a variogram",
+    "text": "Relationship between a correlogram and a variogram\nIn class explanations\nFurther reading: https://csegrecorder.com/articles/view/the-variogram-basics-a-visual-intro-to-useful-geostatistical-concepts"
+  },
+  {
+    "objectID": "Week6/index.html#acknowledgement",
+    "href": "Week6/index.html#acknowledgement",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Acknowledgement",
+    "text": "Acknowledgement\nhttps://r-spatial.org/book/12-Interpolation.html"
+  }
+]
