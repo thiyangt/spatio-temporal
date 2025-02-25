@@ -4,7 +4,7 @@ title: "Mid-term Evaluation (40 marks)"
 
 ## Deadline: [28 Feb 2025]{style="color:red"}
 
-## Presentations: [1 March 2025]{style="color:red"}
+## Presentations: [2 March 2025]{style="color:red"}
 
 Note: Failing to complete the presentation will result in 0 marks for this portion of the mid-term evaluation.
 

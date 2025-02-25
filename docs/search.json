@@ -25,7 +25,7 @@
     "href": "Week5/index.html#centroid",
     "title": "Spatial Visualization with Python",
     "section": "Centroid",
-    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_24348\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_24348\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
+    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_30872\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_30872\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
   },
   {
     "objectID": "Week5/index.html#unary-union-operation",
@@ -651,11 +651,11 @@
     "text": "In-class: Properties of AR(P) process\nDerive\n\nMean\nVariance\nCovariance\nAutocorrelation function of an AR(P) process"
   },
   {
-    "objectID": "Week11/index.html#presentations-1-march-2025",
-    "href": "Week11/index.html#presentations-1-march-2025",
+    "objectID": "Week11/index.html#presentations-2-march-2025",
+    "href": "Week11/index.html#presentations-2-march-2025",
     "title": "Mid-term Evaluation (40 marks)",
-    "section": "Presentations: 1 March 2025",
-    "text": "Presentations: 1 March 2025\nNote: Failing to complete the presentation will result in 0 marks for this portion of the mid-term evaluation.\nFailure to submit within the deadline will result in a deduction of 5 marks."
+    "section": "Presentations: 2 March 2025",
+    "text": "Presentations: 2 March 2025\nNote: Failing to complete the presentation will result in 0 marks for this portion of the mid-term evaluation.\nFailure to submit within the deadline will result in a deduction of 5 marks."
   },
   {
     "objectID": "Week11/index.html#task",
@@ -669,7 +669,7 @@
     "href": "Week11/index.html#you-should-submitpresent-following-documets",
     "title": "Mid-term Evaluation (40 marks)",
     "section": "You should submit/present following documets",
-    "text": "You should submit/present following documets\n\nPresentation document\nTime for presentation: 10 min.\nQ and A: 5 min.\nData, Codes and Results corresponds to reproducibility\nA copy of your research paper."
+    "text": "You should submit/present following documets\n\nPresentation document\nTime for presentation: 10 min. (The total presentation time is strictly limited to 10 minutes. Only the points presented within this timeframe will be considered for grading.)\nQ and A: 5 min.\nData, Codes and Results corresponds to reproducibility\nA copy of your research paper."
   },
   {
     "objectID": "Week3/index.html#identify-the-features-of-the-time-series",
