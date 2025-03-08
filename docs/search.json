@@ -25,7 +25,7 @@
     "href": "Week5/index.html#centroid",
     "title": "Spatial Visualization with Python",
     "section": "Centroid",
-    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_30872\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_30872\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
+    "text": "Centroid\n\nworld[\"geometry\"].centroid.head() # method 1\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_11228\\3721365273.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation.\n\n\n\n\n0    POINT (163.85316 -17.31631)\n1      POINT (34.75299 -6.25773)\n2     POINT (-12.13783 24.29117)\n3     POINT (-98.14238 61.46908)\n4    POINT (-112.59944 45.70563)\ndtype: geometry\n\n\n\nworld.centroid.plot(markersize=1) # method 2\n\nC:\\Users\\DELL\\AppData\\Local\\Temp\\ipykernel_11228\\2075499188.py:1: UserWarning:\n\nGeometry is in a geographic CRS. Results from 'centroid' are likely incorrect. Use 'GeoSeries.to_crs()' to re-project geometries to a projected CRS before this operation."
   },
   {
     "objectID": "Week5/index.html#unary-union-operation",
@@ -200,7 +200,21 @@
     "href": "index.html#lecture-10-1-march-2025",
     "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
     "section": "Lecture 10: 1 March 2025",
-    "text": "Lecture 10: 1 March 2025\nMid term evaluation: 40%"
+    "text": "Lecture 10: 1 March 2025\nMid term evaluation: 40%\nProblem solving"
+  },
+  {
+    "objectID": "index.html#lecture-11-8-march-2025",
+    "href": "index.html#lecture-11-8-march-2025",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Lecture 11: 8 March 2025",
+    "text": "Lecture 11: 8 March 2025\nTime series feature calculation - Python\nTime-series feature calculation - R\nSpatio-temporal data analysis\n3D Variograms"
+  },
+  {
+    "objectID": "index.html#practical-tutorials",
+    "href": "index.html#practical-tutorials",
+    "title": "DSA 554 3.0 Spatio-temporal Data Analysis",
+    "section": "Practical tutorials:",
+    "text": "Practical tutorials:\n\nTime series analysis using Python: https://thiyangt.github.io/spts_python_practical/Practical1/\nAnalysing meuse data: https://thiyangt.github.io/kriginginterpolation/"
   },
   {
     "objectID": "Week1/index.html#time-series",

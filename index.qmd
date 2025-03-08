@@ -98,6 +98,27 @@ Time Series/ Spatio-Temporal Forecasting with machine Learning Algorithms - In c
 
 [Mid term evaluation: 40%](/Week11/index.html)
 
+Problem solving
+
+## Lecture 11: 8 March 2025
+
+[Time series feature calculation - Python](https://github.com/thiyangt/helloPython/blob/master/Time%20Series%20Features.ipynb)
+
+[Time-series feature calculation - R](https://pkg.robjhyndman.com/tsfeatures/)
+
+[Spatio-temporal data analysis](https://gdsl-ul.github.io/san/10-st_analysis.html)
+
+[3D Variograms](https://cran.r-project.org/web/packages/gstat/vignettes/st.pdf)
+
+## Practical tutorials:
+
+1. Time series analysis using Python: https://thiyangt.github.io/spts_python_practical/Practical1/
+
+2. Analysing meuse data:  https://thiyangt.github.io/kriginginterpolation/
+
+
+
+
 # Additional reading
 
 [Introduction to Kriging with R](https://dickbrus.github.io/SpatialSamplingwithR/Introkriging.html)
